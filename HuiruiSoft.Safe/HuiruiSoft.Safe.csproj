@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0CC44926-9126-4C65-A175-F1C62C4E589B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HuiruiSoft.Safe</RootNamespace>
+    <AssemblyName>SafePass</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Build\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>SafePass.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\dll\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\dll\log4net\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceGrid">
+      <HintPath>..\dll\SourceGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\ApplicationConfig.cs" />
+    <Compile Include="Exchange\ExportAccountUtil.cs" />
+    <Compile Include="Exchange\FileFormatProvider.cs" />
+    <Compile Include="Exchange\Formats\OfficeExcel.cs" />
+    <Compile Include="Exchange\Formats\SafePassXml1x.cs" />
+    <Compile Include="ResourceFinder.cs" />
+    <Compile Include="resources\Localization\LocalizationResources.cs" />
+    <Compile Include="resources\Localization\LanguageHeader.cs" />
+    <Compile Include="resources\Localization\LocalizationResourceReader.cs" />
+    <Compile Include="resources\Localization\LocalizationResourceWriter.cs" />
+    <Compile Include="resources\Localization\LocalizedStringItem.cs" />
+    <Compile Include="resources\SafePassResource.DataGrid.cs" />
+    <Compile Include="resources\SafePassResource.Dialog.cs" />
+    <Compile Include="resources\SafePassResource.MainWindow.cs" />
+    <Compile Include="resources\SafePassResource.Window.cs" />
+    <Compile Include="resources\SafePassResource.MenuItem.cs" />
+    <Compile Include="UI\Account\formAccountViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Catalog\formCatalogSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\SecurityConfig.cs" />
+    <EmbeddedResource Include="UI\formChangePassword.resx">
+      <DependentUpon>formChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\formSelectLanguage.resx">
+      <DependentUpon>formSelectLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Wizard\formNewSafeWizard.resx">
+      <DependentUpon>formNewSafeWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="languages\ChineseSimp.lng">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="resources\images\CustomizeLarge.png" />
+    <None Include="resources\images\TopMost.png" />
+    <None Include="resources\images\TopNone.png" />
+    <Compile Include="UI\CustomMessageFilter.cs" />
+    <Compile Include="UI\Export\formExportAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\formChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\formSelectLanguage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Import\formImportAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\formAccountManager_DataGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\formAccountManager_TreeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\formAccountManager_MenuItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\formAccountManager_Functions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="resources\SafePassResource.General.cs" />
+    <Compile Include="resources\SafePassResource.cs" />
+    <Compile Include="UI\formHelpAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\ApplicationConfigSerializer.cs" />
+    <Compile Include="Config\ApplicationDefines.cs" />
+    <Compile Include="Config\SafePassConfiguration.cs" />
+    <Compile Include="Config\WindowSettings.cs" />
+    <Compile Include="UI\Wizard\formNewSafeWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XmlSerialization\XmlSerializerExtend.cs" />
+    <Compile Include="XmlSerialization\XmlSerializerExtend.Gen.cs" />
+    <Compile Include="UI\formSystemOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\formPasswordBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Logon\formLockWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Account\formNewAttribute.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Catalog\formCatalogBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Catalog\formCatalogCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Catalog\formCatalogEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Catalog\formCatalogViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Config\Account.cs" />
+    <Compile Include="UI\Main\formAccountManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\formAccountManager.Designer.cs">
+      <DependentUpon>formAccountManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Account\formAccountBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Account\formAccountCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Account\formAccountEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Logon\formLoginWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Logon\formLoginBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\AccountService.cs" />
+    <Compile Include="Service\CatalogService.cs" />
+    <EmbeddedResource Include="UI\Account\formAccountViewer.resx">
+      <DependentUpon>formAccountViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Catalog\formCatalogSelector.resx">
+      <DependentUpon>formCatalogSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Export\formExportAccount.resx">
+      <DependentUpon>formExportAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\formHelpAbout.resx">
+      <DependentUpon>formHelpAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\formSystemOptions.resx">
+      <DependentUpon>formSystemOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\formPasswordBuilder.resx">
+      <DependentUpon>formPasswordBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Import\formImportAccount.resx">
+      <DependentUpon>formImportAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Logon\formLockWindow.resx">
+      <DependentUpon>formLockWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Account\formNewAttribute.resx">
+      <DependentUpon>formNewAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Catalog\formCatalogBase.resx">
+      <DependentUpon>formCatalogBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Catalog\formCatalogCreator.resx">
+      <DependentUpon>formCatalogCreator.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Catalog\formCatalogEditor.resx">
+      <DependentUpon>formCatalogEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Catalog\formCatalogViewer.resx">
+      <DependentUpon>formCatalogViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Main\formAccountManager.resx">
+      <DependentUpon>formAccountManager.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Account\formAccountBase.resx">
+      <DependentUpon>formAccountBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Account\formAccountCreator.resx">
+      <DependentUpon>formAccountCreator.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Account\formAccountEditor.resx">
+      <DependentUpon>formAccountEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Logon\formLoginWindow.resx">
+      <DependentUpon>formLoginWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Logon\formLoginBase.resx">
+      <DependentUpon>formLoginBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\MostPopularPasswords.txt.gz" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="resources\config\log4net.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\images\show-password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="resources\images\copy.ico" />
+    <EmbeddedResource Include="resources\images\delete.ico" />
+    <EmbeddedResource Include="resources\images\move.ico" />
+    <None Include="resources\images\padlock10.png" />
+    <None Include="resources\images\LockWindow.png" />
+    <None Include="resources\images\Shutdown_02.png" />
+    <EmbeddedResource Include="resources\images\SafePass.ico" />
+    <EmbeddedResource Include="resources\images\hide-password32x32.png" />
+    <EmbeddedResource Include="resources\images\show-password32x32.png" />
+    <EmbeddedResource Include="resources\database\SafePass.sql" />
+    <Content Include="SafePass.ico" />
+    <None Include="resources\images\Refresh32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HuiruiSoft.Controls\HuiruiSoft.Controls.csproj">
+      <Project>{7f2812f3-b382-4bc4-907c-6696fba6ce2d}</Project>
+      <Name>HuiruiSoft.Controls</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HuiruiSoft.Data\HuiruiSoft.Data.csproj">
+      <Project>{53d9d48d-4761-4fd6-8962-2213e1d86876}</Project>
+      <Name>HuiruiSoft.Data</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HuiruiSoft.Utils\HuiruiSoft.Utils.csproj">
+      <Project>{9b4271c4-ffd4-49cf-9024-742eec44cdac}</Project>
+      <Name>HuiruiSoft.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
