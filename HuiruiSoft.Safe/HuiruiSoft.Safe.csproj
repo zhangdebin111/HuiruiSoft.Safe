@@ -279,7 +279,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Properties\MostPopularPasswords.txt.gz" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -295,9 +294,9 @@
     <None Include="resources\images\show-password.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SQLite.Interop.dll">
+    <None Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <EmbeddedResource Include="resources\images\copy.ico" />
     <EmbeddedResource Include="resources\images\delete.ico" />
     <EmbeddedResource Include="resources\images\move.ico" />
