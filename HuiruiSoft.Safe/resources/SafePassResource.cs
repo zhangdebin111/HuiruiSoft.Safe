@@ -36,13 +36,17 @@ namespace HuiruiSoft.Safe.Resources
                          var tmpDefaultString = string.Format("{0}", tmpPropertyInfo.GetValue(tmpPropertyName, null));
                          var tmpLocalizedString = TryGetLocalizedString(localizedStringTable, tmpPropertyName, tmpDefaultString);
 
-                         if(tmpDefaultString!= tmpLocalizedString)
+                         if (tmpDefaultString != tmpLocalizedString)
                          {
                               if (tmpLocalizedString.Contains(@"\n"))
                               {
                                    tmpLocalizedString = tmpLocalizedString.Replace(@"\n", System.Environment.NewLine);
                               }
                               tmpPropertyInfo.SetValue(tmpPropertyName, tmpLocalizedString, null);
+                         }
+                         else
+                         {
+                              System.Diagnostics.Debug.WriteLine(tmpPropertyName + "\t" + tmpDefaultString);
                          }
                     }
                }

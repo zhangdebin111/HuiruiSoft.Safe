@@ -234,6 +234,8 @@
 
           public static string NewWizardWindowButtonSelectDirectory { get; private set; } = @"Select directory";
 
+          public static string NewWizardWindowWorkDirectoryNotEmpty { get; private set; } = @"The directory ""{0}"" is not empty. Please empty the files in the directory first or choose another empty directory!";
+
           public static string NewWizardWindowPromptLoginNameIsEmpty { get; private set; } = @"The Login name cannot be empty. Please re-enter the user name!";
 
           public static string NewWizardWindowPromptLoginNameTooLong { get; private set; } = @"The Login name is too long, the char entered cannot exceed 30 bytes, please re-enter!";

@@ -76,7 +76,13 @@ namespace HuiruiSoft.Safe
                     this.labelPromptRemember.Text = SafePassResource.NewWizardWindowPromptRememberPassword;
 
                     WindowsUtils.SetShowPasswordImage(this.buttonShowPassword, true);
-                    this.textWorkDirectory.Text = NativeShellHelper.GetWorkingDirectory();
+
+                    var tmpWorkDirectory = NativeShellHelper.GetWorkingDirectory();
+                    if (string.IsNullOrEmpty(tmpWorkDirectory))
+                    {
+                         tmpWorkDirectory = System.IO.Path.Combine(NativeShellHelper.GetLocalDataDirectory(), @"HuiruiSoft\SafePass");
+                    }
+                    this.textWorkDirectory.Text = tmpWorkDirectory;
                }
           }
 
@@ -490,10 +496,19 @@ namespace HuiruiSoft.Safe
                     }
                }
 
+
                if (tmpWorkDirectory.Exists)
                {
+                    var files = tmpWorkDirectory.GetFiles("*.*", SearchOption.AllDirectories);
+                    if (files != null && files.Length > 0)
+                    {
+                         MessageBox.Show(string.Format(SafePassResource.NewWizardWindowWorkDirectoryNotEmpty, tmpWorkDirectory.FullName), tmpInputErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                         return;
+                    }
+
                     NativeShellHelper.SetWorkingDirectory(tmpWorkDirectory.FullName);
                     var tmpDataDirectory = Path.Combine(tmpWorkDirectory.FullName, "data");
+
                     if (!Directory.Exists(tmpDataDirectory))
                     {
                          try
