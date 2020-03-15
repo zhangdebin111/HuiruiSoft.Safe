@@ -18,9 +18,15 @@ SafePass 使用C#开发，使用 SQLite，数据存储于本地，不与互联�
 
 ## 功能
 + 新建保险箱
-  <img src="http://www.ilink123.com/download/safepass/images/image_20200315002.png" />
+
+  ![新建保险箱](http://www.ilink123.com/download/safepass/images/image_20200315002.png)
+
 + 登录保险箱
-  <img src="http://www.ilink123.com/download/safepass/images/image_20200315003.png" />
+
+  ![登录保险箱](http://www.ilink123.com/download/safepass/images/image_20200315003.png)
+
 + 新建目录
-  <img src="http://www.ilink123.com/download/safepass/images/image_20200315004.png" />
+
+  ![新建目录](http://www.ilink123.com/download/safepass/images/image_20200315004.png)
+
 
