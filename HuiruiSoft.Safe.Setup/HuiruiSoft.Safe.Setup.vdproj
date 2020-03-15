@@ -312,7 +312,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\HuiruiSoft.Safe.Setup.msi"
+        "OutputFilename" = "8:Release\\SafePass.Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -379,6 +379,11 @@
             "AssemblyAsmDisplayName" = "8:System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_39F0900FDA24492ABB3B3CD18744464A"
+                    {
+                    "Name" = "8:System.Data.SQLite.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\System.Data.SQLite.dll"
             "TargetName" = "8:"
@@ -405,6 +410,11 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Design, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3AB35795E11540BCAC9B1CEDD0DC9061"
+                    {
+                    "Name" = "8:HuiruiSoft.Design.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\HuiruiSoft.Design.dll"
             "TargetName" = "8:"
@@ -451,8 +461,13 @@
             "AssemblyAsmDisplayName" = "8:log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_82A642035FD3ED71AEBA7F63DD1DF7E1"
+                    {
+                    "Name" = "8:log4net.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:log4net.dll"
+            "SourcePath" = "8:log4net.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -477,8 +492,13 @@
             "AssemblyAsmDisplayName" = "8:SourceGrid, Version=4.40.4580.29115, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_8935A4C44504041F8FA7242B19D7CAB1"
+                    {
+                    "Name" = "8:SourceGrid.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:SourceGrid.dll"
+            "SourcePath" = "8:SourceGrid.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -503,6 +523,11 @@
             "AssemblyAsmDisplayName" = "8:log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_8CD1242E0D3D44F98B61AA5684E4876E"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\log4net.dll"
             "TargetName" = "8:"
@@ -529,6 +554,11 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_A548551901C649C0AC78D22227DD50CD"
+                    {
+                    "Name" = "8:HuiruiSoft.Utils.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\HuiruiSoft.Utils.dll"
             "TargetName" = "8:"
@@ -555,6 +585,11 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_A92B86EB2B094E12811E6AD41C7CBC46"
+                    {
+                    "Name" = "8:HuiruiSoft.Data.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\HuiruiSoft.Data.dll"
             "TargetName" = "8:"
@@ -581,8 +616,13 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_AFB2B8A361F15C5297742C42CDA207D9"
+                    {
+                    "Name" = "8:HuiruiSoft.Utils.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:HuiruiSoft.Utils.dll"
+            "SourcePath" = "8:HuiruiSoft.Utils.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -607,6 +647,11 @@
             "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B2FCFC20C970414B9B6BC30D7394C086"
+                    {
+                    "Name" = "8:EPPlus.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\EPPlus.dll"
             "TargetName" = "8:"
@@ -653,8 +698,13 @@
             "AssemblyAsmDisplayName" = "8:EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B575F9A3A555E89BC34C5E02ABA4A69F"
+                    {
+                    "Name" = "8:EPPlus.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:EPPlus.dll"
+            "SourcePath" = "8:EPPlus.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -679,8 +729,13 @@
             "AssemblyAsmDisplayName" = "8:System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B74789DD8F989E3BCE6A6632C9809FAF"
+                    {
+                    "Name" = "8:System.Data.SQLite.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:System.Data.SQLite.dll"
+            "SourcePath" = "8:System.Data.SQLite.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -725,6 +780,11 @@
             "AssemblyAsmDisplayName" = "8:SourceGrid, Version=4.40.4580.29115, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D72A2117C4BF436582E106B50FF9C566"
+                    {
+                    "Name" = "8:SourceGrid.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\SourceGrid.dll"
             "TargetName" = "8:"
@@ -751,8 +811,13 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DC4CA7A0EB9326C1652E19A16BF59CEE"
+                    {
+                    "Name" = "8:HuiruiSoft.Data.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:HuiruiSoft.Data.dll"
+            "SourcePath" = "8:HuiruiSoft.Data.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -777,6 +842,11 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DD22D1828B69466AA481C9B5D3339B72"
+                    {
+                    "Name" = "8:HuiruiSoft.Controls.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\HuiruiSoft.Controls.dll"
             "TargetName" = "8:"
@@ -803,8 +873,13 @@
             "AssemblyAsmDisplayName" = "8:HuiruiSoft.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_EC4F1E6E25B37899F14550A05D9CAB9D"
+                    {
+                    "Name" = "8:HuiruiSoft.Controls.DLL"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:HuiruiSoft.Controls.dll"
+            "SourcePath" = "8:HuiruiSoft.Controls.DLL"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_F27C0370AD9E4BBBAC656E3FB7114486"
@@ -829,6 +904,11 @@
             "AssemblyAsmDisplayName" = "8:SafePass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_F900712CF01B47F8959D489C064ABBD6"
+                    {
+                    "Name" = "8:SafePass.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\Build\\SafePass.exe"
             "TargetName" = "8:"
@@ -878,7 +958,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_F27C0370AD9E4BBBAC656E3FB7114486"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -916,7 +996,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SafePass"
         "ProductCode" = "8:{A7112BC0-9A6C-4C0C-B95F-1DC7C310F0C7}"
-        "PackageCode" = "8:{0333D908-3894-4CAE-AF5A-19D512D9D89E}"
+        "PackageCode" = "8:{A6062F33-25FE-4E82-9136-0199F6497A08}"
         "UpgradeCode" = "8:{A5ADABD5-C43A-4035-9772-63A95A806210}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -937,7 +1017,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
