@@ -178,17 +178,9 @@ namespace HuiruiSoft.Safe.Configuration
 
      public sealed class MasterPassword
      {
-          public uint MinimumLength
-          {
-               get;
-               set;
-          }
+          public uint MinimumLength { get; set; } = 5;
 
-          public uint MinimumQuality
-          {
-               get;
-               set;
-          }
+          public uint MinimumQuality { get; set; } = 30;
      }
 
      public sealed class ClipboardSettings

@@ -554,7 +554,6 @@ namespace HuiruiSoft.Safe
           private void UpdateControlState(bool setModified = false)
           {
                var tmpSelectedNode = this.treeViewCatalog.SelectedNode;
-               loger.Info(tmpSelectedNode);
 
                var tmpCatalogSelected = (tmpSelectedNode != null && tmpSelectedNode.Tag is AccountCatalog);
                var tmpRecycleBinSelected = (tmpSelectedNode == this.recycleBinTreeNode);

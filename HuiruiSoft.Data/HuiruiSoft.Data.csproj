@@ -68,7 +68,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\System.Data.SQLite.DLL</HintPath>
+      <HintPath>..\dll\System.Data.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

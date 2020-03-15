@@ -83,7 +83,7 @@ namespace HuiruiSoft.Safe
                     return;
                }
 
-               log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(Path.Combine(Config.WorkingDirectory, ApplicationDefines.Log4NetConfigFile)));
+               log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(Path.Combine(Application.StartupPath, ApplicationDefines.Log4NetConfigFile)));
 
                var tmpGlobalNotify = TryGlobalInstanceNotify(ApplicationDefines.MutexNameGlobal);
 

@@ -314,6 +314,7 @@ namespace HuiruiSoft.Safe
                     }
                     catch(System.Exception exception)
                     {
+                         loger.Error(exception);
                          System.Diagnostics.Debug.WriteLine(exception);
                     }
                }
@@ -326,6 +327,7 @@ namespace HuiruiSoft.Safe
                     }
                     catch(System.Exception exception)
                     {
+                         loger.Error(exception);
                          System.Diagnostics.Debug.WriteLine(exception);
                     }
                }

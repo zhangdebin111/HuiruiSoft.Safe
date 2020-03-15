@@ -238,6 +238,17 @@
 
           public static string NewWizardWindowPromptLoginNameTooLong { get; private set; } = @"The Login name is too long, the char entered cannot exceed 30 bytes, please re-enter!";
 
+          public static string NewWizardWindowPromptPasswordIsEmpty { get; private set; } = @"The password cannot be empty. Please re-enter the password.";
+
+          public static string NewWizardWindowPromptRememberPassword { get; private set; } = @"Please remember your password. Once lost, it will not be retrieved.";
+
+          public static string NewWizardWindowPromptSafePassNameIsEmpty { get; private set; } = @"The SafePass name cannot be empty. Please re-enter!";
+
+          public static string NewWizardWindowPromptSafePassNameTooLong { get; private set; } = @"The SafePass name is too long, the char entered cannot exceed 30 bytes, please re-enter!";
+
+          public static string NewWizardWindowDialogTitleCreateSuccess { get; private set; } = @"Create success";
+
+          public static string NewWizardWindowDialogMessageCreateSuccess { get; private set; } = @"Master account create success, please login again.";
 
           public static string ChangePasswordWindowCaption { get; private set; } = @"Change password";
 

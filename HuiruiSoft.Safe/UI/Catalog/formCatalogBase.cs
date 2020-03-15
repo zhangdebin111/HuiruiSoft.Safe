@@ -22,6 +22,7 @@ namespace HuiruiSoft.Safe
                this.MinimizeBox = false;
                this.MaximizeBox = false;
                this.ShowInTaskbar = false;
+               this.AcceptButton = this.buttonOK;
                this.CancelButton = this.buttonCancel;
                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
                this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

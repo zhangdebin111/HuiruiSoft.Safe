@@ -7,7 +7,7 @@ namespace HuiruiSoft.Safe
 {
      internal class formAccountBase : System.Windows.Forms.Form
      {
-          private static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
+          protected static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
 
           private System.ComponentModel.IContainer components = null;
           private System.Windows.Forms.Label labelName;

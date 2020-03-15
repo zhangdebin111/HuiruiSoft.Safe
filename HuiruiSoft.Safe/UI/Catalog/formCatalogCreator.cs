@@ -54,7 +54,7 @@ namespace HuiruiSoft.Safe
 
                     string tmpCatalogName = this.textCatalogName.Text;
 
-                    bool tmpCheckupResult = false;
+                    bool tmpCheckupResult = true;
                     if (this.parentCatalogItem == null)
                     {
                          //检查在此目录下是否已经存在一个相同名称的目录
@@ -64,7 +64,7 @@ namespace HuiruiSoft.Safe
                          //检查在此目录下是否已经存在一个相同名称的目录
                     }
 
-                    if (tmpCheckupResult)
+                    if (!tmpCheckupResult)
                     {
                          MessageBox.Show(string.Format(SafePassResource.CatalogEditorPromptCatalogNameRepeat, tmpCatalogName), tmpInputErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                          this.textCatalogName.Focus();

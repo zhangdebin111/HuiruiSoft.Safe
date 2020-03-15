@@ -165,6 +165,7 @@ namespace HuiruiSoft.Safe
                     }
                     catch(System.Exception exception)
                     {
+                         loger.Error(exception);
                          Cursor.Current = System.Windows.Forms.Cursors.Default;
                          MessageBox.Show(string.Format(SafePassResource.AccountEditorDialogMessageCreateFailed, System.Environment.NewLine, exception.Message), SafePassResource.AccountEditorDialogTitleCreateFailed, MessageBoxButtons.OK, MessageBoxIcon.Error);
                          return;
