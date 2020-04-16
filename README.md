@@ -17,24 +17,37 @@ SafePass 可以帮你解决这些困扰，它相当于一个保险箱，你用�
 SafePass 使用C#开发，使用 SQLite，数据存储于本地，不与互联网进行任何交互，只要你妥善保管好你的主密码和数据文件，那么你的所有账号就绝对安全。
 
 ## 功能
-+ 新建保险箱
++ 1、新建保险箱
 
-  ![新建保险箱](http://www.ilink123.com/download/safepass/images/image_20200315002.png)
+  ![新建保险箱](http://download.huiruisoft.com/safepass/images/screenshot_1002.png)
 
-+ 登录保险箱
++ 2、登录保险箱
 
-  ![登录保险箱](http://www.ilink123.com/download/safepass/images/image_20200315004.png)
+  ![登录保险箱](http://download.huiruisoft.com/safepass/images/screenshot_1004.png)
 
-+ 管理主界面
++ 3、管理主界面
 
-  ![登录保险箱](http://www.ilink123.com/download/safepass/images/image_20200315005.png)
+  ![管理主界面](http://download.huiruisoft.com/safepass/images/screenshot_1013.png)
 
-+ 新建目录
++ 4、新建目录
 
-  ![新建目录](http://www.ilink123.com/download/safepass/images/image_20200315006.png)
+  ![新建目录](http://download.huiruisoft.com/safepass/images/screenshot_1008.png)
 
-+ 新建账号
++ 5、新建账号
 
-  ![新建账号](http://www.ilink123.com/download/safepass/images/image_20200315007.png)
+  ![新建账号](http://download.huiruisoft.com/safepass/images/screenshot_1014.png)
+
++ 6、导入数据
+
+  ![导入数据](http://download.huiruisoft.com/safepass/images/screenshot_1019.png)
+
++ 7、选择语言
+
+  ![选择语言](http://download.huiruisoft.com/safepass/images/screenshot_1023.png)
+
++ 8、系统设置
+
+  ![系统设置](http://download.huiruisoft.com/safepass/images/screenshot_1024.png)
+
 
 
