@@ -9,6 +9,7 @@ namespace HuiruiSoft.Safe
           private bool rightButtonNodeClick = false;
           private Keys lastUnhandledTreeKey = Keys.None;
           private TreeNode recycleBinTreeNode;
+          private TreeNode searchResultTreeNode;
 
           private void InitializeTreeView()
           {
@@ -20,24 +21,36 @@ namespace HuiruiSoft.Safe
                if (tmpCatalogDataTable != null)
                {
                     this.CreateCatalogTreeNodes(tmpCatalogDataTable, null, -1);
-
-                    this.CreateRecycleBinNode();
-                    this.treeViewCatalog.Nodes.Add(this.recycleBinTreeNode);
+                    this.CreateSpecialTreeNode();
                }
 
                this.treeViewCatalog.ExpandAll();
                this.treeViewCatalog.LabelEdit = false;
           }
 
-          private void CreateRecycleBinNode()
+          private void CreateSpecialTreeNode()
           {
                if (this.recycleBinTreeNode == null)
                {
                     this.recycleBinTreeNode = new TreeNode();
                     this.recycleBinTreeNode.Text = "Recycle Bin";
-                    this.recycleBinTreeNode.Tag = "RecycleBin";
+                    this.recycleBinTreeNode.Tag = "TreeNode_RecycleBin";
                     this.recycleBinTreeNode.ImageIndex = 2;
                     this.recycleBinTreeNode.SelectedImageIndex = 2;
+               }
+
+               if (this.recycleBinTreeNode != null)
+               {
+                    this.treeViewCatalog.Nodes.Add(this.recycleBinTreeNode);
+               }
+
+               if (this.searchResultTreeNode == null)
+               {
+                    this.searchResultTreeNode = new TreeNode();
+                    this.searchResultTreeNode.Text = "Search Result";
+                    this.searchResultTreeNode.Tag = "TreeNode_SearchResult";
+                    this.searchResultTreeNode.ImageIndex = 3;
+                    this.searchResultTreeNode.SelectedImageIndex = 3;
                }
           }
 
@@ -96,7 +109,15 @@ namespace HuiruiSoft.Safe
           {
                if (!this.rightButtonNodeClick)
                {
-                    this.GetCatalogChildAccounts();
+                    if (args.Node != this.searchResultTreeNode)
+                    {
+                         if (this.treeViewCatalog.Nodes.Contains(this.searchResultTreeNode))
+                         {
+                              this.treeViewCatalog.Nodes.Remove(this.searchResultTreeNode);
+                         }
+                    }
+
+                    this.GetCatalogChildAccounts(false);
                }
 
                this.UpdateControlState();

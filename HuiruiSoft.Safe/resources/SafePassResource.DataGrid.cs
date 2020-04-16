@@ -4,6 +4,8 @@
      {
           public static string DataGridAccountColumnOrderNo { get; private set; } = @"Order";
 
+          public static string DataGridAccountColumnSelected { get; private set; } = @"Select";
+
           public static string DataGridAccountColumnAccountGuid { get; private set; } = @"Guid";
 
           public static string DataGridAccountColumnTopMost { get; private set; } = @"TopMost";

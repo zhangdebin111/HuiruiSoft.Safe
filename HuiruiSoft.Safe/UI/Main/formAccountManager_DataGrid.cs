@@ -109,7 +109,6 @@ namespace HuiruiSoft.Safe
 
                this.SecretCellRank1 = new SourceGrid.Cells.Views.Cell();
                this.SecretCellRank1.ForeColor = System.Drawing.Color.White;
-               this.SecretCellRank1.BackColor = System.Drawing.Color.Blue;
                this.SecretCellRank1.BackColor = Program.Config.Application.Security.SecretRank.Rank1BackColor;
                this.SecretCellRank1.TextAlignment = DevAge.Drawing.ContentAlignment.MiddleCenter;
                this.SecretCellRank1.Font = ApplicationDefines.DefaultDataGridCellFont;
@@ -237,6 +236,7 @@ namespace HuiruiSoft.Safe
                          case Account_Column_URL:
                               tmpCurrentColumn.Width = 270;
                               tmpCurrentColumn.DataCell.View = tmpGridLinkCellView;
+                              tmpCurrentColumn.DataCell.AddController(new LinkClickController());
                               break;
 
                          case Account_Column_UpdateTime:
@@ -249,6 +249,23 @@ namespace HuiruiSoft.Safe
                }
 
                #endregion InitializeAccountDataGrid
+          }
+
+          private class LinkClickController : SourceGrid.Cells.Controllers.ControllerBase
+          {
+               public override void OnClick(SourceGrid.CellContext sender, System.EventArgs args)
+               {
+                    base.OnClick(sender, args);
+
+                    if (sender.Value != null)
+                    {
+                         string url = string.Format("{0}", sender.Value);
+                         if (!string.IsNullOrEmpty(url))
+                         {
+                              var tmpBrowserProcess = System.Diagnostics.Process.Start(url);
+                         }
+                    }
+               }
           }
 
           private void DataGridLocalization()

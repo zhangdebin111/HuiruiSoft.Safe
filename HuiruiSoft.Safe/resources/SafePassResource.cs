@@ -46,7 +46,7 @@ namespace HuiruiSoft.Safe.Resources
                          }
                          else
                          {
-                              System.Diagnostics.Debug.WriteLine(tmpPropertyName + "\t" + tmpDefaultString);
+                              // System.Diagnostics.Debug.WriteLine(tmpPropertyName + "\t" + tmpDefaultString);
                          }
                     }
                }

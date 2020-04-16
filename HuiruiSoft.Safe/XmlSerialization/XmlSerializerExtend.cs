@@ -21,7 +21,8 @@ namespace HuiruiSoft.Utils.XmlSerialization
 
           public void Serialize(System.Xml.XmlWriter xmlWriter, object @object)
           {
-               var tmpSerializer = new System.Xml.Serialization.XmlSerializer(this.objectType);
+               //var tmpSerializer = new System.Xml.Serialization.XmlSerializer(this.objectType); // TODO  未能加载文件或程序集 FileNotFoundException
+               var tmpSerializer = System.Xml.Serialization.XmlSerializer.FromTypes(new[] { this.objectType })[0];
                tmpSerializer.Serialize(xmlWriter, @object);
           }
 
@@ -45,7 +46,8 @@ namespace HuiruiSoft.Utils.XmlSerialization
                     }
                     else
                     {
-                         var tmpSerializer = new System.Xml.Serialization.XmlSerializer(this.objectType);
+                         //var tmpSerializer = new System.Xml.Serialization.XmlSerializer(this.objectType); // TODO  未能加载文件或程序集 FileNotFoundException
+                         var tmpSerializer = System.Xml.Serialization.XmlSerializer.FromTypes(new[] { this.objectType })[0];
                          deserializeResult = tmpSerializer.Deserialize(tmpXmlReader);
                     }
                }

@@ -1,4 +1,4 @@
-﻿
+﻿using System.Xml;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using OfficeOpenXml.Style;
@@ -8,7 +8,7 @@ using HuiruiSoft.Safe.Configuration;
 
 namespace HuiruiSoft.Safe.Exchange
 {
-     public class ExportAccountUtil
+     public class ExportAccountHelper
      {
           private const string ElementRootNode = "Account";
           private const string ElementMetaNode = "Meta";
@@ -19,7 +19,7 @@ namespace HuiruiSoft.Safe.Exchange
           {
                bool tmpExportResult = false;
 
-               var tmpOutputDocument = new System.Xml.XmlDocument();
+               var tmpOutputDocument = new XmlDocument();
                tmpOutputDocument.AppendChild(tmpOutputDocument.CreateXmlDeclaration("1.0", "UTF-8", null));
 
                var tmpRootElement = tmpOutputDocument.CreateElement(ElementRootNode);
@@ -30,11 +30,12 @@ namespace HuiruiSoft.Safe.Exchange
                }
 
                tmpOutputDocument.Save(fileName);
+               tmpExportResult = true;
 
                return tmpExportResult;
           }
 
-          private static void BuildAccountNodes(TreeNodeCollection treeNodes, System.Xml.XmlElement element, List<AccountModel> accountModels)
+          private static void BuildAccountNodes(TreeNodeCollection treeNodes, XmlElement element, List<AccountModel> accountModels)
           {
                if (treeNodes == null || element == null)
                {
@@ -43,41 +44,38 @@ namespace HuiruiSoft.Safe.Exchange
 
                foreach (TreeNode tmpTreeNode in treeNodes)
                {
-                    if (tmpTreeNode.Tag is AccountCatalog)
+                    var tmpCatalog = tmpTreeNode.Tag as AccountCatalog;
+                    var tmpCatalogNode = BuildCatalogElement(element, tmpCatalog);
+                    if (tmpCatalogNode != null)
                     {
-                         var tmpCatalog = (AccountCatalog)tmpTreeNode.Tag;
-
-                         var tmpCatalogNode = BuildCatalogElement(element, tmpCatalog);
-                         if (tmpCatalogNode != null)
+                         if (accountModels != null)
                          {
-                              if (accountModels != null)
+                              var tmpCatalogId = tmpCatalog.CatalogId;
+                              accountModels.ForEach(account =>
                               {
-                                   var tmpCatalogId = tmpCatalog.CatalogId;
-                                   accountModels.ForEach(account =>
+                                   if (account.CatalogId == tmpCatalogId)
                                    {
-                                        if (account.CatalogId == tmpCatalogId)
-                                        {
-                                             var tmpAccountNode = BuildAccountElement(tmpCatalogNode, account);
-                                        }
-                                   });
-                              }
+                                        var tmpAccountNode = BuildAccountElement(tmpCatalogNode, account);
+                                   }
+                              });
+                         }
 
-                              if (tmpTreeNode.Nodes.Count > 0)
-                              {
-                                   BuildAccountNodes(tmpTreeNode.Nodes, tmpCatalogNode, accountModels);
-                              }
+                         if (tmpTreeNode.Nodes.Count > 0)
+                         {
+                              BuildAccountNodes(tmpTreeNode.Nodes, tmpCatalogNode, accountModels);
                          }
                     }
                }
           }
 
-          private static System.Xml.XmlElement BuildCatalogElement(System.Xml.XmlElement parentNode, AccountCatalog catalog)
+          private static XmlElement BuildCatalogElement(XmlElement parentNode, AccountCatalog catalog)
           {
-               System.Xml.XmlElement tmpCatalogNode = null;
+               XmlElement tmpCatalogNode = null;
                if (catalog != null && parentNode != null)
                {
                     tmpCatalogNode = parentNode.OwnerDocument.CreateElement(ElementCatalog);
                     tmpCatalogNode.SetAttribute("id", string.Format("{0}", catalog.CatalogId));
+                    tmpCatalogNode.SetAttribute("ParentId", string.Format("{0}", catalog.ParentId));
                     tmpCatalogNode.SetAttribute("Name", catalog.Name);
                     tmpCatalogNode.SetAttribute("Depth", string.Format("{0}", catalog.Depth));
                     tmpCatalogNode.SetAttribute("Order", string.Format("{0}", catalog.Order));
@@ -98,27 +96,50 @@ namespace HuiruiSoft.Safe.Exchange
                return tmpCatalogNode;
           }
 
-          private static System.Xml.XmlElement BuildAccountElement(System.Xml.XmlElement catalogNode, AccountModel account)
+          private static XmlElement BuildAccountElement(XmlElement catalogNode, AccountModel account)
           {
-               System.Xml.XmlElement tmpAccountNode = null;
+               XmlElement tmpAccountNode = null;
                if (account != null && catalogNode != null)
                {
                     tmpAccountNode = catalogNode.OwnerDocument.CreateElement("item");
                     tmpAccountNode.SetAttribute("id", string.Format("{0}", account.AccountId));
+                    tmpAccountNode.SetAttribute("CatalogId", string.Format("{0}", account.CatalogId));
                     tmpAccountNode.SetAttribute("Guid", account.AccountGuid);
                     tmpAccountNode.SetAttribute("Order", string.Format("{0}", account.Order));
                     tmpAccountNode.SetAttribute("Delete", string.Format("{0}", account.Deleted));
                     tmpAccountNode.SetAttribute("TopMost", string.Format("{0}", account.TopMost));
                     tmpAccountNode.SetAttribute("Name", account.Name);
-                    tmpAccountNode.SetAttribute("LoginName", account.LoginName);
-                    tmpAccountNode.SetAttribute("Password", account.Password);
-                    tmpAccountNode.SetAttribute("Mobile", account.Mobile);
-                    tmpAccountNode.SetAttribute("Email", account.Email);
+
+                    if (account.LoginName != null)
+                    {
+                         tmpAccountNode.SetAttribute("LoginName", account.LoginName);
+                    }
+
+                    if (account.Password != null)
+                    {
+                         tmpAccountNode.SetAttribute("Password", account.Password);
+                    }
+
+                    if (account.Mobile != null)
+                    {
+                         tmpAccountNode.SetAttribute("Mobile", account.Mobile);
+                    }
+
+                    if (account.Email != null)
+                    {
+                         tmpAccountNode.SetAttribute("Email", account.Email);
+                    }
+
                     tmpAccountNode.SetAttribute("SecretRank", string.Format("{0}", account.SecretRank));
 
                     tmpAccountNode.SetAttribute("Version", string.Format("{0}", account.VersionNo));
                     tmpAccountNode.SetAttribute("CreateTime", account.CreateTime.ToString(ApplicationDefines.DateTimeFormat));
                     tmpAccountNode.SetAttribute("UpdateTime", account.UpdateTime.ToString(ApplicationDefines.DateTimeFormat));
+
+                    if (!string.IsNullOrEmpty(account.URL))
+                    {
+                         tmpAccountNode.SetAttribute("URL", account.URL);
+                    }
 
                     if (!string.IsNullOrEmpty(account.Comment))
                     {
@@ -255,6 +276,7 @@ namespace HuiruiSoft.Safe.Exchange
                     tmpWorkSheet.Dispose();
                     tmpExcelPackage.Dispose();
 
+                    tmpExportResult = true;
                     System.GC.Collect();
                }
 

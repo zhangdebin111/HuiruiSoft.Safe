@@ -2,6 +2,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using HuiruiSoft.Win32;
 using HuiruiSoft.Utils;
+using HuiruiSoft.Safe.Model;
 using HuiruiSoft.Safe.Resources;
 
 namespace HuiruiSoft.Safe
@@ -148,6 +149,11 @@ namespace HuiruiSoft.Safe
                     this.recycleBinTreeNode.Text = SafePassResource.RecycleBin;
                }
 
+               if (this.searchResultTreeNode != null)
+               {
+                    this.searchResultTreeNode.Text = SafePassResource.SearchResult;
+               }
+
                foreach (var tmpLinkedToolItemPair in this.linkedToolStripItems)
                {
                     if (tmpLinkedToolItemPair.Value.Text != tmpLinkedToolItemPair.Key.Text)
@@ -209,7 +215,7 @@ namespace HuiruiSoft.Safe
                }
                else if (sender == this.toolButtonDataRefresh)
                {
-                    this.GetCatalogChildAccounts();
+                    this.GetCatalogChildAccounts(true);
                }
                else if (sender == this.toolButtonLockWindow)
                {
@@ -221,7 +227,6 @@ namespace HuiruiSoft.Safe
                }
                else if (sender == this.toolButtonToolsOptions)
                {
-                    //this.OpenPasswordBuilder( );
                     this.OpenSystemOptionDialog();
                }
           }
@@ -263,36 +268,23 @@ namespace HuiruiSoft.Safe
 
           private void OnImportEntryMenuItemClick(object sender, System.EventArgs args)
           {
-               var tmpImportWindow = new formImportAccount();
+               var tmpImportWindow = new formImportAccount(this.allAccountEntries);
                var tmpDialogResult = tmpImportWindow.ShowDialog();
                if (tmpDialogResult == DialogResult.OK)
                {
-                    //
+                    this.InitializeTreeView();
+                    this.LoadAccountEntries();
                }
                tmpImportWindow.Dispose();
           }
 
           private void OnExportEntryMenuItemClick(object sender, System.EventArgs args)
           {
-               var tmpExportWindow = new formExportAccount();
+               var tmpExportWindow = new formExportAccount(this.treeViewCatalog.Nodes);
                var tmpDialogResult = tmpExportWindow.ShowDialog();
-               if (tmpDialogResult == DialogResult.OK && tmpExportWindow.ExportProvider != null)
+               if (tmpDialogResult == DialogResult.OK)
                {
-                    string tmpExportFileName = tmpExportWindow.ExportProvider.FileName;
-
-                    var tmpAccountService = new HuiruiSoft.Safe.Service.AccountService();
-                    var tmpAccountModels = tmpAccountService.GetAccountInfosWithAttributes();
-                    if (tmpAccountModels != null)
-                    {
-                         if (tmpExportWindow.ExportProvider is HuiruiSoft.Safe.Exchange.OfficeExcel)
-                         {
-                              HuiruiSoft.Safe.Exchange.ExportAccountUtil.ExportExcel(this.treeViewCatalog.Nodes, tmpAccountModels, tmpExportFileName);
-                         }
-                         else if (tmpExportWindow.ExportProvider is HuiruiSoft.Safe.Exchange.SafePassXml1x)
-                         {
-                              HuiruiSoft.Safe.Exchange.ExportAccountUtil.ExportSafePassXml(this.treeViewCatalog.Nodes, tmpAccountModels, tmpExportFileName);
-                         }
-                    }
+                    //
                }
 
                tmpExportWindow.Dispose();
@@ -307,9 +299,7 @@ namespace HuiruiSoft.Safe
 
           private void OnCreateCatalogMenuItemClick(object sender, System.EventArgs args)
           {
-               //this.OpenCatalogCreator();
-               var tmpInitializeWizard = new formNewSafeWizard();
-               tmpInitializeWizard.ShowDialog();
+               this.OpenCatalogCreator();
           }
 
           private void OnUpdateCatalogMenuItemClick(object sender, System.EventArgs args)
@@ -378,7 +368,7 @@ namespace HuiruiSoft.Safe
                               var tmpExecuteResult = this.accountService.MoveToRecycleBin(tmpAccountIds);
                               if (tmpExecuteResult)
                               {
-                                   this.GetCatalogChildAccounts();
+                                   this.GetCatalogChildAccounts(true);
                               }
                          }
                     }
@@ -435,7 +425,7 @@ namespace HuiruiSoft.Safe
                          var tmpExecuteResult = this.accountService.EmptyRecycleBin();
                          if (tmpExecuteResult)
                          {
-                              this.GetCatalogChildAccounts();
+                              this.GetCatalogChildAccounts(true);
                          }
                     }
                }
@@ -514,7 +504,7 @@ namespace HuiruiSoft.Safe
                     if (tmpCurrentEntry.LoginName != null)
                     {
                          ClipboardHelper.Copy(tmpCurrentEntry.LoginName);
-                         this.StartClipboardCountdown();
+                         this.StartClipboardCountDown();
                     }
                }
           }
@@ -527,7 +517,7 @@ namespace HuiruiSoft.Safe
                     if (tmpCurrentEntry.Password != null)
                     {
                          ClipboardHelper.Copy(tmpCurrentEntry.Password);
-                         this.StartClipboardCountdown();
+                         this.StartClipboardCountDown();
                     }
                }
           }
@@ -540,7 +530,7 @@ namespace HuiruiSoft.Safe
                     if (tmpCurrentEntry.Mobile != null)
                     {
                          ClipboardHelper.Copy(tmpCurrentEntry.Mobile);
-                         this.StartClipboardCountdown();
+                         this.StartClipboardCountDown();
                     }
                }
           }
@@ -553,14 +543,14 @@ namespace HuiruiSoft.Safe
                     if (tmpCurrentEntry.Email != null)
                     {
                          ClipboardHelper.Copy(tmpCurrentEntry.Email);
-                         this.StartClipboardCountdown();
+                         this.StartClipboardCountDown();
                     }
                }
           }
 
           private void OnRefreshMenuItemClick(object sender, System.EventArgs args)
           {
-               this.GetCatalogChildAccounts();
+               this.GetCatalogChildAccounts(true);
           }
 
           private void OnChangeLanguageMenuItemClick(object sender, System.EventArgs args)
@@ -595,6 +585,142 @@ namespace HuiruiSoft.Safe
                var tmpAboutWindow = new formHelpAbout();
                tmpAboutWindow.ShowDialog();
                tmpAboutWindow.Dispose();
+          }
+
+          private bool   quickFindBlockFlags = false;
+          private object quickFindSyncObject = new object();
+          private int    lastQuickSearchTick = System.Environment.TickCount - 1500;
+          private string lastQuickSearchText = string.Empty;
+
+          private delegate void PerformQuickFindDelegate(string search, bool forceShowExpired, bool respectEntrySearchDisabled);
+
+
+          private void PerformQuickFind(string search, bool forceShowExpired, bool respectEntrySearchDisabled)
+          {
+               Cursor.Current = Cursors.WaitCursor;
+
+               var tmpAccountModels = this.allAccountEntries.FindAll(delegate (AccountModel item)
+               {
+                    return (!string.IsNullOrEmpty(item.Name) && item.Name.Contains(search)) ||
+                           (!string.IsNullOrEmpty(item.URL) && item.URL.Contains(search)) ||
+                           (!string.IsNullOrEmpty(item.LoginName) && item.LoginName.Contains(search)) ||
+                           (!string.IsNullOrEmpty(item.Email) && item.Email.Contains(search)) ||
+                           (!string.IsNullOrEmpty(item.Mobile) && item.Mobile.Contains(search)) ||
+                           (!string.IsNullOrEmpty(item.Comment) && item.Comment.Contains(search));
+               });
+
+               if (tmpAccountModels != null)
+               {
+                    if (!this.treeViewCatalog.Nodes.Contains(this.searchResultTreeNode))
+                    {
+                         this.treeViewCatalog.Nodes.Add(this.searchResultTreeNode);
+                    }
+
+                    this.treeViewCatalog.SelectedNode = this.searchResultTreeNode;
+
+                    this.accountDataTable.BeginLoadData();
+                    this.accountDataTable.Rows.Clear();
+                    this.FillAccountDataGrid(tmpAccountModels);
+                    this.accountDataTable.EndLoadData();
+               }
+
+               Cursor.Current = Cursors.Default;
+          }
+
+          private void OnToolComboBoxQuickFindKeyDown(object sender, KeyEventArgs args)
+          {
+               if (this.HandleMainWindowKeyMessage(args, true))
+               {
+                    return;
+               }
+
+               bool tempHandled = false;
+
+               if (args.KeyCode == Keys.Return)
+               {
+                    this.OnToolComboBoxQuickFindSelectedIndexChanged(sender, args);
+                    tempHandled = true;
+               }
+
+               if (tempHandled)
+               {
+                    args.Handled = true;
+                    args.SuppressKeyPress = true;
+               }
+          }
+
+          private void OnToolComboBoxQuickFindKeyUp(object sender, KeyEventArgs args)
+          {
+               if (this.HandleMainWindowKeyMessage(args, false))
+               {
+                    return;
+               }
+
+               bool tempHandled = false;
+
+               if (args.KeyCode == Keys.Return)
+               {
+                    tempHandled = true;
+               }
+
+               if (tempHandled)
+               {
+                    args.Handled = true;
+                    args.SuppressKeyPress = true;
+               }
+          }
+
+
+          private void OnToolComboBoxQuickFindSelectedIndexChanged(object sender, System.EventArgs args)
+          {
+               if (this.quickFindBlockFlags)
+               {
+                    return;
+               }
+
+               this.quickFindBlockFlags = true;
+
+               string tmpSearchText = this.toolComboBoxQuickFind.Text;
+
+               lock (this.quickFindSyncObject)
+               {
+                    int tmpNowTicks = System.Environment.TickCount;
+                    if (tmpNowTicks - this.lastQuickSearchTick <= 1000 && tmpSearchText == this.lastQuickSearchText)
+                    {
+                         this.quickFindBlockFlags = false;
+                         return;
+                    }
+
+                    this.lastQuickSearchTick = tmpNowTicks;
+                    this.lastQuickSearchText = tmpSearchText;
+               }
+
+               int tmpExistsAlready = -1;
+               for (int index = 0; index < this.toolComboBoxQuickFind.Items.Count; ++index)
+               {
+                    string tmpItemText = (string)this.toolComboBoxQuickFind.Items[index];
+                    if (tmpItemText.Equals(tmpSearchText, System.StringComparison.OrdinalIgnoreCase))
+                    {
+                         tmpExistsAlready = index;
+                         break;
+                    }
+               }
+
+               if (tmpExistsAlready >= 0)
+               {
+                    this.toolComboBoxQuickFind.Items.RemoveAt(tmpExistsAlready);
+               }
+               else if (this.toolComboBoxQuickFind.Items.Count >= 8)
+               {
+                    this.toolComboBoxQuickFind.Items.RemoveAt(this.toolComboBoxQuickFind.Items.Count - 1);
+               }
+
+               this.toolComboBoxQuickFind.Items.Insert(0, tmpSearchText);
+               this.toolComboBoxQuickFind.SelectedIndex = 0;
+               this.toolComboBoxQuickFind.Select(0, tmpSearchText.Length);
+               this.BeginInvoke(new PerformQuickFindDelegate(this.PerformQuickFind), tmpSearchText, false, true);
+
+               this.quickFindBlockFlags = false;
           }
      }
 }

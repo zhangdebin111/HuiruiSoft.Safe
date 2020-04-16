@@ -164,7 +164,7 @@ namespace HuiruiSoft.Safe
                // 
                // buttonCancel
                // 
-               this.buttonCancel.Location = new System.Drawing.Point(815, 533);
+               this.buttonCancel.Location = new System.Drawing.Point(875, 579);
                this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
                this.buttonCancel.Name = "buttonCancel";
                this.buttonCancel.Size = new System.Drawing.Size(180, 55);
@@ -174,7 +174,7 @@ namespace HuiruiSoft.Safe
                // 
                // buttonOK
                // 
-               this.buttonOK.Location = new System.Drawing.Point(603, 533);
+               this.buttonOK.Location = new System.Drawing.Point(663, 579);
                this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
                this.buttonOK.Name = "buttonOK";
                this.buttonOK.Size = new System.Drawing.Size(180, 55);
@@ -184,7 +184,7 @@ namespace HuiruiSoft.Safe
                // 
                // numericLockGlobalTime
                // 
-               this.numericLockGlobalTime.Location = new System.Drawing.Point(544, 78);
+               this.numericLockGlobalTime.Location = new System.Drawing.Point(523, 78);
                this.numericLockGlobalTime.Margin = new System.Windows.Forms.Padding(4);
                this.numericLockGlobalTime.Maximum = new decimal(new int[] {
             1209600,
@@ -222,7 +222,7 @@ namespace HuiruiSoft.Safe
                // 
                // numericLockAfterTime
                // 
-               this.numericLockAfterTime.Location = new System.Drawing.Point(544, 31);
+               this.numericLockAfterTime.Location = new System.Drawing.Point(523, 31);
                this.numericLockAfterTime.Margin = new System.Windows.Forms.Padding(4);
                this.numericLockAfterTime.Maximum = new decimal(new int[] {
             1209600,
@@ -252,7 +252,7 @@ namespace HuiruiSoft.Safe
                this.tabControlMain.Location = new System.Drawing.Point(19, 29);
                this.tabControlMain.Name = "tabControlMain";
                this.tabControlMain.SelectedIndex = 0;
-               this.tabControlMain.Size = new System.Drawing.Size(980, 472);
+               this.tabControlMain.Size = new System.Drawing.Size(1040, 520);
                this.tabControlMain.TabIndex = 0;
                // 
                // tabPageGeneral
@@ -268,7 +268,7 @@ namespace HuiruiSoft.Safe
                this.tabPageGeneral.Location = new System.Drawing.Point(4, 28);
                this.tabPageGeneral.Name = "tabPageGeneral";
                this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-               this.tabPageGeneral.Size = new System.Drawing.Size(972, 440);
+               this.tabPageGeneral.Size = new System.Drawing.Size(1032, 488);
                this.tabPageGeneral.TabIndex = 0;
                this.tabPageGeneral.Text = "General";
                this.tabPageGeneral.UseVisualStyleBackColor = true;
@@ -284,7 +284,7 @@ namespace HuiruiSoft.Safe
                // 
                // buttonChangeDirectory
                // 
-               this.buttonChangeDirectory.Location = new System.Drawing.Point(769, 189);
+               this.buttonChangeDirectory.Location = new System.Drawing.Point(832, 189);
                this.buttonChangeDirectory.Name = "buttonChangeDirectory";
                this.buttonChangeDirectory.Size = new System.Drawing.Size(180, 60);
                this.buttonChangeDirectory.TabIndex = 7;
@@ -296,7 +296,7 @@ namespace HuiruiSoft.Safe
                // 
                this.textWorkDirectory.Location = new System.Drawing.Point(183, 205);
                this.textWorkDirectory.Name = "textWorkDirectory";
-               this.textWorkDirectory.Size = new System.Drawing.Size(580, 28);
+               this.textWorkDirectory.Size = new System.Drawing.Size(645, 28);
                this.textWorkDirectory.TabIndex = 6;
                // 
                // tabPageSecurity
@@ -312,7 +312,7 @@ namespace HuiruiSoft.Safe
                this.tabPageSecurity.Location = new System.Drawing.Point(4, 28);
                this.tabPageSecurity.Name = "tabPageSecurity";
                this.tabPageSecurity.Padding = new System.Windows.Forms.Padding(3);
-               this.tabPageSecurity.Size = new System.Drawing.Size(972, 440);
+               this.tabPageSecurity.Size = new System.Drawing.Size(1032, 488);
                this.tabPageSecurity.TabIndex = 1;
                this.tabPageSecurity.Text = "Security";
                this.tabPageSecurity.UseVisualStyleBackColor = true;
@@ -393,7 +393,7 @@ namespace HuiruiSoft.Safe
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(1028, 633);
+               this.ClientSize = new System.Drawing.Size(1078, 674);
                this.Controls.Add(this.tabControlMain);
                this.Controls.Add(this.buttonCancel);
                this.Controls.Add(this.buttonOK);

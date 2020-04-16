@@ -159,7 +159,7 @@ namespace HuiruiSoft.Safe.Model
 
           public virtual object Clone( )
           {
-               return new AccountModel( )
+               var tmpCloneObject = new AccountModel( )
                {
                     AccountId = this.AccountId,
                     AccountGuid = this.AccountGuid,
@@ -173,11 +173,65 @@ namespace HuiruiSoft.Safe.Model
                     LoginName = this.LoginName,
                     Password = this.Password,
                     SecretRank = this.SecretRank,
+                    URL = this.URL,
                     VersionNo = this.VersionNo,
                     CreateTime = this.CreateTime,
                     UpdateTime = this.UpdateTime,
                     Comment = this.Comment
                };
+
+               this.Attributes.ForEach(item =>
+               {
+                    var tmpAttribute = (AccountAttribute)(item.Clone());
+                    tmpAttribute.AccountId = this.AccountId;
+                    tmpCloneObject.Attributes.Add(tmpAttribute);
+               });
+
+               return tmpCloneObject;
+          }
+
+          public bool CompareTo(AccountModel another)
+          {
+               if (another == null)
+               {
+                    return false;
+               }
+
+               var tmpCompareResult =
+                    this.AccountGuid == another.AccountGuid &&
+                    this.CatalogId == another.CatalogId &&
+                    this.Name == another.Name &&
+                    this.Email == another.Email &&
+                    this.Mobile == another.Mobile &&
+                    this.Order == another.Order &&
+                    this.TopMost == another.TopMost &&
+                    this.Deleted == another.Deleted &&
+                    this.LoginName == another.LoginName &&
+                    this.Password == another.Password &&
+                    this.SecretRank == another.SecretRank &&
+                    this.Comment == another.Comment;
+
+               if (!tmpCompareResult)
+               {
+                    return false;
+               }
+
+               if (this.Attributes.Count != another.Attributes.Count)
+               {
+                    return false;
+               }
+               else
+               {
+                    for (int index = 0; index < this.Attributes.Count; index++)
+                    {
+                         if (!this.Attributes[index].CompareTo(another.Attributes[index]))
+                         {
+                              return false;
+                         }
+                    }
+               }
+
+               return true;
           }
 
           /// <summary>确定指定的 AccountModel 是否等于当前的 AccountModel。</summary>
@@ -185,7 +239,7 @@ namespace HuiruiSoft.Safe.Model
           /// <returns>如果指定的 AccountModel 等于当前的 AccountModel，则为 true；否则为 false。</returns>
           public override bool Equals(object @object)
           {
-               if(!(@object is AccountModel))
+               if (!(@object is AccountModel))
                {
                     return false;
                }

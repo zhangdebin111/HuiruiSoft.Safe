@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using HuiruiSoft.Win32;
 using HuiruiSoft.Utils;
+using HuiruiSoft.Safe.Model;
 using HuiruiSoft.Safe.Resources;
 using HuiruiSoft.Safe.Configuration;
 
@@ -16,6 +17,7 @@ namespace HuiruiSoft.Safe
           private int clearClipboardCurrent = -1;
           private readonly int applicationMessage = Program.ApplicationMessage;
           private FormWindowState lastNotMinimizedState = FormWindowState.Normal;
+          private System.Collections.Generic.List<AccountModel> allAccountEntries = null;
 
           private System.Windows.Forms.Timer idleTickTimer = null;
           private HuiruiSoft.Safe.Service.AccountService accountService;
@@ -121,10 +123,13 @@ namespace HuiruiSoft.Safe
 
                     this.accountService = new HuiruiSoft.Safe.Service.AccountService( );
 
-                    this.CreateRecycleBinNode( );
+                    this.CreateSpecialTreeNode( );
                     this.InitializeToolBar( );
                     this.InitializeTreeView( );
                     this.InitializeAccountDataGrid( );
+
+                    this.toolComboBoxQuickFind.AutoCompleteMode = AutoCompleteMode.Suggest;
+                    this.toolComboBoxQuickFind.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                     this.idleTickTimer = new System.Windows.Forms.Timer( );
                     this.idleTickTimer.Tick += this.OnIdleTickTimerElapsed;
@@ -142,7 +147,7 @@ namespace HuiruiSoft.Safe
                     this.treeViewCatalog.ContextMenuStrip = this.menuStripTreeView;
                     this.dataGridAccount.ContextMenuStrip = this.menuStripDataGrid;
 
-                    this.GetCatalogChildAccounts( );
+                    this.GetCatalogChildAccounts(true);
 
                     this.statusPartProgress.Visible = false;
                     this.statusPartClipboard.Visible = false;
@@ -355,7 +360,7 @@ namespace HuiruiSoft.Safe
                }
           }
 
-          public void StartClipboardCountdown()
+          public void StartClipboardCountDown()
           {
                if (this.clearClipboardMaximum >= 0)
                {

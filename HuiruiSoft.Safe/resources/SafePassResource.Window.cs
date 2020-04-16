@@ -46,8 +46,6 @@
           public static string DeleteGroupInfo { get; private set; } = @"Deleting a group will also delete all entries and subgroups in that group.";
 
 
-
-
           public static string AccountCreatorCaption { get; private set; } = @"New Account";
 
           public static string AccountEditorCaption { get; private set; } = @"Edit Account";
@@ -186,11 +184,31 @@
 
           public static string ImportWindowCaption { get; private set; } = @"Import data";
 
-          public static string ImportWindowGroupBoxFileInfo { get; private set; } = @"Import file";
-
           public static string ImportWindowLabelImportFile { get; private set; } = @"Import from file:";
 
           public static string ImportWindowGroupBoxOptions { get; private set; } = @"Import options";
+
+          public static string ImportXML1xFilter { get; private set; } = @"SafePass XML(*.xml)|*.xml";
+
+          public static string ImportExcelFilter { get; private set; } = @"Excel workbook(*.xlsx)|*.xlsx";
+
+          public static string ImportWindowButtonSelectAll { get; private set; } = @"Select All";
+
+          public static string ImportWindowButtonUnSelected { get; private set; } = @"Cancel Select";
+
+          public static string ImportWindowButtonSelectNone { get; private set; } = @"Select None";
+
+          public static string ImportWindowButtonStartImport { get; private set; } = @"&Start import";
+
+          public static string ImportWindowCheckBoxCompare { get; private set; } = @"Compare with current database";
+
+          public static string ImportWindowLabelPromptNotFound { get; private set; } = @"The entity is not found in the current database"; //表示当前数据库里不存在
+
+          public static string ImportWindowLabelPromptUnequal { get; private set; }  = @"The record is different compared with the record of the current database"; // 表示与当前数据库的记录相比较有差异
+
+          public static string ImportWindowMessageImportProgress { get; private set; } = @"Importing:{0}";//正在导入:{0}
+
+          public static string ImportWindowMessageImportFinished { get; private set; } = @"The file ""{0}""  import finish.";
 
           public static string ExportWindowCaption { get; private set; } = @"Export data";
 
@@ -211,6 +229,14 @@
           public static string ExportXML1xFilter { get; private set; } = @"SafePass XML(*.xml)|*.xml";
 
           public static string ExportExcelFilter { get; private set; } = @"Excel workbook(*.xlsx)|*.xlsx";
+
+          public static string ExportWindowDialogTitleFailed { get; private set; } = @"Export failed";
+
+          public static string ExportWindowDialogTitleSuccess { get; private set; } = @"Export success";
+
+          public static string ExportWindowDialogMessageFailed { get; private set; } = @"Export failed!";
+
+          public static string ExportWindowDialogMessageSuccess { get; private set; } = @"The data have been successfully exported to file:{0}{1}";
 
 
           public static string AboutWindowCaption { get; private set; } = @"About SafePass";

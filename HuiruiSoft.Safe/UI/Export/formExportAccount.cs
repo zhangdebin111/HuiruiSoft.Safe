@@ -18,14 +18,12 @@ namespace HuiruiSoft.Safe
           private System.Windows.Forms.RadioButton radioExportXML1;
           private System.Windows.Forms.RadioButton radioExportExcel;
 
-          internal FileFormatProvider ExportProvider
-          {
-               get;
-               private set;
-          }
+          private TreeNodeCollection treeViewNodes;
 
-          internal formExportAccount()
+          internal formExportAccount(TreeNodeCollection treeViewNodes)
           {
+               this.treeViewNodes = treeViewNodes;
+
                this.InitializeComponent();
 
                this.MinimizeBox = false;
@@ -165,7 +163,7 @@ namespace HuiruiSoft.Safe
                this.buttonSelectFile.Size = new System.Drawing.Size(48, 32);
                this.buttonSelectFile.TabIndex = 2;
                this.buttonSelectFile.UseVisualStyleBackColor = true;
-               this.buttonSelectFile.Click += new System.EventHandler(this.buttonSelectFile_Click);
+               this.buttonSelectFile.Click += new System.EventHandler(this.OnSelectFileButtonClick);
                // 
                // textExportFile
                // 
@@ -267,22 +265,45 @@ namespace HuiruiSoft.Safe
                          return;
                     }
 
+                    FileFormatProvider tmpExportProvider;
                     if (this.radioExportExcel.Checked)
                     {
-                         this.ExportProvider = new OfficeExcel();
+                         tmpExportProvider = new OfficeExcel() { FileName = tmpFileInfo.FullName };
                     }
                     else
                     {
-                         this.ExportProvider = new SafePassXml1x();
+                         tmpExportProvider = new SafePassXml1x() { FileName = tmpFileInfo.FullName };
                     }
 
-                    this.ExportProvider.FileName = tmpFileInfo.FullName;
+                    var tmpAccountService = new HuiruiSoft.Safe.Service.AccountService();
+                    var tmpAccountModels = tmpAccountService.GetAccountInfosWithAttributes();
+                    if (tmpAccountModels != null)
+                    {
+                         bool tmpExportResult = false;
+                         if (tmpExportProvider is OfficeExcel)
+                         {
+                              tmpExportResult = ExportAccountHelper.ExportExcel(this.treeViewNodes, tmpAccountModels, tmpExportProvider.FileName);
+                         }
+                         else if (tmpExportProvider is SafePassXml1x)
+                         {
+                              tmpExportResult = ExportAccountHelper.ExportSafePassXml(this.treeViewNodes, tmpAccountModels, tmpExportProvider.FileName);
+                         }
 
-                    this.DialogResult = DialogResult.OK;
+                         var tmpDialogTitle = tmpExportResult ? SafePassResource.ExportWindowDialogTitleSuccess : SafePassResource.ExportWindowDialogTitleFailed;
+                         if (!tmpExportResult)
+                         {
+                              MessageBox.Show(SafePassResource.ExportWindowDialogMessageFailed, tmpDialogTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                         }
+                         else
+                         {
+                              MessageBox.Show(string.Format(SafePassResource.ExportWindowDialogMessageSuccess, System.Environment.NewLine, tmpFileInfo.FullName), tmpDialogTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                              this.DialogResult = DialogResult.OK;
+                         }
+                    }
                }
           }
 
-          private void buttonSelectFile_Click(object sender, System.EventArgs args)
+          private void OnSelectFileButtonClick(object sender, System.EventArgs args)
           {
                var tmpSaveFileDialog = new SaveFileDialog();
                tmpSaveFileDialog.ShowHelp = false;

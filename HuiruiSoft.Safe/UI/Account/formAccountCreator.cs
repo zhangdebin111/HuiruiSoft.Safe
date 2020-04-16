@@ -76,17 +76,18 @@ namespace HuiruiSoft.Safe
                if(this.CheckInputValidity( ))
                {
                     var tmpComment = this.textComment.Text.Trim( );
-                    var tmpEmailAddress = this.textEmail.Text.Trim( );
-                    var tmpMobileNumber = this.textMobile.Text.Trim( );
+                    var tmpEmail = this.textEmail.Text.Trim( );
+                    var tmpMobile = this.textMobile.Text.Trim( );
+                    var tmpHttpUrl = this.textURL.Text.Trim();
 
                     var tmpAccountInfo = new AccountModel( );
                     tmpAccountInfo.AccountGuid = System.Guid.NewGuid( ).ToString("N");
                     tmpAccountInfo.Name = this.textName.Text.Trim();
-                    tmpAccountInfo.URL = this.textURL.Text.Trim( );
-                    tmpAccountInfo.LoginName = this.textLoginName.Text.Trim( );
-                    tmpAccountInfo.Password = this.textPassword.Text.Trim( );
-                    tmpAccountInfo.Email = string.IsNullOrEmpty(tmpEmailAddress) ? null : tmpEmailAddress;
-                    tmpAccountInfo.Mobile = string.IsNullOrEmpty(tmpMobileNumber) ? null : tmpMobileNumber;
+                    tmpAccountInfo.LoginName = this.textLoginName.Text.Trim();
+                    tmpAccountInfo.Password = this.textPassword.Text.Trim();
+                    tmpAccountInfo.Email = string.IsNullOrEmpty(tmpEmail) ? null : tmpEmail;
+                    tmpAccountInfo.URL = string.IsNullOrEmpty(tmpHttpUrl) ? null : tmpHttpUrl;
+                    tmpAccountInfo.Mobile = string.IsNullOrEmpty(tmpMobile) ? null : tmpMobile;
                     tmpAccountInfo.Comment = string.IsNullOrEmpty(tmpComment) ? null : tmpComment;
                     tmpAccountInfo.CreateTime = System.DateTime.Now;
                     tmpAccountInfo.UpdateTime = System.DateTime.Now;

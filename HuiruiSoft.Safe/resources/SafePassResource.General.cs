@@ -44,6 +44,8 @@
 
           public static string RecycleBin { get; private set; } = @"Recycle Bin";
 
+          public static string SearchResult { get; private set; } = @"Search Result";
+
           public static string MessageBoxCaptionInputError { get; private set; } = @"Input error";
 
           public static string PasswordRepeatFailed { get; private set; } = @"Password and repeated password aren't identical!";

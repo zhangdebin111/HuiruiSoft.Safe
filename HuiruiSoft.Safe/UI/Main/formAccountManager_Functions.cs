@@ -14,7 +14,6 @@ namespace HuiruiSoft.Safe
           private long lockAtInputTicks = long.MaxValue;
           private long lockAtGlobalTicks = long.MaxValue;
 
-          /// <summary>Reset the internal user inactivity timers.</summary>
           public void NotifyUserActivity( )
           {
                if(this.lockTimerMaximum < 30)
@@ -66,7 +65,10 @@ namespace HuiruiSoft.Safe
                          int tmpAccountId;
                          if (int.TryParse(string.Format("{0}", tmpCurrentDataRow[Account_Column_AccountId]), out tmpAccountId))
                          {
-                              tmpAccountInfo = this.accountService.GetAccountInfo(tmpAccountId);
+                              tmpAccountInfo = this.allAccountEntries.Find(delegate (AccountModel item)
+                              {
+                                   return item.AccountId == tmpAccountId;
+                              });
                          }
                     }
                }
@@ -74,28 +76,42 @@ namespace HuiruiSoft.Safe
                return tmpAccountInfo;
           }
 
-          private void GetCatalogChildAccounts( )
+          private void LoadAccountEntries()
           {
-               this.accountDataTable.BeginLoadData( );
-               this.accountDataTable.Rows.Clear( );
+               this.allAccountEntries = this.accountService.GetAccountInfosWithAttributes();
+          }
+
+          private void GetCatalogChildAccounts(bool forceRefresh)
+          {
+               this.accountDataTable.BeginLoadData();
+               this.accountDataTable.Rows.Clear();
+
+               if (forceRefresh || this.allAccountEntries == null)
+               {
+                    this.LoadAccountEntries();
+               }
 
                var tmpSelectedNode = this.treeViewCatalog.SelectedNode;
-               if(tmpSelectedNode != null)
+               if (tmpSelectedNode != null && this.allAccountEntries != null)
                {
                     Cursor.Current = Cursors.WaitCursor;
 
                     IList<AccountModel> tmpAccountModels = null;
-                    
-                    if(tmpSelectedNode == this.recycleBinTreeNode)
+
+                    if (tmpSelectedNode == this.recycleBinTreeNode)
                     {
-                         tmpAccountModels = this.accountService.GetDeletedAccounts( );
+                         tmpAccountModels = this.accountService.GetDeletedAccounts();
                     }
-                    else if(tmpSelectedNode.Tag is AccountCatalog)
+                    else if (tmpSelectedNode.Tag is AccountCatalog)
                     {
-                         tmpAccountModels = this.accountService.GetAccountInfos((AccountCatalog)(tmpSelectedNode.Tag));
+                         var tmpAccountCatalog = (AccountCatalog)(tmpSelectedNode.Tag);
+                         tmpAccountModels = this.allAccountEntries.FindAll(delegate (AccountModel item)
+                         {
+                              return !item.Deleted && item.CatalogId == tmpAccountCatalog.CatalogId;
+                         });
                     }
 
-                    if(tmpAccountModels != null)
+                    if (tmpAccountModels != null)
                     {
                          this.FillAccountDataGrid(tmpAccountModels);
                     }
@@ -103,7 +119,7 @@ namespace HuiruiSoft.Safe
                     Cursor.Current = Cursors.Default;
                }
 
-               this.accountDataTable.EndLoadData( );
+               this.accountDataTable.EndLoadData();
           }
 
           private void GetCatalogChildAccounts(AccountCatalog catalog)
@@ -114,8 +130,12 @@ namespace HuiruiSoft.Safe
                if(catalog != null)
                {
                     Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-                    
-                    var tmpAccountModels = this.accountService.GetAccountInfos(catalog);
+
+                    var tmpAccountModels = this.allAccountEntries.FindAll(delegate (AccountModel item)
+                    {
+                         return item.CatalogId == catalog.CatalogId;
+                    });
+
                     if(tmpAccountModels != null)
                     {
                          this.FillAccountDataGrid(tmpAccountModels);
@@ -305,6 +325,7 @@ namespace HuiruiSoft.Safe
                     var tmpDialogResult = tmpAccountCreator.ShowDialog( );
                     if(tmpDialogResult == DialogResult.OK)
                     {
+                         this.LoadAccountEntries();
                          this.GetCatalogChildAccounts(tmpCurrentCatalog);
                     }
                     tmpAccountCreator.Dispose( );
@@ -331,9 +352,10 @@ namespace HuiruiSoft.Safe
                     var tmpDialogResult = tmpAccountEditor.ShowDialog();
                     if (tmpDialogResult == DialogResult.OK)
                     {
-                         TreeNode tmpSelectedNode = this.treeViewCatalog.SelectedNode;
+                         var tmpSelectedNode = this.treeViewCatalog.SelectedNode;
                          if (tmpSelectedNode != null && (tmpSelectedNode.Tag is AccountCatalog))
                          {
+                              this.LoadAccountEntries();
                               this.GetCatalogChildAccounts((AccountCatalog)(tmpSelectedNode.Tag));
                          }
                     }
@@ -379,7 +401,7 @@ namespace HuiruiSoft.Safe
 
                               if(tmpUpdateResult)
                               {
-                                   this.GetCatalogChildAccounts( );
+                                   this.GetCatalogChildAccounts(true);
                               }
                          }
                     }
@@ -428,7 +450,7 @@ namespace HuiruiSoft.Safe
 
                          if(tmpUpdateResult)
                          {
-                              this.GetCatalogChildAccounts( );
+                              this.GetCatalogChildAccounts(true);
                          }
                     }
                }
@@ -490,7 +512,7 @@ namespace HuiruiSoft.Safe
                               var tmpDeleteResult = this.accountService.DeleteOutrightAccounts(tmpAccountIds);
                               if (tmpDeleteResult)
                               {
-                                   this.GetCatalogChildAccounts();
+                                   this.GetCatalogChildAccounts(true);
                               }
                          }
                     }
@@ -522,7 +544,7 @@ namespace HuiruiSoft.Safe
                               var tmpExecuteResult = this.accountService.RestoreFromRecycleBin(tmpAccountIds);
                               if(tmpExecuteResult)
                               {
-                                   this.GetCatalogChildAccounts( );
+                                   this.GetCatalogChildAccounts(true);
                               }
                          }
                     }

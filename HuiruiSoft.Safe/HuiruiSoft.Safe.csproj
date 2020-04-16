@@ -41,6 +41,8 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -76,7 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ApplicationConfig.cs" />
-    <Compile Include="Exchange\ExportAccountUtil.cs" />
+    <Compile Include="Exchange\ImportAccountHelper.cs" />
+    <Compile Include="Exchange\ExportAccountHelper.cs" />
     <Compile Include="Exchange\FileFormatProvider.cs" />
     <Compile Include="Exchange\Formats\OfficeExcel.cs" />
     <Compile Include="Exchange\Formats\SafePassXml1x.cs" />

@@ -130,21 +130,19 @@ namespace HuiruiSoft.Data.SQLite
 
                if(command != null)
                {
-                    if(command.Connection == null)
+                    DbConnection tmpDataConnection = null;
+                    if (command.Connection == null || command.Connection.State == ConnectionState.Closed)
                     {
-                         command.Connection = ((IDataBase)this).CreateConnection(this.ConnectionString);
-                    }
-
-                    if(command.Connection.State == ConnectionState.Closed || command.Connection.State == ConnectionState.Broken)
-                    {
-                         command.Connection.Open( );
+                         tmpDataConnection = ((IDataBase)this).CreateConnection(this.ConnectionString);
+                         tmpDataConnection.Open();
+                         command.Connection = tmpDataConnection;
                     }
 
                     tmpAffectedCount = command.ExecuteNonQuery( );
 
-                    if(command.Connection != null)
+                    if(tmpDataConnection != null)
                     {
-                         command.Connection.Close( );
+                         tmpDataConnection.Close( );
                     }
                }
 

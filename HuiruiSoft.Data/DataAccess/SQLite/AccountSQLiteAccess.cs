@@ -34,7 +34,7 @@ namespace HuiruiSoft.Data.SQLite
 
                Statement_SelectRecycleBin = string.Format("SELECT * FROM {0} WHERE Deleted=1", TableName_Account);
 
-               Statement_SelectAll = string.Format("SELECT * FROM {0} WHERE Deleted=0 ORDER BY TopMost DESC, OrderNo ASC", TableName_Account);
+               Statement_SelectAll = string.Format("SELECT * FROM {0} ORDER BY TopMost DESC, OrderNo ASC", TableName_Account); //WHERE Deleted=0 
                Statement_SelectOnCatalog = string.Format("SELECT * FROM {0} WHERE CatalogId = {1} AND Deleted=0 ORDER BY TopMost DESC, OrderNo ASC", TableName_Account, "{0}");
 
                Statement_SelectByGuid = string.Format("SELECT * FROM {0} WHERE AccountGuid=@AccountGuid", TableName_Account);
@@ -47,12 +47,12 @@ namespace HuiruiSoft.Data.SQLite
                UpdateDeleteFlagByPK = string.Format("UPDATE {0} SET Deleted=@Deleted, VersionNo=VersionNo+1 WHERE AccountId=@AccountId AND Deleted!=@Deleted", TableName_Account);
                UpdateDeleteFlagByGuid = string.Format("UPDATE {0} SET Deleted=@Deleted, VersionNo=VersionNo+1 WHERE AccountGuid=@AccountGuid AND Deleted!=@Deleted", TableName_Account);
 
-               Statement_Insert = string.Format("INSERT INTO {0}(AccountGuid, CatalogId, Name, OrderNo, SecretRank, LoginName, Password, Email, Mobile, URL, CreateTime, UpdateTime, Comment)", TableName_Account);
-               Statement_Insert += " VALUES (@AccountGuid, @CatalogId, @Name, @OrderNo, @SecretRank, @LoginName, @Password, @Email, @Mobile, @URL, DATETIME('NOW','LOCALTIME'), DATETIME('NOW','LOCALTIME'), @Comment); ";
+               Statement_Insert = string.Format("INSERT INTO {0}(AccountGuid, CatalogId, Name, OrderNo, TopMost, SecretRank, LoginName, Password, Email, Mobile, URL, CreateTime, UpdateTime, Comment)", TableName_Account);
+               Statement_Insert += " VALUES (@AccountGuid, @CatalogId, @Name, @OrderNo, @TopMost, @SecretRank, @LoginName, @Password, @Email, @Mobile, @URL, DATETIME('NOW','LOCALTIME'), DATETIME('NOW','LOCALTIME'), @Comment); ";
                Statement_Insert += " SELECT LAST_INSERT_ROWID() AS AccountId";
 
                Statement_UpdateOnPK = string.Format("UPDATE {0}", TableName_Account);
-               Statement_UpdateOnPK += " SET Name=@Name, OrderNo=@OrderNo, SecretRank=@SecretRank, LoginName=@LoginName, Password=@Password, Email=@Email, Mobile=@Mobile, URL=@URL, VersionNo=VersionNo+1, UpdateTime=DATETIME('NOW','LOCALTIME'), Comment=@Comment";
+               Statement_UpdateOnPK += " SET Name=@Name, OrderNo=@OrderNo, TopMost=@TopMost, SecretRank=@SecretRank, LoginName=@LoginName, Password=@Password, Email=@Email, Mobile=@Mobile, URL=@URL, VersionNo=VersionNo+1, UpdateTime=DATETIME('NOW','LOCALTIME'), Comment=@Comment";
                Statement_UpdateOnPK += " WHERE AccountId=@AccountId AND VersionNo=@VersionNo";
           }
 
@@ -86,6 +86,7 @@ namespace HuiruiSoft.Data.SQLite
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@CatalogId", DbType.Int32));
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@Name", DbType.String, 50));
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@OrderNo", DbType.Int32));
+               tmpInsertCommand.Parameters.Add(new SQLiteParameter("@TopMost", DbType.Int16));
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@SecretRank", DbType.Int16));
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@LoginName", DbType.String, 80));
                tmpInsertCommand.Parameters.Add(new SQLiteParameter("@Password", DbType.String, 80));
@@ -119,6 +120,7 @@ namespace HuiruiSoft.Data.SQLite
                     tmpInsertCommand.Parameters["@CatalogId"].Value = entity.CatalogId;
                     tmpInsertCommand.Parameters["@Name"].Value = entity.Name;
                     tmpInsertCommand.Parameters["@OrderNo"].Value = entity.Order;
+                    tmpInsertCommand.Parameters["@TopMost"].Value = entity.TopMost;
                     tmpInsertCommand.Parameters["@SecretRank"].Value = entity.SecretRank;
                     tmpInsertCommand.Parameters["@LoginName"].Value = entity.LoginName;
                     tmpInsertCommand.Parameters["@Password"].Value = entity.Password;
@@ -174,6 +176,7 @@ namespace HuiruiSoft.Data.SQLite
 
                tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@Name", DbType.String, 50));
                tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@OrderNo", DbType.Int32));
+               tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@TopMost", DbType.Int16));
                tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@SecretRank", DbType.Int16));
                tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@LoginName", DbType.String, 80));
                tmpUpdateCommand.Parameters.Add(new SQLiteParameter("@Password", DbType.String, 80));
@@ -207,6 +210,7 @@ namespace HuiruiSoft.Data.SQLite
 
                     tmpUpdateCommand.Parameters["@Name"].Value = entity.Name;
                     tmpUpdateCommand.Parameters["@OrderNo"].Value = entity.Order;
+                    tmpUpdateCommand.Parameters["@TopMost"].Value = entity.TopMost;
                     tmpUpdateCommand.Parameters["@SecretRank"].Value = entity.SecretRank;
                     tmpUpdateCommand.Parameters["@LoginName"].Value = entity.LoginName;
                     tmpUpdateCommand.Parameters["@Password"].Value = entity.Password;

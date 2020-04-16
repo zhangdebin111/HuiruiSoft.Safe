@@ -121,15 +121,17 @@ namespace HuiruiSoft.Safe
                     }
 
                     string tmpComment = this.textComment.Text.Trim();
-                    string tmpEmailAddress = this.textEmail.Text.Trim();
-                    string tmpMobileNumber = this.textMobile.Text.Trim();
+                    var tmpEmail = this.textEmail.Text.Trim();
+                    var tmpMobile = this.textMobile.Text.Trim();
+                    var tmpHttpUrl = this.textURL.Text.Trim();
 
                     this.currentAccount.Name = tmpAccountName;
                     this.currentAccount.URL = this.textURL.Text.Trim();
                     this.currentAccount.LoginName = this.textLoginName.Text.Trim();
                     this.currentAccount.Password = this.textPassword.Text.Trim();
-                    this.currentAccount.Email = string.IsNullOrEmpty(tmpEmailAddress) ? null : tmpEmailAddress;
-                    this.currentAccount.Mobile = string.IsNullOrEmpty(tmpMobileNumber) ? null : tmpMobileNumber;
+                    this.currentAccount.Email = string.IsNullOrEmpty(tmpEmail) ? null : tmpEmail;
+                    this.currentAccount.URL = string.IsNullOrEmpty(tmpHttpUrl) ? null : tmpHttpUrl;
+                    this.currentAccount.Mobile = string.IsNullOrEmpty(tmpMobile) ? null : tmpMobile;
                     this.currentAccount.UpdateTime = System.DateTime.Now;
                     this.currentAccount.Comment = string.IsNullOrEmpty(tmpComment) ? null : tmpComment;
 
@@ -194,7 +196,7 @@ namespace HuiruiSoft.Safe
                          Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
 
                          var tmpAccountService = new HuiruiSoft.Safe.Service.AccountService();
-                         bool tmpCreateResult = tmpAccountService.UpdateAccount(this.currentAccount);
+                         bool tmpUpdateResult = tmpAccountService.UpdateAccount(this.currentAccount);
                          tmpAccountService = null;
 
                          Cursor.Current = System.Windows.Forms.Cursors.Default;

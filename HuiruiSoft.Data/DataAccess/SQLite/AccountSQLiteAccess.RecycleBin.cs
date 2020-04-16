@@ -79,7 +79,7 @@ namespace HuiruiSoft.Data.SQLite
                          {
                               var tmpAccountId = accountEntity.AccountId;
                               tmpDeleteCommand.Parameters["@AccountId"].Value = tmpAccountId;
-                              tmpDeleteResult = tmpDeleteCommand.ExecuteNonQuery() == 1;
+                              tmpDeleteResult = tmpDeleteCommand.ExecuteNonQuery() > 0;
                               if (tmpDeleteResult)
                               {
                                    tmpAttributeAccess.DeleteAccountAttributes(tmpAccountId, tmpDbTransaction);

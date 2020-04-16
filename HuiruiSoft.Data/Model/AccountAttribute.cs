@@ -73,6 +73,21 @@ namespace HuiruiSoft.Safe.Model
                };
           }
 
+
+          public bool CompareTo(AccountAttribute another)
+          {
+               if (another == null)
+               {
+                    return false;
+               }
+
+               return 
+                    this.Order == another.Order &&
+                    this.Name == another.Name &&
+                    this.Value == another.Value &&
+                    this.Encrypted == another.Encrypted;
+          }
+
           /// <summary>确定指定的 AccountAttribute 是否等于当前的 AccountAttribute。</summary>
           /// <param name="object">与当前的 AccountAttribute 进行比较的 AccountAttribute。</param>
           /// <returns>如果指定的 AccountAttribute 等于当前的 AccountAttribute，则为 true；否则为 false。</returns>
