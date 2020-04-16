@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using HuiruiSoft.Utils;
+using HuiruiSoft.Win32;
 using HuiruiSoft.Safe.Resources;
 using HuiruiSoft.Safe.Configuration;
 using HuiruiSoft.Data.Configuration;
@@ -161,6 +162,26 @@ namespace HuiruiSoft.Safe
           }
 
           #endregion
+
+          protected override void WndProc(ref Message message)
+          {
+               switch (message.Msg)
+               {
+                    case WindowsMessages.WM_MOVE:
+                    case WindowsMessages.WM_ACTIVATE:
+                    case WindowsMessages.WM_KEYUP:
+                    case WindowsMessages.WM_KEYDOWN:
+                    case WindowsMessages.WM_MOUSEMOVE:
+                    case WindowsMessages.WM_LBUTTONDOWN:
+                    case WindowsMessages.WM_RBUTTONDOWN:
+                    case WindowsMessages.WM_MBUTTONDOWN:
+                    case WindowsMessages.WM_MOUSEWHEEL:
+                         HuiruiSoft.Safe.Program.NotifyUserActivity();
+                         break;
+               }
+
+               base.WndProc(ref message);
+          }
 
           protected virtual void OnLoginButtonClick(object sender, System.EventArgs args)
           {

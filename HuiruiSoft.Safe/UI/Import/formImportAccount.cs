@@ -1068,10 +1068,14 @@ namespace HuiruiSoft.Safe
                               int dataRowIndex = 0;
                               this.importingAccounts.ForEach(item =>
                               {
-                                   var tmpAccountInfo = this.CurrentAccounts.Find(delegate (AccountModel account)
+                                   AccountModel tmpAccountInfo = null;
+                                   if (this.CurrentAccounts != null)
                                    {
-                                        return account.AccountGuid == item.AccountGuid;
-                                   });
+                                        tmpAccountInfo = this.CurrentAccounts.Find(delegate (AccountModel account)
+                                        {
+                                             return account.AccountGuid == item.AccountGuid;
+                                        });
+                                   }
 
                                    var tmpNewAccountRow = this.accountDataTable.NewRow();
 
@@ -1235,7 +1239,12 @@ namespace HuiruiSoft.Safe
                                    tmpAccountInfo.Password = string.Empty;
                               }
 
-                              var tmpFoundResult = this.CurrentAccounts.Exists(item => item.AccountGuid == tmpAccountInfo.AccountGuid);
+                              bool tmpFoundResult = false;
+                              if (this.CurrentAccounts != null)
+                              {
+                                   tmpFoundResult = this.CurrentAccounts.Exists(item => item.AccountGuid == tmpAccountInfo.AccountGuid);
+                              }
+
                               if (tmpFoundResult)
                               {
                                    bool tmpUpdateResult = tmpAccountService.UpdateAccount(tmpAccountInfo);

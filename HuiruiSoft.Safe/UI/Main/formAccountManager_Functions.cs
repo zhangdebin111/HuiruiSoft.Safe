@@ -10,6 +10,7 @@ namespace HuiruiSoft.Safe
      public partial class formAccountManager : Form
      {
           private int lockTimerMaximum = 0;
+          private int lockGlobalMaximum = 0;
           private int lastInputTime = int.MaxValue;
           private long lockAtInputTicks = long.MaxValue;
           private long lockAtGlobalTicks = long.MaxValue;
@@ -25,6 +26,17 @@ namespace HuiruiSoft.Safe
                     var tmpUtcLockAt = System.DateTime.UtcNow;
                     tmpUtcLockAt = tmpUtcLockAt.AddSeconds(this.lockTimerMaximum);
                     this.lockAtInputTicks = tmpUtcLockAt.Ticks;
+               }
+
+               if (this.lockGlobalMaximum < 30)
+               {
+                    this.lockAtGlobalTicks = long.MaxValue;
+               }
+               else
+               {
+                    var tmpGlobalLockAt = System.DateTime.UtcNow;
+                    tmpGlobalLockAt = tmpGlobalLockAt.AddSeconds(this.lockGlobalMaximum);
+                    this.lockAtGlobalTicks = tmpGlobalLockAt.Ticks;
                }
           }
 
@@ -171,9 +183,11 @@ namespace HuiruiSoft.Safe
                {
                     if (this.lockMaskWindow.IsDisposed)
                     {
+                         this.lockMaskWindow.Dispose();
                          this.lockMaskWindow = null;
-                         this.lockMaskWindow = new formLockWindow();
                     }
+
+                    this.lockMaskWindow = new formLockWindow();
                }
 
                if(this.lockMaskWindow != null && !this.lockMaskWindow.Visible)
@@ -558,6 +572,7 @@ namespace HuiruiSoft.Safe
                {
                     var tmpSecurityConfig = Program.Config.Application.Security;
                     this.lockTimerMaximum = (int)tmpSecurityConfig.LockWorkspace.LockAfterTime;
+                    this.lockGlobalMaximum = (int)tmpSecurityConfig.LockWorkspace.LockGlobalTime;
                     this.NotifyUserActivity( );
 
                     this.SecretCellRank0.BackColor = tmpSecurityConfig.SecretRank.Rank0BackColor;
@@ -589,16 +604,18 @@ namespace HuiruiSoft.Safe
                this.toolButtonCatalogEdit.Enabled = tmpCatalogSelected;
                this.toolButtonCatalogDelete.Enabled = tmpCatalogSelected;
                this.menuItemAccountTopLevel.Enabled = tmpCatalogSelected;
-               this.menuItemSelectAll.Enabled = this.dataGridAccount.Rows.Count > 0;
+               this.menuItemSelectAll.Enabled = this.dataGridAccount.Rows.Count > 1;
 
                var tmpCurrentEntry = this.GetCurrentSelectedEntry();
                var tmpAccountSelected = tmpCurrentEntry != null;
                this.menuItemEntryEdit.Enabled = (tmpCatalogSelected && tmpAccountSelected);
+               this.menuItemEntryMoveTo.Enabled = tmpAccountSelected;
                this.menuItemEntryDelete.Enabled = tmpAccountSelected;
                this.toolButtonEntryEdit.Enabled = tmpAccountSelected;
                this.toolButtonEntryDelete.Enabled = tmpAccountSelected;
                this.toolButtonCatalogCreate.Enabled = this.menuItemCatalogCreate.Enabled;
 
+               this.menuItemFileExport.Enabled = this.allAccountEntries != null && this.allAccountEntries.Count > 0;
                this.menuItemCopyMobile.Enabled = tmpCurrentEntry != null && !string.IsNullOrEmpty(tmpCurrentEntry.Mobile);
                this.menuItemCopyEmail.Enabled = tmpCurrentEntry != null && !string.IsNullOrEmpty(tmpCurrentEntry.Email);
                this.menuItemCopyUserName.Enabled = tmpCurrentEntry != null && !string.IsNullOrEmpty(tmpCurrentEntry.LoginName);

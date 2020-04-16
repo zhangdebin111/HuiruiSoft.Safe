@@ -567,7 +567,7 @@ namespace HuiruiSoft.Safe
 
           private void OnSelectAllMenuItemClick(object sender, System.EventArgs args)
           {
-               if (this.dataGridAccount.Rows.Count > 0)
+               if (this.dataGridAccount.Rows.Count > 1)
                {
                     var tmpSelectRange = new SourceGrid.Range(1, 1, this.dataGridAccount.Rows.Count, this.dataGridAccount.Columns.Count);
                     this.dataGridAccount.Selection.SelectRange(tmpSelectRange, true);

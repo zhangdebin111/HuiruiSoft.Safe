@@ -140,6 +140,7 @@ namespace HuiruiSoft.Safe
                     this.Visible = true;
                     this.Icon = WindowsUtils.DefaultAppIcon;
                     this.lockTimerMaximum = (int)Program.Config.Application.Security.LockWorkspace.LockAfterTime;
+                    this.lockGlobalMaximum = (int)Program.Config.Application.Security.LockWorkspace.LockGlobalTime;
                     this.clearClipboardMaximum = (int)Program.Config.Application.Security.Clipboard.ClipboardClearAfterSeconds;
 
                     this.NotifyUserActivity( );

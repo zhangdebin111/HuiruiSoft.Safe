@@ -125,10 +125,18 @@ namespace HuiruiSoft.Safe
                     var tmpMobile = this.textMobile.Text.Trim();
                     var tmpHttpUrl = this.textURL.Text.Trim();
 
+                    var tmpPassword = this.textPassword.Text.Trim();
+                    if (!string.Equals(tmpPassword, this.textPwdRepeat.Text))
+                    {
+                         this.textPwdRepeat.Focus();
+                         MessageBox.Show(SafePassResource.PasswordRepeatFailed, tmpInputErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                         return;
+                    }
+
                     this.currentAccount.Name = tmpAccountName;
                     this.currentAccount.URL = this.textURL.Text.Trim();
                     this.currentAccount.LoginName = this.textLoginName.Text.Trim();
-                    this.currentAccount.Password = this.textPassword.Text.Trim();
+                    this.currentAccount.Password = tmpPassword;
                     this.currentAccount.Email = string.IsNullOrEmpty(tmpEmail) ? null : tmpEmail;
                     this.currentAccount.URL = string.IsNullOrEmpty(tmpHttpUrl) ? null : tmpHttpUrl;
                     this.currentAccount.Mobile = string.IsNullOrEmpty(tmpMobile) ? null : tmpMobile;

@@ -299,14 +299,14 @@ namespace HuiruiSoft.UI.Controls
                this.panelControls.Controls.Add(this.labelPromptYellow);
                this.panelControls.Controls.Add(this.labelPromptBlack);
                this.panelControls.Controls.Add(this.labelCurrColor);
-               this.panelControls.Location = new System.Drawing.Point(334, 8);
+               this.panelControls.Location = new System.Drawing.Point(331, 8);
                this.panelControls.Name = "panelControls";
-               this.panelControls.Size = new System.Drawing.Size(302, 358);
+               this.panelControls.Size = new System.Drawing.Size(306, 363);
                this.panelControls.TabIndex = 2;
                // 
                // numericBlack
                // 
-               this.numericBlack.Location = new System.Drawing.Point(200, 237);
+               this.numericBlack.Location = new System.Drawing.Point(202, 237);
                this.numericBlack.Name = "numericBlack";
                this.numericBlack.Size = new System.Drawing.Size(63, 28);
                this.numericBlack.TabIndex = 31;
@@ -314,7 +314,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericYellow
                // 
-               this.numericYellow.Location = new System.Drawing.Point(200, 199);
+               this.numericYellow.Location = new System.Drawing.Point(202, 199);
                this.numericYellow.Name = "numericYellow";
                this.numericYellow.Size = new System.Drawing.Size(63, 28);
                this.numericYellow.TabIndex = 28;
@@ -322,7 +322,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericMagenta
                // 
-               this.numericMagenta.Location = new System.Drawing.Point(200, 161);
+               this.numericMagenta.Location = new System.Drawing.Point(202, 161);
                this.numericMagenta.Name = "numericMagenta";
                this.numericMagenta.Size = new System.Drawing.Size(63, 28);
                this.numericMagenta.TabIndex = 25;
@@ -330,7 +330,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericCyan
                // 
-               this.numericCyan.Location = new System.Drawing.Point(200, 123);
+               this.numericCyan.Location = new System.Drawing.Point(202, 123);
                this.numericCyan.Name = "numericCyan";
                this.numericCyan.Size = new System.Drawing.Size(63, 28);
                this.numericCyan.TabIndex = 22;
@@ -339,7 +339,7 @@ namespace HuiruiSoft.UI.Controls
                // textCurrColor
                // 
                this.textCurrColor.ImeMode = System.Windows.Forms.ImeMode.Off;
-               this.textCurrColor.Location = new System.Drawing.Point(161, 312);
+               this.textCurrColor.Location = new System.Drawing.Point(168, 328);
                this.textCurrColor.Name = "textCurrColor";
                this.textCurrColor.Size = new System.Drawing.Size(106, 28);
                this.textCurrColor.TabIndex = 34;
@@ -348,7 +348,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericChannelB
                // 
-               this.numericChannelB.Location = new System.Drawing.Point(200, 85);
+               this.numericChannelB.Location = new System.Drawing.Point(202, 85);
                this.numericChannelB.Name = "numericChannelB";
                this.numericChannelB.Size = new System.Drawing.Size(63, 28);
                this.numericChannelB.TabIndex = 20;
@@ -356,7 +356,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericLuminance
                // 
-               this.numericLuminance.Location = new System.Drawing.Point(200, 9);
+               this.numericLuminance.Location = new System.Drawing.Point(202, 9);
                this.numericLuminance.Name = "numericLuminance";
                this.numericLuminance.Size = new System.Drawing.Size(63, 28);
                this.numericLuminance.TabIndex = 14;
@@ -364,7 +364,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericChannelA
                // 
-               this.numericChannelA.Location = new System.Drawing.Point(200, 47);
+               this.numericChannelA.Location = new System.Drawing.Point(202, 47);
                this.numericChannelA.Name = "numericChannelA";
                this.numericChannelA.Size = new System.Drawing.Size(63, 28);
                this.numericChannelA.TabIndex = 17;
@@ -372,49 +372,49 @@ namespace HuiruiSoft.UI.Controls
                // 
                // numericHue
                // 
-               this.numericHue.Location = new System.Drawing.Point(53, 9);
+               this.numericHue.Location = new System.Drawing.Point(56, 9);
                this.numericHue.Name = "numericHue";
-               this.numericHue.Size = new System.Drawing.Size(63, 28);
+               this.numericHue.Size = new System.Drawing.Size(64, 28);
                this.numericHue.TabIndex = 1;
                this.numericHue.ValueChanged += new System.EventHandler(this.OnHSLNumericValueChanged);
                // 
                // numericBrightness
                // 
-               this.numericBrightness.Location = new System.Drawing.Point(53, 85);
+               this.numericBrightness.Location = new System.Drawing.Point(56, 85);
                this.numericBrightness.Name = "numericBrightness";
-               this.numericBrightness.Size = new System.Drawing.Size(63, 28);
+               this.numericBrightness.Size = new System.Drawing.Size(64, 28);
                this.numericBrightness.TabIndex = 5;
                this.numericBrightness.ValueChanged += new System.EventHandler(this.OnHSLNumericValueChanged);
                // 
                // numericSaturation
                // 
-               this.numericSaturation.Location = new System.Drawing.Point(53, 47);
+               this.numericSaturation.Location = new System.Drawing.Point(56, 47);
                this.numericSaturation.Name = "numericSaturation";
-               this.numericSaturation.Size = new System.Drawing.Size(63, 28);
+               this.numericSaturation.Size = new System.Drawing.Size(64, 28);
                this.numericSaturation.TabIndex = 3;
                this.numericSaturation.ValueChanged += new System.EventHandler(this.OnHSLNumericValueChanged);
                // 
                // numericBlue
                // 
-               this.numericBlue.Location = new System.Drawing.Point(53, 199);
+               this.numericBlue.Location = new System.Drawing.Point(56, 199);
                this.numericBlue.Name = "numericBlue";
-               this.numericBlue.Size = new System.Drawing.Size(63, 28);
+               this.numericBlue.Size = new System.Drawing.Size(64, 28);
                this.numericBlue.TabIndex = 11;
                this.numericBlue.ValueChanged += new System.EventHandler(this.OnRGBNumericValueChanged);
                // 
                // numericGreen
                // 
-               this.numericGreen.Location = new System.Drawing.Point(53, 161);
+               this.numericGreen.Location = new System.Drawing.Point(56, 161);
                this.numericGreen.Name = "numericGreen";
-               this.numericGreen.Size = new System.Drawing.Size(63, 28);
+               this.numericGreen.Size = new System.Drawing.Size(64, 28);
                this.numericGreen.TabIndex = 9;
                this.numericGreen.ValueChanged += new System.EventHandler(this.OnRGBNumericValueChanged);
                // 
                // numericRed
                // 
-               this.numericRed.Location = new System.Drawing.Point(53, 123);
+               this.numericRed.Location = new System.Drawing.Point(56, 123);
                this.numericRed.Name = "numericRed";
-               this.numericRed.Size = new System.Drawing.Size(63, 28);
+               this.numericRed.Size = new System.Drawing.Size(64, 28);
                this.numericRed.TabIndex = 7;
                this.numericRed.ValueChanged += new System.EventHandler(this.OnRGBNumericValueChanged);
                // 
@@ -423,7 +423,7 @@ namespace HuiruiSoft.UI.Controls
                this.panelColorSample.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
                this.panelColorSample.Controls.Add(this.labelNewColor);
                this.panelColorSample.Controls.Add(this.labelOldColor);
-               this.panelColorSample.Location = new System.Drawing.Point(14, 280);
+               this.panelColorSample.Location = new System.Drawing.Point(20, 297);
                this.panelColorSample.Name = "panelColorSample";
                this.panelColorSample.Size = new System.Drawing.Size(100, 60);
                this.panelColorSample.TabIndex = 15;
@@ -450,7 +450,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelColorHue
                // 
-               this.labelColorHue.Location = new System.Drawing.Point(118, 13);
+               this.labelColorHue.Location = new System.Drawing.Point(125, 13);
                this.labelColorHue.Name = "labelColorHue";
                this.labelColorHue.Size = new System.Drawing.Size(15, 20);
                this.labelColorHue.TabIndex = 12;
@@ -514,7 +514,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelColorSaturation
                // 
-               this.labelColorSaturation.Location = new System.Drawing.Point(118, 51);
+               this.labelColorSaturation.Location = new System.Drawing.Point(125, 51);
                this.labelColorSaturation.Name = "labelColorSaturation";
                this.labelColorSaturation.Size = new System.Drawing.Size(15, 20);
                this.labelColorSaturation.TabIndex = 15;
@@ -522,7 +522,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelColorBrightness
                // 
-               this.labelColorBrightness.Location = new System.Drawing.Point(118, 89);
+               this.labelColorBrightness.Location = new System.Drawing.Point(125, 89);
                this.labelColorBrightness.Name = "labelColorBrightness";
                this.labelColorBrightness.Size = new System.Drawing.Size(15, 20);
                this.labelColorBrightness.TabIndex = 18;
@@ -589,7 +589,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelPromptCyan
                // 
-               this.labelPromptCyan.Location = new System.Drawing.Point(264, 127);
+               this.labelPromptCyan.Location = new System.Drawing.Point(273, 127);
                this.labelPromptCyan.Name = "labelPromptCyan";
                this.labelPromptCyan.Size = new System.Drawing.Size(15, 20);
                this.labelPromptCyan.TabIndex = 23;
@@ -597,7 +597,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelPromptMagenta
                // 
-               this.labelPromptMagenta.Location = new System.Drawing.Point(264, 165);
+               this.labelPromptMagenta.Location = new System.Drawing.Point(273, 165);
                this.labelPromptMagenta.Name = "labelPromptMagenta";
                this.labelPromptMagenta.Size = new System.Drawing.Size(15, 20);
                this.labelPromptMagenta.TabIndex = 26;
@@ -605,7 +605,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelPromptYellow
                // 
-               this.labelPromptYellow.Location = new System.Drawing.Point(264, 203);
+               this.labelPromptYellow.Location = new System.Drawing.Point(273, 203);
                this.labelPromptYellow.Name = "labelPromptYellow";
                this.labelPromptYellow.Size = new System.Drawing.Size(15, 20);
                this.labelPromptYellow.TabIndex = 29;
@@ -613,7 +613,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelPromptBlack
                // 
-               this.labelPromptBlack.Location = new System.Drawing.Point(264, 241);
+               this.labelPromptBlack.Location = new System.Drawing.Point(273, 241);
                this.labelPromptBlack.Name = "labelPromptBlack";
                this.labelPromptBlack.Size = new System.Drawing.Size(15, 20);
                this.labelPromptBlack.TabIndex = 32;
@@ -621,7 +621,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // labelCurrColor
                // 
-               this.labelCurrColor.Location = new System.Drawing.Point(146, 312);
+               this.labelCurrColor.Location = new System.Drawing.Point(152, 333);
                this.labelCurrColor.Name = "labelCurrColor";
                this.labelCurrColor.Size = new System.Drawing.Size(15, 20);
                this.labelCurrColor.TabIndex = 33;
@@ -656,7 +656,7 @@ namespace HuiruiSoft.UI.Controls
                this.Controls.Add(this.panelControls);
                this.Controls.Add(this.colorPicker);
                this.Name = "ColorPanel";
-               this.Size = new System.Drawing.Size(656, 391);
+               this.Size = new System.Drawing.Size(650, 375);
                this.panelControls.ResumeLayout(false);
                this.panelControls.PerformLayout();
                ((System.ComponentModel.ISupportInitialize)(this.numericBlack)).EndInit();

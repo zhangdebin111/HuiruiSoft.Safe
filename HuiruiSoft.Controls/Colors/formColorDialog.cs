@@ -75,7 +75,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // buttonCancel
                // 
-               this.buttonCancel.Location = new System.Drawing.Point(605, 444);
+               this.buttonCancel.Location = new System.Drawing.Point(665, 465);
                this.buttonCancel.Name = "buttonCancel";
                this.buttonCancel.Size = new System.Drawing.Size(180, 50);
                this.buttonCancel.TabIndex = 3;
@@ -84,7 +84,7 @@ namespace HuiruiSoft.UI.Controls
                // 
                // buttonOK
                // 
-               this.buttonOK.Location = new System.Drawing.Point(380, 444);
+               this.buttonOK.Location = new System.Drawing.Point(440, 465);
                this.buttonOK.Name = "buttonOK";
                this.buttonOK.Size = new System.Drawing.Size(180, 50);
                this.buttonOK.TabIndex = 2;
@@ -95,9 +95,9 @@ namespace HuiruiSoft.UI.Controls
                // 
                this.colorPicker.AutoSize = true;
                this.colorPicker.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-               this.colorPicker.Location = new System.Drawing.Point(30, 30);
+               this.colorPicker.Location = new System.Drawing.Point(20, 25);
                this.colorPicker.Name = "colorPicker";
-               this.colorPicker.Size = new System.Drawing.Size(639, 369);
+               this.colorPicker.Size = new System.Drawing.Size(643, 369);
                this.colorPicker.TabIndex = 0;
                this.colorPicker.ColorChanged += new HuiruiSoft.UI.Controls.ColorChangedEventHandler(this.OnColorPickerColorChanged);
                this.colorPicker.PanelClosing += new HuiruiSoft.UI.Controls.PanelClosingEventHandler(this.OnColorPickerPanelClosing);
@@ -105,7 +105,7 @@ namespace HuiruiSoft.UI.Controls
                // formColorDialog
                // 
                this.AutoScaleBaseSize = new System.Drawing.Size(10, 21);
-               this.ClientSize = new System.Drawing.Size(817, 521);
+               this.ClientSize = new System.Drawing.Size(888, 544);
                this.Controls.Add(this.colorPicker);
                this.Controls.Add(this.buttonCancel);
                this.Controls.Add(this.buttonOK);

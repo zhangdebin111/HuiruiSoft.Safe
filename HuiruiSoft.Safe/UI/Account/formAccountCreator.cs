@@ -80,11 +80,21 @@ namespace HuiruiSoft.Safe
                     var tmpMobile = this.textMobile.Text.Trim( );
                     var tmpHttpUrl = this.textURL.Text.Trim();
 
+                    var tmpInputErrorCaption = SafePassResource.MessageBoxCaptionInputError;
+
+                    var tmpPassword = this.textPassword.Text.Trim();
+                    if (!string.Equals(tmpPassword, this.textPwdRepeat.Text))
+                    {
+                         this.textPwdRepeat.Focus();
+                         MessageBox.Show(SafePassResource.PasswordRepeatFailed, tmpInputErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                         return;
+                    }
+
                     var tmpAccountInfo = new AccountModel( );
                     tmpAccountInfo.AccountGuid = System.Guid.NewGuid( ).ToString("N");
                     tmpAccountInfo.Name = this.textName.Text.Trim();
                     tmpAccountInfo.LoginName = this.textLoginName.Text.Trim();
-                    tmpAccountInfo.Password = this.textPassword.Text.Trim();
+                    tmpAccountInfo.Password = tmpPassword;
                     tmpAccountInfo.Email = string.IsNullOrEmpty(tmpEmail) ? null : tmpEmail;
                     tmpAccountInfo.URL = string.IsNullOrEmpty(tmpHttpUrl) ? null : tmpHttpUrl;
                     tmpAccountInfo.Mobile = string.IsNullOrEmpty(tmpMobile) ? null : tmpMobile;
