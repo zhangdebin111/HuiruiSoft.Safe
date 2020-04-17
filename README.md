@@ -4,7 +4,8 @@
 
 介于2020年初的特殊时间，对一些功能做了一些完善，现开源出来供大家免费使用。
 
-官方地址: [huiruisoft.com](http://download.huiruisoft.com/safepass/index.html)
+官方地址：[huiruisoft.com](http://download.huiruisoft.com/safepass/index.html)
+
 
 
 简介
