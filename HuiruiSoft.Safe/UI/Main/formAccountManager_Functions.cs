@@ -9,33 +9,33 @@ namespace HuiruiSoft.Safe
 {
      public partial class formAccountManager : Form
      {
-          private int lockTimerMaximum = 0;
-          private int lockGlobalMaximum = 0;
           private int lastInputTime = int.MaxValue;
           private long lockAtInputTicks = long.MaxValue;
           private long lockAtGlobalTicks = long.MaxValue;
 
           public void NotifyUserActivity( )
           {
-               if(this.lockTimerMaximum < 30)
+               var tmpLockWindowMaxTime = Program.Config.Application.Security.LockWorkspace.LockWindowAfterTime;
+               var tmpLockScreenMaxTime = Program.Config.Application.Security.LockWorkspace.LockScreenAfterTime;
+               if (tmpLockWindowMaxTime < 30)
                {
                     this.lockAtInputTicks = long.MaxValue;
                }
                else
                {
                     var tmpUtcLockAt = System.DateTime.UtcNow;
-                    tmpUtcLockAt = tmpUtcLockAt.AddSeconds(this.lockTimerMaximum);
+                    tmpUtcLockAt = tmpUtcLockAt.AddSeconds(tmpLockWindowMaxTime);
                     this.lockAtInputTicks = tmpUtcLockAt.Ticks;
                }
 
-               if (this.lockGlobalMaximum < 30)
+               if (tmpLockScreenMaxTime < 30)
                {
                     this.lockAtGlobalTicks = long.MaxValue;
                }
                else
                {
                     var tmpGlobalLockAt = System.DateTime.UtcNow;
-                    tmpGlobalLockAt = tmpGlobalLockAt.AddSeconds(this.lockGlobalMaximum);
+                    tmpGlobalLockAt = tmpGlobalLockAt.AddSeconds(tmpLockScreenMaxTime);
                     this.lockAtGlobalTicks = tmpGlobalLockAt.Ticks;
                }
           }
@@ -47,7 +47,7 @@ namespace HuiruiSoft.Safe
 
           private void UpdateGlobalLockTimeout(System.DateTime currentTime)
           {
-               var tmpLockGlobal = Program.Config.Application.Security.LockWorkspace.LockGlobalTime;
+               var tmpLockGlobal = Program.Config.Application.Security.LockWorkspace.LockScreenAfterTime;
                if(tmpLockGlobal <= 0)
                {
                     this.lockAtGlobalTicks = long.MaxValue;
@@ -173,39 +173,43 @@ namespace HuiruiSoft.Safe
 
           private formLockWindow lockMaskWindow;
 
-          private void OpenLockWindow( )
+          private void OpenLockWindow()
           {
-               if(this.lockMaskWindow == null)
+               if (this.Visible)
                {
-                    this.lockMaskWindow = new formLockWindow( );
+                    this.Hide();
                }
-               else if(!this.lockMaskWindow.Visible)
+
+               if (this.lockMaskWindow != null)
                {
                     if (this.lockMaskWindow.IsDisposed)
                     {
-                         this.lockMaskWindow.Dispose();
                          this.lockMaskWindow = null;
                     }
-
-                    this.lockMaskWindow = new formLockWindow();
                }
 
-               if(this.lockMaskWindow != null && !this.lockMaskWindow.Visible)
+               if (this.lockMaskWindow == null)
                {
-                    this.Hide( );
+                    this.mainWindowLocked = true;
+                    this.lockMaskWindow = new formLockWindow();
                     this.lockMaskWindow.ClearPassword();
-                    if(this.lockMaskWindow.ShowDialog(this) == DialogResult.OK)
-                    {
-                         this.Show();
-                         this.Activate( );
-                         GlobalWindowManager.ShowAllWindows();
-                    }
-                    else
-                    {
-                         //this.idleTickTimer.Stop( );
-                         //this.idleTickTimer.Enabled = false;
-                         System.Windows.Forms.Application.Exit( );
-                    }
+               }
+
+               if (this.lockMaskWindow.Visible)
+               {
+                    this.lockMaskWindow.Show();
+                    WindowsUtils.SetWindowState(this, FormWindowState.Normal);
+               }
+               else if (this.lockMaskWindow.ShowDialog(this) == DialogResult.OK)
+               {
+                    this.Show();
+                    this.Activate();
+
+                    this.lockMaskWindow.Dispose();
+                    this.lockMaskWindow = null;
+
+                    GlobalWindowManager.ShowAllWindows();
+                    WindowsUtils.SetWindowState(this, (Program.Config.MainWindow.Maximized ? FormWindowState.Maximized : FormWindowState.Normal));
                }
           }
 
@@ -570,11 +574,9 @@ namespace HuiruiSoft.Safe
                var tmpOptionsWindow = new formSystemOptions( );
                if (tmpOptionsWindow.ShowDialog(this) == DialogResult.OK)
                {
-                    var tmpSecurityConfig = Program.Config.Application.Security;
-                    this.lockTimerMaximum = (int)tmpSecurityConfig.LockWorkspace.LockAfterTime;
-                    this.lockGlobalMaximum = (int)tmpSecurityConfig.LockWorkspace.LockGlobalTime;
                     this.NotifyUserActivity( );
 
+                    var tmpSecurityConfig = Program.Config.Application.Security;
                     this.SecretCellRank0.BackColor = tmpSecurityConfig.SecretRank.Rank0BackColor;
                     this.SecretCellRank1.BackColor = tmpSecurityConfig.SecretRank.Rank1BackColor;
                     this.SecretCellRank2.BackColor = tmpSecurityConfig.SecretRank.Rank2BackColor;
@@ -590,7 +592,26 @@ namespace HuiruiSoft.Safe
           /// <param name="setModified"></param>
           private void UpdateControlState(bool setModified = false)
           {
+               if (!this.mainWindowLoaded)
+               {
+                    return;
+               }
+
                var tmpSelectedNode = this.treeViewCatalog.SelectedNode;
+
+               bool tmpInvokable = true;
+               foreach (Form window in Application.OpenForms)
+               {
+                    if (window != Program.MainWindow)
+                    {
+                         tmpInvokable = false;
+                         break;
+                    }
+               }
+
+               this.menuItemLockWindow.Enabled = tmpInvokable;
+               this.menuItemLockScreen.Enabled = tmpInvokable;
+               this.menuItemExitWorkspace.Enabled = tmpInvokable;
 
                var tmpCatalogSelected = (tmpSelectedNode != null && tmpSelectedNode.Tag is AccountCatalog);
                var tmpRecycleBinSelected = (tmpSelectedNode == this.recycleBinTreeNode);

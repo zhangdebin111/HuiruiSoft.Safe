@@ -156,7 +156,7 @@ namespace HuiruiSoft.UI.Controls
                     this.colorSlider.Size = new System.Drawing.Size(40, 268);
                     this.colorSlider.Location = new System.Drawing.Point(this.colorPicker.Right + 8, 9);
 
-                    this.panelControls.Size = new System.Drawing.Size(215, 256);
+                    this.panelControls.Size = new System.Drawing.Size(215, 268);
                     this.panelControls.Location = new System.Drawing.Point(this.colorSlider.Right + 8, 5);
                }
           }
@@ -656,7 +656,7 @@ namespace HuiruiSoft.UI.Controls
                this.Controls.Add(this.panelControls);
                this.Controls.Add(this.colorPicker);
                this.Name = "ColorPanel";
-               this.Size = new System.Drawing.Size(650, 375);
+               this.Size = new System.Drawing.Size(650, 380);
                this.panelControls.ResumeLayout(false);
                this.panelControls.PerformLayout();
                ((System.ComponentModel.ISupportInitialize)(this.numericBlack)).EndInit();

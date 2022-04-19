@@ -62,9 +62,9 @@
 
           public static string AlgorithmUnknown { get; private set; } = "The algorithm is unknown.";
 
-          public static string ClipboardDataCopied { get; private set; } = @"Data copied to clipboard."; // 数据已复制到剪贴板
+          public static string ClipboardDataCopied { get; private set; } = @"Data copied to clipboard.";
 
-          public static string ClipboardClearInSeconds { get; private set; } = @"Clipboard will be cleared in {0} seconds";  // 剪贴板的数据将在 {0} 秒后清除
+          public static string ClipboardClearInSeconds { get; private set; } = @"Clipboard will be cleared in {0} seconds";
 
           public static string MasterPasswordMinimumLengthFailed { get; private set; } = @"The master password is too short, the master password must be at least {0} characters long!";
 

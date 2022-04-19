@@ -6,6 +6,8 @@ namespace HuiruiSoft.Safe.Configuration
 {
      public static class ApplicationConfigSerializer
      {
+          private static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
+
           public static SafePassConfiguration Load( )
           {
                var tmpWorkDirectory = HuiruiSoft.Utils.NativeShellHelper.GetWorkingDirectory();
@@ -35,16 +37,17 @@ namespace HuiruiSoft.Safe.Configuration
                }
                catch(System.Exception exception)
                {
+                    applicationConfig = new SafePassConfiguration();
                     System.Diagnostics.Debug.WriteLine(exception.StackTrace);
                }
 
                return applicationConfig;
           }
 
-          public static bool SaveApplicationConfig(SafePassConfiguration config)
+          public static bool SaveApplicationConfig(SafePassConfiguration configuration)
           {
-               System.Diagnostics.Debug.Assert(config != null);
-               if(config == null)
+               System.Diagnostics.Debug.Assert(configuration != null);
+               if(configuration == null)
                {
                     throw new System.ArgumentNullException("config");
                }
@@ -55,15 +58,23 @@ namespace HuiruiSoft.Safe.Configuration
                     var tmpWriterSettings = HuiruiSoft.Utils.XmlDocumentHelper.CreateXmlWriterSettings( );
 
                     var tmpWorkDirectory = HuiruiSoft.Utils.NativeShellHelper.GetWorkingDirectory();
-                    var tmpConfigFileName = System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigFile);
-                    using (var tmpXmlWriter = System.Xml.XmlWriter.Create(tmpConfigFileName, tmpWriterSettings))
+                    var tmpTempConfigFile = new System.IO.FileInfo(System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigTemp));
+                    using (var tmpXmlWriter = System.Xml.XmlWriter.Create(tmpTempConfigFile.FullName, tmpWriterSettings))
                     {
                          var tmpXmlSerializer = new XmlSerializerExtend(typeof(SafePassConfiguration));
-                         tmpXmlSerializer.Serialize(tmpXmlWriter, config);
+                         tmpXmlSerializer.Serialize(tmpXmlWriter, configuration);
+                    }
+                    
+                    if (tmpTempConfigFile.Exists && tmpTempConfigFile.Length > 500)
+                    {
+                         var tmpConfigFileName = System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigFile);
+                         var tmpConfigFileBack = System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigBack);
+                         tmpTempConfigFile.Replace(tmpConfigFileName, tmpConfigFileBack);
                     }
                }
-               catch(System.Exception)
+               catch(System.Exception exception)
                {
+                    loger.Error(exception);
                     System.Diagnostics.Debug.Assert(false); tmpSaveResult = false;
                }
 
@@ -88,8 +99,9 @@ namespace HuiruiSoft.Safe.Configuration
                          tmpXmlSerializer.Serialize(tmpXmlWriter, config);
                     }
                }
-               catch (System.Exception)
+               catch (System.Exception exception)
                {
+                    loger.Error(exception);
                     System.Diagnostics.Debug.Assert(false); tmpSaveResult = false;
                }
 

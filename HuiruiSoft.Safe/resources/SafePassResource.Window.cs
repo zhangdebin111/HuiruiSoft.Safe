@@ -117,6 +117,8 @@
 
           public static string OptionWindowTabPageSecurity { get; private set; } = @"Security";
 
+          public static string OptionWindowTabPageSecretLevel { get; private set; } = @"Secret level";
+
           public static string OptionWindowSecretPublicColor { get; private set; } = @"public color:";
 
           public static string OptionWindowSecretSecretColor { get; private set; } = @"secret color:";
@@ -129,12 +131,25 @@
 
           public static string OptionWindowButtonChangeDirectory { get; private set; } = @"Change directory";
 
-          public static string OptionWindowCheckBoxLockAfterTime { get; private set; } = @"Time the main window was locked inactive (seconds):";
+          public static string OptionWindowCheckBoxLockWindowAfterTime { get; private set; } = @"Time the main window was locked inactive (seconds):";
 
-          public static string OptionWindowCheckBoxLockGlobalTime { get; private set; } = @"Operating system inactivity lock time (seconds):";
+          public static string OptionWindowCheckBoxLockScreenAfterTime { get; private set; } = @"Operating system inactivity lock time (seconds):";
 
-          public static string OptionWindowCheckBoxAutoRunAtStartup { get; private set; } = @"Run SafePass at Windows startup (current user)";
+          public static string OptionWindowCheckBoxAutoRunAtStartup { get; private set; } = @"Auto run SafePass at Windows startup (current user)";
 
+          public static string OptionWindowCheckBoxTrayIconSingleClick { get; private set; } = @"Single click instead of double click to activate tray icon action";
+
+          public static string OptionWindowCheckBoxMinimizeWindowToTray { get; private set; } = @"Minimize to tray instead of taskbar";
+
+          public static string OptionWindowCheckBoxClearClipboardTime { get; private set; } = @"Clipboard data auto-clear time (seconds):";
+
+          public static string OptionWindowCheckBoxMinimizeAtCloseButton { get; private set; } = @"Click the ""Close"" button to minimize the main window instead of exiting the application";
+
+          public static string OptionWindowCheckBoxLockOnMinimizeToTray { get; private set; } = @"Lock workspace when the main window is minimized to tray";
+
+          public static string OptionWindowCheckBoxLockOnMinimizeTaskbar { get; private set; } = @"Lock workspace when the main window is minimized to taskbar";
+
+          public static string OptionWindowCheckBoxExitInsteadOfLockAfterTime { get; private set; } = @"Exit application instead of lock the workspace after the specified time";
 
           public static string PasswordGeneratorWindowCaption { get; private set; } = @"Password Generator";
 
@@ -202,11 +217,11 @@
 
           public static string ImportWindowCheckBoxCompare { get; private set; } = @"Compare with current database";
 
-          public static string ImportWindowLabelPromptNotFound { get; private set; } = @"The entity is not found in the current database"; //表示当前数据库里不存在
+          public static string ImportWindowLabelPromptNotFound { get; private set; } = @"The entity is not found in the current database";
 
-          public static string ImportWindowLabelPromptUnequal { get; private set; }  = @"The record is different compared with the record of the current database"; // 表示与当前数据库的记录相比较有差异
+          public static string ImportWindowLabelPromptUnequal { get; private set; } = @"The record is different compared with the record of the current database";
 
-          public static string ImportWindowMessageImportProgress { get; private set; } = @"Importing:{0}";//正在导入:{0}
+          public static string ImportWindowMessageImportProgress { get; private set; } = @"Importing:{0}";
 
           public static string ImportWindowMessageImportFinished { get; private set; } = @"The file ""{0}""  import finish.";
 
@@ -242,6 +257,37 @@
           public static string AboutWindowCaption { get; private set; } = @"About SafePass";
 
           public static string AboutWindowLabelGpl { get; private set; } = @"The program is distributed under the terms of the GNU General Public License v2 or later.";
+
+          public static string AboutWindowLabelHomepage { get; private set; } = @"Official website:";
+
+          public static string AboutWindowLabelOpensource { get; private set; } = @"Open source:";
+
+          public static string AboutWindowLabelLicense { get; private set; } = @"License:";
+
+
+          public static string AutoUpdateWindowCaption { get; private set; } = @"Update";
+
+          public static string AutoUpdateWindowLabelVersion { get; private set; } = @"Current version : {0}";
+
+          public static string AutoUpdateWindowCheckBoxSkipUpdate { get; private set; } = @"Skip this version";
+
+          public static string AutoUpdateWindowButtonCheckUpdate { get; private set; } = @"Check for update";
+
+          public static string AutoUpdateWindowButtonStartUpdate { get; private set; } = @"Start update";
+
+          public static string AutoUpdateWindowCloseApplication { get; private set; } = @"Closing application...";
+
+          public static string AutoUpdateWindowCurrentVersion { get; private set; } = @"{0}, current version : {1}";
+
+          public static string AutoUpdateWindowMandatoryVersion { get; private set; } = @"There is new version {0} available. This is required update.";
+
+          public static string AutoUpdateWindowAvailableVersion { get; private set; } = @"There is new version {0} available.";
+
+          public static string AutoUpdateMessageBoxTitle { get; private set; } = "Update Available";
+
+          public static string AutoUpdateMessageBoxMandatoryVersion { get; private set; } = @"There is new version {0} available. You are using version {1}. This is required update. Press Click the Start update button to begin updating the application.";
+
+          public static string AutoUpdateMessageBoxAvailableVersion { get; private set; } = @"There is new version {0} available. You are using version {1}. Do you want to update the application now?";
 
 
           public static string NewWizardWindowCaption { get; private set; } = @"New Wizard";

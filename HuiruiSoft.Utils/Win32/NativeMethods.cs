@@ -125,6 +125,14 @@ namespace HuiruiSoft.Win32
           public static extern int AnimateWindow(System.IntPtr windowHandle, int time, AnimateWindowFlags flags);
 
 
+          [DllImport(NativeExternDll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+          public static extern System.IntPtr SetActiveWindow([In] System.IntPtr windowHandle);
+
+
+          [DllImport(NativeExternDll.User32, CharSet = CharSet.Auto, ExactSpelling = true)]
+          public static extern System.IntPtr SetFocus([In] System.IntPtr windowHandle);
+
+
           [DllImport(NativeExternDll.User32, CharSet = CharSet.Auto)]
           public static extern int SendMessage(System.IntPtr windowHandle, int message, System.IntPtr wParam, System.IntPtr lParam);
 

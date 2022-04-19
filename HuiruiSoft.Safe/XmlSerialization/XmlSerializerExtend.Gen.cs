@@ -111,6 +111,18 @@ namespace HuiruiSoft.Utils.XmlSerialization
                               case "Maximized":
                                    tmpWindowSettings.Maximized = ReadBoolean(reader);
                                    break;
+
+                              case "ActionTraySingleClick":
+                                   tmpWindowSettings.ActionTraySingleClick = ReadBoolean(reader);
+                                   break;
+
+                              case "MinimizeWindowToTray":
+                                   tmpWindowSettings.MinimizeWindowToTray = ReadBoolean(reader);
+                                   break;
+
+                              case "MinimizeAtCloseButton":
+                                   tmpWindowSettings.MinimizeAtCloseButton = ReadBoolean(reader);
+                                   break;
                          }
 
                          reader.MoveToContent();
@@ -391,12 +403,20 @@ namespace HuiruiSoft.Utils.XmlSerialization
                                    reader.Skip();
                                    break;
 
-                              case "LockAfterTime":
-                                   tmpLockConfig.LockAfterTime = ReadUInt32(reader);
+                              case "LockWindowAfterTime":
+                                   tmpLockConfig.LockWindowAfterTime = ReadUInt32(reader);
                                    break;
 
-                              case "LockGlobalTime":
-                                   tmpLockConfig.LockGlobalTime = ReadUInt32(reader);
+                              case "LockScreenAfterTime":
+                                   tmpLockConfig.LockScreenAfterTime = ReadUInt32(reader);
+                                   break;
+
+                              case "LockOnMinimizeTaskbar":
+                                   tmpLockConfig.LockOnMinimizeTaskbar = ReadBoolean(reader);
+                                   break;
+
+                              case "LockOnMinimizeToTray":
+                                   tmpLockConfig.LockOnMinimizeToTray = ReadBoolean(reader);
                                    break;
                          }
 
@@ -488,7 +508,7 @@ namespace HuiruiSoft.Utils.XmlSerialization
                                    break;
 
                               case "ClipboardClearAfterSeconds":
-                                   tmpClipboardSettings.ClipboardClearAfterSeconds = ReadInt32(reader);
+                                   tmpClipboardSettings.ClipboardClearAfterSeconds = ReadUInt32(reader);
                                    break;
                          }
 

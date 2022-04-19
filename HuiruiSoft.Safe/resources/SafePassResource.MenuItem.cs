@@ -20,6 +20,8 @@
 
           public static string MenuItemExitWorkspace { get; private set; } = @"E&xit";
 
+          public static string MenuItemSwitchSystemTray { get; private set; } = @"&Tray / Untray";
+
           public static string MenuItemSelectAll { get; private set; } = @"&Select All";
 
           public static string MenuItemRestoreRecycleBin { get; private set; } = @"R&estore";
@@ -39,6 +41,8 @@
           public static string MenuItemEntryDelete { get; private set; } = @"&Delete Account";
 
           public static string MenuItemEntryMoveTo { get; private set; } = @"Mo&ve to...";
+
+          public static string MenuItemDataRefresh { get; private set; } = @"Refresh";
 
           public static string MenuItemCopyUserName { get; private set; } = @"Copy &User Name";
 
@@ -80,6 +84,12 @@
 
           public static string MenuItemHelpAbout { get; private set; } = @"&About...";
 
+          public static string MenuItemHelpCheckUpdate { get; private set; } = @"Check for Updates";
+
+
+          public static string ToolButtonFileExit { get; private set; } = @"Exit";
+
+          public static string ToolButtonFileExitTips { get; private set; } = @"Exit SafePass";
 
           public static string ToolButtonCatalogCreate { get; private set; } = @"New Catalog";
 

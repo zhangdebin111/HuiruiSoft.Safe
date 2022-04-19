@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using System.ComponentModel;
 using HuiruiSoft.Win32;
 using HuiruiSoft.Utils;
 using HuiruiSoft.Safe.Model;
@@ -12,20 +11,19 @@ namespace HuiruiSoft.Safe
      {
           private static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
 
-          private bool initialized = false;
-          private int clearClipboardMaximum = 0;
-          private int clearClipboardCurrent = -1;
+          private bool mainWindowLoaded = false;
+          private bool mainWindowLocked = false;
           private readonly int applicationMessage = Program.ApplicationMessage;
-          private FormWindowState lastNotMinimizedState = FormWindowState.Normal;
+          private FormWindowState lastWindowState = FormWindowState.Normal;
           private System.Collections.Generic.List<AccountModel> allAccountEntries = null;
 
           private System.Windows.Forms.Timer idleTickTimer = null;
           private HuiruiSoft.Safe.Service.AccountService accountService;
           private readonly string statusReady = SafePassResource.Ready;
 
-          public formAccountManager( )
+          public formAccountManager()
           {
-               this.InitializeComponent( );
+               this.InitializeComponent();
                this.dataGridAccount.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
                this.StartPosition = FormStartPosition.CenterScreen;
           }
@@ -37,7 +35,6 @@ namespace HuiruiSoft.Safe
                if (!base.DesignMode)
                {
                     this.Visible = false;
-
                     this.MinimizeBox = true;
                     this.MaximizeBox = true;
                     this.ShowInTaskbar = true;
@@ -55,64 +52,55 @@ namespace HuiruiSoft.Safe
                     int tmpMinimumHeight = tmpScreenBounds.Height * 40 / 100;
 
                     var tmpAppConfig = HuiruiSoft.Safe.Program.Config;
-                    if(tmpAppConfig.MainWindow.X < tmpMinLocationX)
+                    if (tmpAppConfig.MainWindow.X < tmpMinLocationX)
                     {
                          tmpAppConfig.MainWindow.X = 0;
                     }
 
-                    if(tmpAppConfig.MainWindow.X > tmpScreenBounds.Width * 90 / 100)
+                    if (tmpAppConfig.MainWindow.X > tmpScreenBounds.Width * 90 / 100)
                     {
                          tmpAppConfig.MainWindow.X = tmpScreenBounds.Width * 90 / 100;
                     }
 
-                    if(tmpAppConfig.MainWindow.Y < tmpMinLocationY)
+                    if (tmpAppConfig.MainWindow.Y < tmpMinLocationY)
                     {
                          tmpAppConfig.MainWindow.Y = 0;
                     }
 
-                    if(tmpAppConfig.MainWindow.Y > tmpScreenBounds.Height * 90 / 100)
+                    if (tmpAppConfig.MainWindow.Y > tmpScreenBounds.Height * 90 / 100)
                     {
                          tmpAppConfig.MainWindow.Y = tmpScreenBounds.Height * 90 / 100;
                     }
 
-                    if(tmpAppConfig.MainWindow.Width < tmpMinimumWidth)
+                    if (tmpAppConfig.MainWindow.Width < tmpMinimumWidth)
                     {
                          tmpAppConfig.MainWindow.Width = tmpMinimumWidth;
                     }
 
-                    if(tmpAppConfig.MainWindow.Width > tmpScreenBounds.Width)
+                    if (tmpAppConfig.MainWindow.Width > tmpScreenBounds.Width)
                     {
                          tmpAppConfig.MainWindow.Width = tmpScreenBounds.Width;
                     }
 
-                    if(tmpAppConfig.MainWindow.Height < tmpMinimumHeight)
+                    if (tmpAppConfig.MainWindow.Height < tmpMinimumHeight)
                     {
                          tmpAppConfig.MainWindow.Height = tmpMinimumHeight;
                     }
 
-                    if(tmpAppConfig.MainWindow.Height > tmpScreenBounds.Height)
+                    if (tmpAppConfig.MainWindow.Height > tmpScreenBounds.Height)
                     {
                          tmpAppConfig.MainWindow.Height = tmpScreenBounds.Height;
                     }
 
+                    this.Icon = WindowsUtils.DefaultAppIcon;
                     this.TopMost = tmpAppConfig.MainWindow.TopMost;
                     this.MinimumSize = new System.Drawing.Size(tmpMinimumWidth, tmpMinimumHeight);
                     this.Location = new System.Drawing.Point(tmpAppConfig.MainWindow.X, tmpAppConfig.MainWindow.Y);
                     this.ClientSize = new System.Drawing.Size(tmpAppConfig.MainWindow.Width, tmpAppConfig.MainWindow.Height);
 
-                    if(Program.Config.MainWindow.Maximized)
-                    {
-                         this.WindowState = FormWindowState.Maximized;
-                         this.lastNotMinimizedState = this.WindowState;
-                    }
-                    else if(Program.Config.MainWindow.Minimized)
-                    {
-                         this.WindowState = FormWindowState.Minimized;
-                    }
-                    else
-                    {
-                         this.WindowState = FormWindowState.Normal;
-                    }
+                    this.notifyIconTray.Icon = this.Icon;
+                    this.notifyIconTray.Visible = true;
+                    this.notifyIconTray.ContextMenuStrip = this.menuStripTray;
 
                     this.splitControls.Panel1MinSize = 150;
                     this.splitControls.Panel2MinSize = 200;
@@ -121,29 +109,37 @@ namespace HuiruiSoft.Safe
                          this.splitControls.SplitterDistance = (int)(this.splitControls.Width * tmpAppConfig.MainWindow.SplitPosition / 100);
                     }
 
-                    this.accountService = new HuiruiSoft.Safe.Service.AccountService( );
+                    this.accountService = new HuiruiSoft.Safe.Service.AccountService();
 
-                    this.CreateSpecialTreeNode( );
-                    this.InitializeToolBar( );
-                    this.InitializeTreeView( );
-                    this.InitializeAccountDataGrid( );
+                    this.CreateSpecialTreeNode();
+                    this.InitializeToolBar();
+                    this.InitializeTreeView();
+                    this.InitializeAccountDataGrid();
 
                     this.toolComboBoxQuickFind.AutoCompleteMode = AutoCompleteMode.Suggest;
                     this.toolComboBoxQuickFind.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-                    this.idleTickTimer = new System.Windows.Forms.Timer( );
+                    this.idleTickTimer = new System.Windows.Forms.Timer();
                     this.idleTickTimer.Tick += this.OnIdleTickTimerElapsed;
                     this.idleTickTimer.Interval = 1 * 1000;
-                    this.idleTickTimer.Start( );
+                    this.idleTickTimer.Start();
 
-                    this.initialized = true;
                     this.Visible = true;
-                    this.Icon = WindowsUtils.DefaultAppIcon;
-                    this.lockTimerMaximum = (int)Program.Config.Application.Security.LockWorkspace.LockAfterTime;
-                    this.lockGlobalMaximum = (int)Program.Config.Application.Security.LockWorkspace.LockGlobalTime;
-                    this.clearClipboardMaximum = (int)Program.Config.Application.Security.Clipboard.ClipboardClearAfterSeconds;
+                    this.NotifyUserActivity();
 
-                    this.NotifyUserActivity( );
+                    if (Program.Config.MainWindow.Maximized)
+                    {
+                         this.lastWindowState = this.WindowState;
+                         WindowsUtils.SetWindowState(this, FormWindowState.Maximized);
+                    }
+                    else if (Program.Config.MainWindow.Minimized)
+                    {
+                         WindowsUtils.SetWindowState(this, FormWindowState.Minimized);
+                    }
+                    else
+                    {
+                         WindowsUtils.SetWindowState(this, FormWindowState.Normal);
+                    }
 
                     this.treeViewCatalog.ContextMenuStrip = this.menuStripTreeView;
                     this.dataGridAccount.ContextMenuStrip = this.menuStripDataGrid;
@@ -156,6 +152,8 @@ namespace HuiruiSoft.Safe
 
                     System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(OnFormLoadParallelAsync));
                }
+
+               this.mainWindowLoaded = true;
           }
 
           private static void OnFormLoadParallelAsync(object stateInfo)
@@ -167,26 +165,9 @@ namespace HuiruiSoft.Safe
           {
                base.OnLocationChanged(args);
 
-               if(this.initialized)
+               if (this.mainWindowLoaded)
                {
-                    switch(this.WindowState)
-                    {
-                         case FormWindowState.Minimized:
-                         case FormWindowState.Maximized:
-                              break;
-
-                         case FormWindowState.Normal:
-                              if(Program.Config.MainWindow.X != this.Left)
-                              {
-                                   Program.Config.MainWindow.X = this.Left;
-                              }
-
-                              if(Program.Config.MainWindow.Y != this.Top)
-                              {
-                                   Program.Config.MainWindow.Y = this.Top;
-                              }
-                              break;
-                    }
+                    this.SaveWindowClientRectangle();
                }
           }
 
@@ -194,63 +175,56 @@ namespace HuiruiSoft.Safe
           {
                base.OnResizeEnd(args);
 
-               if(this.initialized)
+               if (this.mainWindowLoaded)
                {
-                    switch(this.WindowState)
-                    {
-                         case FormWindowState.Minimized:
-                         case FormWindowState.Maximized:
-                              break;
-
-                         case FormWindowState.Normal:
-                              if(Program.Config.MainWindow.X != this.Left)
-                              {
-                                   Program.Config.MainWindow.X = this.Left;
-                              }
-
-                              if(Program.Config.MainWindow.Y != this.Top)
-                              {
-                                   Program.Config.MainWindow.Y = this.Top;
-                              }
-
-                              if(Program.Config.MainWindow.Width != this.ClientRectangle.Width)
-                              {
-                                   Program.Config.MainWindow.Width = this.ClientRectangle.Width;
-                              }
-
-                              if(Program.Config.MainWindow.Height != this.ClientRectangle.Height)
-                              {
-                                   Program.Config.MainWindow.Height = this.ClientRectangle.Height;
-                              }
-                              break;
-                    }
+                    this.SaveWindowClientRectangle();
                }
           }
 
-          protected override void OnClosing(CancelEventArgs args)
-          {
-               base.OnClosing(args);
-
-               if (this.WindowState != FormWindowState.Minimized)
-               {
-                    Program.Config.MainWindow.SplitPosition = ((this.splitControls.SplitterDistance + 8) * 100) / this.splitControls.Width;
-               }
-
-               Program.Config.MainWindow.Minimized = (this.WindowState == FormWindowState.Minimized);
-               Program.Config.MainWindow.Maximized = (this.WindowState == FormWindowState.Maximized);
-
-               ApplicationConfigSerializer.SaveApplicationConfig(Program.Config);
-          }
-
+          private bool forceExitWorkspace = false;
           private bool restartApplication = false;
 
           protected override void OnFormClosed(FormClosedEventArgs args)
           {
                base.OnFormClosed(args);
+
                if (this.restartApplication)
                {
                     NativeShellHelper.StartProcess(WindowsUtils.GetExecutablePath());
                }
+          }
+
+          protected override void OnFormClosing(FormClosingEventArgs args)
+          {
+               base.OnFormClosing(args);
+
+               this.SaveWindowClientRectangle();
+               if (!this.forceExitWorkspace)
+               {
+                    switch (args.CloseReason)
+                    {
+                         case CloseReason.WindowsShutDown:
+                         case CloseReason.TaskManagerClosing:
+                         case CloseReason.ApplicationExitCall:
+                              break;
+
+                         case CloseReason.None:
+                         case CloseReason.UserClosing:
+                         case CloseReason.FormOwnerClosing:
+                         default:
+                              if (Program.Config.MainWindow.MinimizeAtCloseButton)
+                              {
+                                   args.Cancel = true;
+                                   WindowsUtils.SetWindowState(this, FormWindowState.Minimized);
+                                   return;
+                              }
+                              break;
+                    }
+               }
+
+               this.forceExitWorkspace = false;
+               GlobalWindowManager.CloseAllWindows();
+               ApplicationConfigSerializer.SaveApplicationConfig(Program.Config);
           }
 
           protected override void WndProc(ref Message message)
@@ -261,7 +235,14 @@ namespace HuiruiSoft.Safe
                }
                else if (message.WParam.ToInt64() == (long)WindowMenuMessage.SC_MINIMIZE)
                {
-                    this.lastNotMinimizedState = this.WindowState;
+                    this.lastWindowState = this.WindowState;
+               }
+               else if (message.Msg == WindowsMessages.WM_SYSCOMMAND)
+               {
+                    if ((message.WParam == (System.IntPtr)WindowMenuMessage.SC_MINIMIZE) || (message.WParam == (System.IntPtr)WindowMenuMessage.SC_MAXIMIZE))
+                    {
+                         this.SaveWindowClientRectangle();
+                    }
                }
                else if (message.Msg == applicationMessage && (applicationMessage != 0))
                {
@@ -275,13 +256,18 @@ namespace HuiruiSoft.Safe
                base.WndProc(ref message);
           }
 
+          public bool WindowIsTrayed()
+          {
+               return !this.Visible;
+          }
+
           public void EnsureVisibleForegroundWindow(bool restoreWindow)
           {
                if (restoreWindow && (this.WindowState == FormWindowState.Minimized))
                {
-                    if (this.lastNotMinimizedState != FormWindowState.Minimized)
+                    if (this.lastWindowState != FormWindowState.Minimized)
                     {
-                         this.WindowState = this.lastNotMinimizedState;
+                         this.WindowState = this.lastWindowState;
                     }
                }
 
@@ -289,6 +275,104 @@ namespace HuiruiSoft.Safe
                {
                     this.BringToFront();
                     this.Activate();
+               }
+          }
+
+          private void SaveWindowClientRectangle()
+          {
+               if (!this.mainWindowLoaded)
+               {
+                    System.Diagnostics.Debug.Assert(false);
+                    return;
+               }
+
+               var tmpCurrWindowState = this.WindowState;
+               var tmpLastWindowState = this.lastWindowState;
+               this.lastWindowState = tmpCurrWindowState;
+               switch (tmpCurrWindowState)
+               {
+                    case FormWindowState.Minimized:
+                         break;
+
+                    case FormWindowState.Maximized:
+                         Program.Config.MainWindow.Maximized = true;
+                         break;
+
+                    case FormWindowState.Normal:
+                         Program.Config.MainWindow.Maximized = false;
+                         Program.Config.MainWindow.X = this.Location.X;
+                         Program.Config.MainWindow.Y = this.Location.Y;
+                         Program.Config.MainWindow.Width = this.ClientSize.Width;
+                         Program.Config.MainWindow.Height = this.ClientSize.Height;
+                         break;
+               }
+
+               if (tmpCurrWindowState != FormWindowState.Minimized)
+               {
+                    if (this.splitControls.Width > 200)
+                    {
+                         Program.Config.MainWindow.SplitPosition = ((this.splitControls.SplitterDistance + 8) * 100) / this.splitControls.Width;
+                    }
+               }
+
+               if (tmpCurrWindowState == FormWindowState.Minimized && tmpLastWindowState != tmpCurrWindowState)
+               {
+                    if (Program.Config.Application.Security.LockWorkspace.LockOnMinimizeTaskbar)
+                    {
+                         this.mainWindowLocked = true;
+                    }
+
+                    if (Program.Config.MainWindow.MinimizeWindowToTray)
+                    {
+                         this.MinimizeWindowToTray(true);
+                    }
+               }
+          }
+
+          private void MinimizeWindowToTray(bool minimize)
+          {
+               if (minimize)
+               {
+                    this.Visible = false;
+                    this.mainWindowLocked = Program.Config.Application.Security.LockWorkspace.LockOnMinimizeToTray;
+               }
+               else
+               {
+                    if (this.mainWindowLocked)
+                    {
+                         this.OpenLockWindow();
+                    }
+                    else
+                    {
+                         this.Visible = true;
+                         if (this.WindowState == FormWindowState.Minimized)
+                         {
+                              WindowsUtils.SetWindowState(this, (Program.Config.MainWindow.Maximized ? FormWindowState.Maximized : FormWindowState.Normal));
+                         }
+                    }
+               }
+
+               this.UpdateTrayIcon(false);
+          }
+
+          private void UpdateTrayIcon(bool refreshIcon)
+          {
+               if (this.notifyIconTray == null)
+               {
+                    System.Diagnostics.Debug.Assert(false);
+                    return;
+               }
+
+               bool tmpWindowVisible = this.Visible;
+               bool tmpTrayIsVisible = this.notifyIconTray.Visible;
+               if (tmpWindowVisible && !tmpTrayIsVisible)
+               {
+                    this.notifyIconTray.Visible = true;
+               }
+
+               if (refreshIcon)
+               {
+                    //this.notifyIconTray.RefreshShellIcon();
                }
           }
 
@@ -306,32 +390,39 @@ namespace HuiruiSoft.Safe
                {
                     this.clearClipboardCurrent = -1;
                     this.UpdateClipboardStatus();
-                    ClipboardHelper.ClearIfOwner( );
+                    ClipboardHelper.ClearIfOwner();
                     this.UpdateControlState(false);
                }
 
                long tmpCurrentTicks = tmpCurrentTime.Ticks;
-               if(this.Visible && tmpCurrentTicks >= this.lockAtInputTicks)
+               if ((this.Visible || this.mainWindowLocked) && tmpCurrentTicks >= this.lockAtInputTicks)
                {
                     try
                     {
-                         this.BeginInvoke(new MethodInvoker(this.OpenLockWindow));
-                         this.lockAtInputTicks = long.MaxValue;
+                         if (Program.Config.Application.Security.LockWorkspace.ExitInsteadOfLockAfterTime)
+                         {
+                              this.OnExitWorkspaceMenuItemClick(this.menuItemExitWorkspace, System.EventArgs.Empty);
+                         }
+                         else
+                         {
+                              this.BeginInvoke(new MethodInvoker(this.OpenLockWindow));
+                              this.lockAtInputTicks = long.MaxValue;
+                         }
                     }
-                    catch(System.Exception exception)
+                    catch (System.Exception exception)
                     {
                          loger.Error(exception);
                          System.Diagnostics.Debug.WriteLine(exception);
                     }
                }
 
-               if(tmpCurrentTicks >= this.lockAtGlobalTicks)
+               if (tmpCurrentTicks >= this.lockAtGlobalTicks)
                {
                     try
                     {
-                         NativeMethods.LockWorkStation( );
+                         NativeMethods.LockWorkStation();
                     }
-                    catch(System.Exception exception)
+                    catch (System.Exception exception)
                     {
                          loger.Error(exception);
                          System.Diagnostics.Debug.WriteLine(exception);
@@ -339,20 +430,23 @@ namespace HuiruiSoft.Safe
                }
           }
 
+          private int clearClipboardCurrent = -1;
+
           private void UpdateClipboardStatus()
           {
-               if (this.clearClipboardMaximum < 0 && this.clearClipboardCurrent > 0)
+               var tmpClearClipboardAfter = (int)Program.Config.Application.Security.Clipboard.ClipboardClearAfterSeconds;
+               if (tmpClearClipboardAfter < 0 && this.clearClipboardCurrent > 0)
                {
                     this.clearClipboardCurrent = 0;
                }
-               else if (clearClipboardCurrent > this.clearClipboardMaximum && this.clearClipboardMaximum >= 0)
+               else if (clearClipboardCurrent > tmpClearClipboardAfter && tmpClearClipboardAfter >= 0)
                {
-                    this.clearClipboardCurrent = this.clearClipboardMaximum;
+                    this.clearClipboardCurrent = tmpClearClipboardAfter;
                }
 
-               if (this.clearClipboardCurrent > 0 && this.clearClipboardMaximum > 0)
+               if (this.clearClipboardCurrent > 0 && tmpClearClipboardAfter > 0)
                {
-                    this.statusPartClipboard.Value = (this.clearClipboardCurrent * 100) / this.clearClipboardMaximum;
+                    this.statusPartClipboard.Value = (this.clearClipboardCurrent * 100) / tmpClearClipboardAfter;
                     this.SetStatusText(string.Format("{0}{1}{2}", SafePassResource.ClipboardDataCopied, " ", string.Format(SafePassResource.ClipboardClearInSeconds, this.clearClipboardCurrent)));
                }
                else if (clearClipboardCurrent == 0)
@@ -363,9 +457,10 @@ namespace HuiruiSoft.Safe
 
           public void StartClipboardCountDown()
           {
-               if (this.clearClipboardMaximum >= 0)
+               var tmpClearClipboardAfter = (int)Program.Config.Application.Security.Clipboard.ClipboardClearAfterSeconds;
+               if (tmpClearClipboardAfter >= 0)
                {
-                    this.clearClipboardCurrent = this.clearClipboardMaximum;
+                    this.clearClipboardCurrent = tmpClearClipboardAfter;
                     this.statusPartClipboard.Visible = true;
                     this.UpdateClipboardStatus();
                     this.SetStatusText(string.Format("{0}{1}{2}", SafePassResource.ClipboardDataCopied, " ", string.Format(SafePassResource.ClipboardClearInSeconds, this.clearClipboardCurrent)));
@@ -376,22 +471,22 @@ namespace HuiruiSoft.Safe
           {
                bool tmpMessageHandled = false;
 
-               if(args != null)
+               if (args != null)
                {
-                    if(args.Control && !args.Alt)
+                    if (args.Control && !args.Alt)
                     {
-                         if(args.KeyCode == Keys.I)
+                         if (args.KeyCode == Keys.I)
                          {
-                              if(keyDown)
+                              if (keyDown)
                               {
-                                   this.OpenAccountCreator( );
+                                   this.OpenAccountCreator();
                               }
 
                               tmpMessageHandled = true;
                          }
                     }
 
-                    if(tmpMessageHandled)
+                    if (tmpMessageHandled)
                     {
                          args.Handled = tmpMessageHandled;
                          args.SuppressKeyPress = tmpMessageHandled;

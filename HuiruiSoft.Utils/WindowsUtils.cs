@@ -146,6 +146,127 @@ namespace HuiruiSoft.Utils
                }
           }
 
+          public static System.Drawing.Bitmap InvertImage(System.Drawing.Image image)
+          {
+               var tmpColorMatrix = new System.Drawing.Imaging.ColorMatrix(new float[][] {
+                    new float[] { -1, 0, 0, 0, 0 },
+                    new float[] { 0, -1, 0, 0, 0 },
+                    new float[] { 0, 0, -1, 0, 0 },
+                    new float[] { 0, 0, 0, 1, 0 },
+                    new float[] { 1, 1, 1, 0, 1 }
+               });
+
+               return CloneWithColorMatrix(image, tmpColorMatrix);
+          }
+
+          public static System.Drawing.Bitmap CreateGrayImage(System.Drawing.Image image)
+          {
+               var tmpColorMatrix = new System.Drawing.Imaging.ColorMatrix(new float[][] {
+                    new float[] { 0.30f, 0.30f, 0.30f, 0, 0 },
+                    new float[] { 0.59f, 0.59f, 0.59f, 0, 0 },
+                    new float[] { 0.11f, 0.11f, 0.11f, 0, 0 },
+                    new float[] { 0.00f, 0.00f, 0.00f, 1, 0 },
+                    new float[] { 0.00f, 0.00f, 0.00f, 0, 1 }
+               });
+
+               return CloneWithColorMatrix(image, tmpColorMatrix);
+          }
+
+
+          private static System.Drawing.Bitmap CloneWithColorMatrix(System.Drawing.Image image, System.Drawing.Imaging.ColorMatrix colorMatrix)
+          {
+               if (image == null || colorMatrix == null)
+               {
+                    System.Diagnostics.Debug.Assert(false);
+                    return null;
+               }
+
+               try
+               {
+                    int width = image.Width, height = image.Height;
+
+                    var tmpClonedBitmap = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                    using (var tmpGraphics = System.Drawing.Graphics.FromImage(tmpClonedBitmap))
+                    {
+                         tmpGraphics.Clear(System.Drawing.Color.Transparent);
+                         tmpGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+                         tmpGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+
+                         var tmpImageAttributes = new System.Drawing.Imaging.ImageAttributes();
+                         tmpImageAttributes.SetColorMatrix(colorMatrix);
+                         tmpGraphics.DrawImage(image, new System.Drawing.Rectangle(0, 0, width, height), 0, 0, width, height, System.Drawing.GraphicsUnit.Pixel, tmpImageAttributes);
+                    }
+
+                    return tmpClonedBitmap;
+               }
+               catch (System.Exception)
+               {
+                    System.Diagnostics.Debug.Assert(false);
+               }
+
+               return null;
+          }
+
+          public static void SetWindowState(Form window, FormWindowState windowState)
+          {
+               if (window == null)
+               {
+                    System.Diagnostics.Debug.Assert(false);
+                    return;
+               }
+
+               window.WindowState = windowState;
+
+               try
+               {
+                    var tmpStateCached = window.WindowState;
+
+                    var tmpWindowHandle = window.Handle;
+                    if (tmpWindowHandle == System.IntPtr.Zero)
+                    {
+                         System.Diagnostics.Debug.Assert(false);
+                         return;
+                    }
+
+                    var tmpRealMinimized = NativeMethods.IsIconic(tmpWindowHandle);
+                    var tmpRealMaximized = NativeMethods.IsZoomed(tmpWindowHandle);
+
+                    FormWindowState? tmpFixWindowState = null;
+                    if (tmpRealMinimized && (tmpStateCached != FormWindowState.Minimized))
+                    {
+                         tmpFixWindowState = FormWindowState.Minimized;
+                    }
+                    else if (tmpRealMaximized && (tmpStateCached != FormWindowState.Maximized) && !tmpRealMinimized)
+                    {
+                         tmpFixWindowState = FormWindowState.Maximized;
+                    }
+                    else if (!tmpRealMinimized && !tmpRealMaximized && (tmpStateCached != FormWindowState.Normal))
+                    {
+                         tmpFixWindowState = FormWindowState.Normal;
+                    }
+
+                    if (tmpFixWindowState.HasValue)
+                    {
+                         var tmpWindowVisible = window.Visible;
+                         if (tmpWindowVisible)
+                         {
+                              window.Visible = false;
+                         }
+
+                         window.WindowState = tmpFixWindowState.Value;
+
+                         if (tmpWindowVisible)
+                         {
+                              window.Visible = true;
+                         }
+                    }
+               }
+               catch (System.Exception)
+               {
+                    System.Diagnostics.Debug.Assert(NativeMethods.IsUnix());
+               }
+          }
+
           public static string GetExecutablePath()
           {
                if (string.IsNullOrEmpty(executablePath))

@@ -7,13 +7,14 @@ namespace HuiruiSoft.Safe
      public partial class formLockWindow : System.Windows.Forms.Form
      {
           private System.ComponentModel.IContainer components = null;
-          protected System.Windows.Forms.Label labelPassword;
-          protected System.Windows.Forms.Label labelLoginName;
-          protected System.Windows.Forms.Button buttonOK;
-          protected System.Windows.Forms.Button buttonCancel;
-          protected System.Windows.Forms.GroupBox groupOptions;
-          protected System.Windows.Forms.TextBox textPassword;
-          protected System.Windows.Forms.TextBox textLoginName;
+          private System.Windows.Forms.GroupBox groupOptions;
+          private System.Windows.Forms.Label labelPassword;
+          private System.Windows.Forms.Label labelLoginName;
+          private System.Windows.Forms.Button buttonOK;
+          private System.Windows.Forms.Button buttonExit;
+          private System.Windows.Forms.Button buttonCancel;
+          private System.Windows.Forms.TextBox textPassword;
+          private System.Windows.Forms.TextBox textLoginName;
 
           internal formLockWindow( )
           {
@@ -37,6 +38,7 @@ namespace HuiruiSoft.Safe
 
                     this.AcceptButton = this.buttonOK;
                     this.CancelButton = this.buttonCancel;
+                    this.buttonCancel.Location = new System.Drawing.Point(-200, -100);
 
                     this.textLoginName.ReadOnly = true;
                     this.textLoginName.Text = Account.CurrentAccount.UserName;
@@ -46,16 +48,26 @@ namespace HuiruiSoft.Safe
                     this.Icon = WindowsUtils.DefaultAppIcon;
                     this.Text = SafePassResource.LockedWindowCaption;
                     this.buttonOK.Text = SafePassResource.ButtonOK;
-                    this.buttonCancel.Text = SafePassResource.ButtonExitApp;
+                    this.buttonExit.Text = SafePassResource.ButtonExitApp;
+                    this.buttonCancel.Text = SafePassResource.ButtonCancel;
                     this.groupOptions.Text = SafePassResource.LoginWindowOptions;
                     this.labelLoginName.Text = SafePassResource.LoginWindowUserName;
                     this.labelPassword.Text = SafePassResource.LoginWindowPassword;
+
+                    HuiruiSoft.Win32.NativeMethods.SetForegroundWindow(this.Handle);
+                    HuiruiSoft.Win32.NativeMethods.SetActiveWindow(this.Handle);
+                    HuiruiSoft.Win32.NativeMethods.SetFocus(this.textPassword.Handle);
                }
           }
 
-          protected override void OnClosed(System.EventArgs args)
+          protected override void OnFormClosing(FormClosingEventArgs args)
           {
-               base.OnClosed(args);
+               base.OnFormClosing(args);
+
+               if (args.CloseReason == CloseReason.UserClosing)
+               {
+                    this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+               }
           }
 
           protected override void Dispose(bool disposing)
@@ -71,26 +83,27 @@ namespace HuiruiSoft.Safe
 
           private void InitializeComponent( )
           {
-               this.buttonCancel = new System.Windows.Forms.Button();
+               this.buttonExit = new System.Windows.Forms.Button();
                this.groupOptions = new System.Windows.Forms.GroupBox();
                this.textPassword = new System.Windows.Forms.TextBox();
                this.labelPassword = new System.Windows.Forms.Label();
                this.textLoginName = new System.Windows.Forms.TextBox();
                this.labelLoginName = new System.Windows.Forms.Label();
                this.buttonOK = new System.Windows.Forms.Button();
+               this.buttonCancel = new System.Windows.Forms.Button();
                this.groupOptions.SuspendLayout();
                this.SuspendLayout();
                // 
-               // buttonCancel
+               // buttonExit
                // 
-               this.buttonCancel.Location = new System.Drawing.Point(630, 324);
-               this.buttonCancel.Margin = new System.Windows.Forms.Padding(6);
-               this.buttonCancel.Name = "buttonCancel";
-               this.buttonCancel.Size = new System.Drawing.Size(195, 69);
-               this.buttonCancel.TabIndex = 2;
-               this.buttonCancel.Text = "&Cancel";
-               this.buttonCancel.UseVisualStyleBackColor = true;
-               this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+               this.buttonExit.Location = new System.Drawing.Point(630, 330);
+               this.buttonExit.Margin = new System.Windows.Forms.Padding(6);
+               this.buttonExit.Name = "buttonExit";
+               this.buttonExit.Size = new System.Drawing.Size(195, 69);
+               this.buttonExit.TabIndex = 2;
+               this.buttonExit.Text = "E&xit";
+               this.buttonExit.UseVisualStyleBackColor = true;
+               this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
                // 
                // groupOptions
                // 
@@ -148,7 +161,7 @@ namespace HuiruiSoft.Safe
                // 
                // buttonOK
                // 
-               this.buttonOK.Location = new System.Drawing.Point(393, 324);
+               this.buttonOK.Location = new System.Drawing.Point(393, 330);
                this.buttonOK.Margin = new System.Windows.Forms.Padding(6);
                this.buttonOK.Name = "buttonOK";
                this.buttonOK.Size = new System.Drawing.Size(195, 69);
@@ -157,14 +170,26 @@ namespace HuiruiSoft.Safe
                this.buttonOK.UseVisualStyleBackColor = true;
                this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
                // 
+               // buttonCancel
+               // 
+               this.buttonCancel.Location = new System.Drawing.Point(867, 330);
+               this.buttonCancel.Margin = new System.Windows.Forms.Padding(6);
+               this.buttonCancel.Name = "buttonCancel";
+               this.buttonCancel.Size = new System.Drawing.Size(195, 69);
+               this.buttonCancel.TabIndex = 3;
+               this.buttonCancel.Text = "&Cancel";
+               this.buttonCancel.UseVisualStyleBackColor = true;
+               this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+               // 
                // formLockWindow
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(902, 438);
-               this.Controls.Add(this.buttonCancel);
+               this.ClientSize = new System.Drawing.Size(898, 444);
+               this.Controls.Add(this.buttonExit);
                this.Controls.Add(this.groupOptions);
                this.Controls.Add(this.buttonOK);
+               this.Controls.Add(this.buttonCancel);
                this.Margin = new System.Windows.Forms.Padding(4);
                this.Name = "formLockWindow";
                this.Text = "Locked";
@@ -182,6 +207,16 @@ namespace HuiruiSoft.Safe
                this.textPassword.Focus();
           }
 
+          private void buttonExit_Click(object sender, System.EventArgs args)
+          {
+               System.Windows.Forms.Application.Exit( );
+          }
+
+          private void buttonCancel_Click(object sender, System.EventArgs args)
+          {
+               this.Close();
+          }
+
           private void buttonOK_Click(object sender, System.EventArgs args)
           {
                var tmpPassword = this.textPassword.Text.Trim( );
@@ -197,11 +232,6 @@ namespace HuiruiSoft.Safe
                          this.DialogResult = DialogResult.OK;
                     }
                }
-          }
-
-          private void buttonCancel_Click(object sender, System.EventArgs args)
-          {
-               System.Windows.Forms.Application.Exit( );
           }
 
           protected virtual bool CheckValidity( )

@@ -50,7 +50,7 @@ namespace HuiruiSoft.Utils
                }
                else
                {
-                    return System.Text.RegularExpressions.Regex.IsMatch(mobile, "^[1]([3,4,5,7,8][0-9]{1})[0-9]{8}$");
+                    return Regex.IsMatch(mobile, "^[1]([3,4,5,7,8][0-9]{1})[0-9]{8}$");
                }
           }
 
@@ -62,7 +62,7 @@ namespace HuiruiSoft.Utils
                }
                else
                {
-                    return System.Text.RegularExpressions.Regex.IsMatch(mail, "^\\s*([A-Za-z0-9_-]+(\\.\\w+)*@(\\w+\\.)+\\w{2,5})\\s*$");
+                    return Regex.IsMatch(mail, "^\\s*([A-Za-z0-9_-]+(\\.\\w+)*@(\\w+\\.)+\\w{2,5})\\s*$");
                }
           }
           

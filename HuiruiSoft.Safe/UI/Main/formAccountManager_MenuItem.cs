@@ -26,24 +26,30 @@ namespace HuiruiSoft.Safe
                this.menuItemReArrangePopup.Visible = false; // 功能未实现，暂时隐藏
 
                this.linkedToolStripItems = new List<KeyValuePair<ToolStripItem, ToolStripItem>>();
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemRefresh, this.OnRefreshMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemRefresh, this.OnRefreshMenuItemClick, true);
 
                this.menuItemEdit.DropDownItems.Insert(0, new ToolStripSeparator());
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCopyEmail, this.OnCopyEmailMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCopyMobile, this.OnCopyMobileMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCopyPassword, this.OnCopyPasswordMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCopyUserName, this.OnCopyUserNameMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCopyEmail, this.OnCopyEmailMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCopyMobile, this.OnCopyMobileMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCopyPassword, this.OnCopyPasswordMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCopyUserName, this.OnCopyUserNameMenuItemClick, true);
 
                this.menuItemEdit.DropDownItems.Insert(0, new ToolStripSeparator());
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemSelectAll, this.OnSelectAllMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemEntryDelete, this.OnDeleteAccountMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemEntryEdit, this.OnUpdateAccountMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemEntryCreate, this.OnCreateAccountMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemSelectAll, this.OnSelectAllMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemEntryDelete, this.OnDeleteAccountMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemEntryEdit, this.OnUpdateAccountMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemEntryCreate, this.OnCreateAccountMenuItemClick, true);
 
                this.menuItemEdit.DropDownItems.Insert(0, new ToolStripSeparator());
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCatalogDelete, this.OnDeleteCatalogMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCatalogEdit, this.OnUpdateCatalogMenuItemClick, true);
-               this.InsertToolStripItem(this.menuItemEdit, this.menuItemCatalogCreate, this.OnCreateCatalogMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCatalogDelete, this.OnDeleteCatalogMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCatalogEdit, this.OnUpdateCatalogMenuItemClick, true);
+               this.InsertToolStripMenuItem(this.menuItemEdit, this.menuItemCatalogCreate, this.OnCreateCatalogMenuItemClick, true);
+
+               this.menuStripTray.Items.Add(new ToolStripSeparator());
+               this.InsertToolDropDownItem(this.menuStripTray, this.menuItemLockWindow, this.OnLockWindowMenuItemClick, true);
+               this.InsertToolDropDownItem(this.menuStripTray, this.menuItemLockScreen, this.OnLockScreenMenuItemClick, true);
+               this.menuStripTray.Items.Add(new ToolStripSeparator());
+               this.InsertToolDropDownItem(this.menuStripTray, this.menuItemExitWorkspace, this.OnExitWorkspaceMenuItemClick, true);
 
                this.SetLocalizedStrings();
                this.AssignMenuItemShortcuts();
@@ -83,6 +89,7 @@ namespace HuiruiSoft.Safe
                this.menuItemLockWindow.Text = SafePassResource.MenuItemLockWindow;
                this.menuItemLockScreen.Text = SafePassResource.MenuItemLockScreen;
                this.menuItemExitWorkspace.Text = SafePassResource.MenuItemExitWorkspace;
+               this.menuItemSwitchSystemTray.Text = SafePassResource.MenuItemSwitchSystemTray;
 
                this.menuItemCatalogCreate.Text = SafePassResource.MenuItemCatalogCreate;
                this.menuItemCatalogEdit.Text = SafePassResource.MenuItemCatalogEdit;
@@ -93,7 +100,7 @@ namespace HuiruiSoft.Safe
                this.menuItemEntryDelete.Text = SafePassResource.MenuItemEntryDelete;
                this.menuItemEntryMoveTo.Text = SafePassResource.MenuItemEntryMoveTo;
 
-               this.menuItemRefresh.Text = SafePassResource.ToolButtonDataRefresh;
+               this.menuItemRefresh.Text = SafePassResource.MenuItemDataRefresh;
 
                this.menuItemCopyUserName.Text = SafePassResource.MenuItemCopyUserName;
                this.menuItemCopyPassword.Text = SafePassResource.MenuItemCopyPassword;
@@ -113,6 +120,7 @@ namespace HuiruiSoft.Safe
 
                this.menuItemToolsOptions.Text = SafePassResource.MenuItemToolsOptions;
                this.menuItemHelpAbout.Text = SafePassResource.MenuItemHelpAbout;
+               this.menuItemHelpCheckUpdate.Text = SafePassResource.MenuItemHelpCheckUpdate;
 
                this.toolButtonCatalogCreate.Text = SafePassResource.ToolButtonCatalogCreate;
                this.toolButtonCatalogCreate.ToolTipText = SafePassResource.ToolButtonCatalogCreateTips;
@@ -144,6 +152,9 @@ namespace HuiruiSoft.Safe
                this.toolButtonToolsOptions.Text = SafePassResource.ToolButtonToolsOptions;
                this.toolButtonToolsOptions.ToolTipText = SafePassResource.ToolButtonToolsOptionsTips;
 
+               this.toolButtonExitWorkspace.Text = SafePassResource.ToolButtonFileExit;
+               this.toolButtonExitWorkspace.ToolTipText = SafePassResource.ToolButtonFileExitTips;
+
                if (this.recycleBinTreeNode != null)
                {
                     this.recycleBinTreeNode.Text = SafePassResource.RecycleBin;
@@ -164,24 +175,46 @@ namespace HuiruiSoft.Safe
                this.DataGridLocalization();
           }
 
-          private ToolStripMenuItem InsertToolStripItem(ToolStripMenuItem toolStripContainer, ToolStripMenuItem toolStripTemplate, System.EventHandler eventHandler, bool permanentlyLinkToTemplate)
+          private ToolStripMenuItem InsertToolDropDownItem(ToolStripDropDown toolStripDropDown, ToolStripMenuItem templateMenuItem, System.EventHandler eventHandler, bool linkToTemplate)
           {
-               var tmpToolMenuItem = new ToolStripMenuItem(toolStripTemplate.Text, toolStripTemplate.Image);
+               var tmpToolMenuItem = new ToolStripMenuItem(templateMenuItem.Text, templateMenuItem.Image);
                tmpToolMenuItem.Click += eventHandler;
-               tmpToolMenuItem.ShowShortcutKeys = toolStripTemplate.ShowShortcutKeys;
+               tmpToolMenuItem.ShowShortcutKeys = templateMenuItem.ShowShortcutKeys;
 
-               var tmpShortcutKeys = toolStripTemplate.ShortcutKeyDisplayString;
+               var tmpShortcutKeys = templateMenuItem.ShortcutKeyDisplayString;
                if (!string.IsNullOrEmpty(tmpShortcutKeys))
                {
                     tmpToolMenuItem.ShortcutKeyDisplayString = tmpShortcutKeys;
                }
 
-               if (permanentlyLinkToTemplate)
+               if (linkToTemplate)
                {
-                    this.linkedToolStripItems.Add(new KeyValuePair<ToolStripItem, ToolStripItem>(toolStripTemplate, tmpToolMenuItem));
+                    this.linkedToolStripItems.Add(new KeyValuePair<ToolStripItem, ToolStripItem>(templateMenuItem, tmpToolMenuItem));
                }
 
-               toolStripContainer.DropDownItems.Insert(0, tmpToolMenuItem);
+               toolStripDropDown.Items.Add(tmpToolMenuItem);
+
+               return tmpToolMenuItem;
+          }
+
+          private ToolStripMenuItem InsertToolStripMenuItem(ToolStripMenuItem menuItemContainer, ToolStripMenuItem templateMenuItem, System.EventHandler eventHandler, bool linkToTemplate)
+          {
+               var tmpToolMenuItem = new ToolStripMenuItem(templateMenuItem.Text, templateMenuItem.Image);
+               tmpToolMenuItem.Click += eventHandler;
+               tmpToolMenuItem.ShowShortcutKeys = templateMenuItem.ShowShortcutKeys;
+
+               var tmpShortcutKeys = templateMenuItem.ShortcutKeyDisplayString;
+               if (!string.IsNullOrEmpty(tmpShortcutKeys))
+               {
+                    tmpToolMenuItem.ShortcutKeyDisplayString = tmpShortcutKeys;
+               }
+
+               if (linkToTemplate)
+               {
+                    this.linkedToolStripItems.Add(new KeyValuePair<ToolStripItem, ToolStripItem>(templateMenuItem, tmpToolMenuItem));
+               }
+
+               menuItemContainer.DropDownItems.Insert(0, tmpToolMenuItem);
 
                return tmpToolMenuItem;
           }
@@ -217,6 +250,10 @@ namespace HuiruiSoft.Safe
                {
                     this.GetCatalogChildAccounts(true);
                }
+               else if (sender == this.toolButtonToolsOptions)
+               {
+                    this.OpenSystemOptionDialog();
+               }
                else if (sender == this.toolButtonLockWindow)
                {
                     this.OpenLockWindow();
@@ -225,9 +262,9 @@ namespace HuiruiSoft.Safe
                {
                     NativeMethods.LockWorkStation();
                }
-               else if (sender == this.toolButtonToolsOptions)
+               else if (sender == this.toolButtonExitWorkspace)
                {
-                    this.OpenSystemOptionDialog();
+                    this.OnExitWorkspaceMenuItemClick(sender, args);
                }
           }
 
@@ -293,6 +330,7 @@ namespace HuiruiSoft.Safe
           private void OnExitWorkspaceMenuItemClick(object sender, System.EventArgs args)
           {
                this.NotifyUserActivity();
+               this.forceExitWorkspace = true;
                this.Close();
                //Application.Exit();
           }
@@ -585,6 +623,77 @@ namespace HuiruiSoft.Safe
                var tmpAboutWindow = new formHelpAbout();
                tmpAboutWindow.ShowDialog();
                tmpAboutWindow.Dispose();
+          }
+
+          private void OnHelpCheckUpdateMenuItemClick(object sender, System.EventArgs args)
+          {
+               var tmpAutoUpdateWindow = new formAutoUpdater();
+               tmpAutoUpdateWindow.ShowDialog();
+               tmpAutoUpdateWindow.Dispose();
+          }
+
+          private void OnTrayMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs args)
+          {
+               this.UpdateTrayState();
+          }
+
+          private MouseButtons lastTrayMouseButtons = MouseButtons.None;
+
+          private void OnSystemTrayIconMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
+          {
+               this.lastTrayMouseButtons = args.Button;
+          }
+
+          private void OnSystemTrayIconClick(object sender, System.EventArgs args)
+          {
+               if ((this.lastTrayMouseButtons & MouseButtons.Left) != MouseButtons.None)
+               {
+                    if (Program.Config.MainWindow.ActionTraySingleClick)
+                    {
+                         this.OnSwitchSystemTrayMenuItemClick(sender, args);
+                    }
+               }
+          }
+
+          private void OnSystemTrayIconDoubleClick(object sender, System.EventArgs args)
+          {
+               if ((this.lastTrayMouseButtons & MouseButtons.Left) != MouseButtons.None)
+               {
+                    if (!Program.Config.MainWindow.ActionTraySingleClick)
+                    {
+                         this.OnSwitchSystemTrayMenuItemClick(sender, args);
+                    }
+               }
+          }
+
+          private void OnSwitchSystemTrayMenuItemClick(object sender, System.EventArgs args)
+          {
+               if (this.WindowState != FormWindowState.Minimized || this.WindowIsTrayed())
+               {
+                    bool tmpWindowTrayed = !this.WindowIsTrayed();
+                    this.MinimizeWindowToTray(tmpWindowTrayed);
+                    if (!tmpWindowTrayed)
+                    {
+                         this.EnsureVisibleForegroundWindow(false);
+                    }
+               }
+               else
+               {
+                    if (Program.Config.MainWindow.Maximized)
+                    {
+                         WindowsUtils.SetWindowState(this, FormWindowState.Maximized);
+                    }
+                    else
+                    {
+                         WindowsUtils.SetWindowState(this, FormWindowState.Normal);
+                    }
+               }
+          }
+
+
+          private void UpdateTrayState()
+          {
+               this.UpdateControlState(false);
           }
 
           private bool   quickFindBlockFlags = false;

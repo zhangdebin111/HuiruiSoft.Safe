@@ -15,6 +15,8 @@
           public static readonly string MutexNameGlobal = "SafePassMutexGlobal";
           public static readonly string WindowMessageId = "EFD7F28308AC71F068A37D978DA3F663";
           public static readonly string MainConfigFile = @"config\SafePass.config.xml";
+          public static readonly string MainConfigTemp = @"config\SafePass.config.tmp";
+          public static readonly string MainConfigBack = @"config\SafePass.config.bak";
           public static readonly string SafePassDbFile = @"data\SafePassData.dat";
           public static readonly string Log4NetConfigFile = @"config\log4net.config";
           public static readonly string ChineseSimpLanguageFile = @"languages\ChineseSimp.lng";
@@ -33,8 +35,10 @@
           public static readonly string VersionNo = "1.0";
           public static readonly string Copyright = @"Copyright © 2020, HuiruiSoft";
 
-          public static readonly string VersionUrl = "https://github.com/zhangdebin111";
-          public static readonly string HomepageUrl = "http://www.huiruisoft.com/";
+          public static readonly string VersionUrl = "";
+          public static readonly string LicenseUrl = "";
+          public static readonly string HomepageUrl = "http://download.huiruisoft.com/safepass/index.html";
+          public static readonly string OpenSourceUrl = "https://github.com/zhangdebin111/HuiruiSoft.Safe";
 
 
           public static bool CheckApplicationReadied()

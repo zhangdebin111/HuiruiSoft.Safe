@@ -72,6 +72,7 @@ namespace HuiruiSoft.Safe.Localization
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemFileImport", Value = @"导入(&I)..." });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemFileExport", Value = @"导出(&E)..." });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemExitWorkspace", Value = @"退出(&X)" });
+               tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemSwitchSystemTray", Value = @"切换托盘/窗口(&T)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemSelectAll", Value = @"全选(&L)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemEmptyRecycleBin", Value = @"清空回收站(&B)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemRestoreRecycleBin", Value = @"还原(&E)" });
@@ -82,6 +83,7 @@ namespace HuiruiSoft.Safe.Localization
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemEntryEdit", Value = @"编辑账号(&E)..." });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemEntryDelete", Value = @"删除账号(&D)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemEntryMoveTo", Value = @"移动到(&V)..." });
+               tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemDataRefresh", Value = @"刷新" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemCopyUserName", Value = @"复制用户名(&U)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemCopyPassword", Value = @"复制密码(&P)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemCopyMobile", Value = @"复制手机号码(&T)" });
@@ -102,9 +104,12 @@ namespace HuiruiSoft.Safe.Localization
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemLockScreen", Value = @"锁定屏幕(&W)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemToolsOptions", Value = @"选项(&O)..." });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemHelpAbout", Value = @"关于(&A)..." });
+               tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemHelpCheckUpdate", Value = @"检查更新(&C)..." });
 
                var tmpMainToolbarLocalStrings = new List<LocalizedStringItem>();
                tmpLocalResources.LocalizedStrings.MainToolbar = tmpMainToolbarLocalStrings;
+               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonFileExit", Value = @"    退出    " });
+               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonFileExitTips", Value = @"退出 SafePass" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonCatalogCreate", Value = @"新建目录" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonCatalogCreateTips", Value = @"新建目录..." });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonCatalogEdit", Value = @"编辑目录" });
@@ -117,14 +122,14 @@ namespace HuiruiSoft.Safe.Localization
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonEntryEditTips", Value = @"编辑账号..." });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonEntryDelete", Value = @"删除账号" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonEntryDeleteTips", Value = @"删除账号" });
-               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonDataRefresh", Value = @"刷新" });
+               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonDataRefresh", Value = @"    刷新    " });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonDataRefreshTips", Value = @"刷新数据" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonLockWindow", Value = @"锁定窗口" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonLockWindowTips", Value = @"锁定窗口" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonLockScreen", Value = @"锁定屏幕" });
                tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonLockScreenTips", Value = @"锁定屏幕" });
-               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonToolsOptions", Value = @"选项" });
-               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonToolsOptionsTips", Value = @"选项" });
+               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonToolsOptions", Value = @"    选项    " });
+               tmpMainToolbarLocalStrings.Add(new LocalizedStringItem() { Name = "ToolButtonToolsOptionsTips", Value = @"选项配置" });
 
                var tmpWindowLocalStrings = new List<LocalizedStringItem>();
                tmpLocalResources.LocalizedStrings.Windows = tmpWindowLocalStrings;
@@ -188,15 +193,23 @@ namespace HuiruiSoft.Safe.Localization
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCaption", Value = @"选项" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowTabPageGeneral", Value = @"常规" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowTabPageSecurity", Value = @"安全" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowTabPageSecretLevel", Value = @"秘级" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowSecretPublicColor", Value = @"公开颜色:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowSecretSecretColor", Value = @"秘密颜色:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowSecretConfidentialColor", Value = @"机密颜色:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowSecretTopSecretColor", Value = @"绝密颜色:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowLabelWorkDirectory", Value = @"工作目录:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowButtonChangeDirectory", Value = @"更改目录" });
-               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockAfterTime", Value = @"主窗口处于非活动状态锁定的时间 (秒):" });
-               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockGlobalTime", Value = @"操作系统处于非活动状态锁定时间 (秒):" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockWindowAfterTime", Value = @"主窗口处于非活动状态锁定的时间 (秒):" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockScreenAfterTime", Value = @"操作系统处于非活动状态锁定时间 (秒):" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxAutoRunAtStartup", Value = @"开机时自动运行 SafePass (当前用户)" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxTrayIconSingleClick", Value = @"使用单击（而不是双击）激活托盘图标操作" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxMinimizeWindowToTray", Value = @"最小化到托盘（而不是任务栏）" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxClearClipboardTime", Value = @"剪贴板数据自动清空时间（秒）:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxMinimizeAtCloseButton", Value = @"点击“关闭”按钮最小化主窗口，而不是退出应用程序" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockOnMinimizeToTray", Value = @"主窗口最小化到托盘时锁定" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxLockOnMinimizeTaskbar", Value = @"主窗口最小化到任务栏时锁定" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "OptionWindowCheckBoxExitInsteadOfLockAfterTime", Value = @"至指定时间后直接退出，而非自动锁定" });
 
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "PasswordGeneratorWindowCaption", Value = @"密码生成器" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "PasswordGeneratorPasswordOptions", Value = @"选项" });
@@ -306,7 +319,23 @@ namespace HuiruiSoft.Safe.Localization
 
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AboutWindowCaption", Value = @"关于 SafePass" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AboutWindowLabelGpl", Value = @"SafePass 的发布遵循 GNU 通用公共授权许可 V2 或新版的条款。" });
-               
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AboutWindowLabelHomepage", Value = @"官方主页:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AboutWindowLabelOpensource", Value = @"开源地址:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AboutWindowLabelLicense", Value = @"开源许可:" });
+
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCaption", Value = @"升级更新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowLabelVersion", Value = @"当前版本: {0}" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCheckBoxSkipUpdate", Value = @"忽略版本更新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowButtonCheckUpdate", Value = @"检查更新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowButtonStartUpdate", Value = @"开始更新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCloseApplication", Value = @"关闭应用..." });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCurrentVersion", Value = @"{0}, 当前版本: {1}" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowMandatoryVersion", Value = @"您有新的版本 {0} 可用，这是必需的更新。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowAvailableVersion", Value = @"您有新的版本 {0} 可用。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxTitle", Value = @"升级更新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxMandatoryVersion", Value = @"您有新的版本 {0} 可用，当前使用版本是 {1}，这是必需的更新。请点击“开始更新”按钮开始更新。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxAvailableVersion", Value = @"您有新的版本 {0} 可用，当前使用版本是 {1}，您现在要更新应用程序吗？" });
+
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowCaption", Value = @"新建向导" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowLabelLoginName", Value = @"用 户 名:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowLabelPassword", Value = @"登录密码:" });

@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
 namespace HuiruiSoft.Safe.Configuration
 {
@@ -100,9 +101,15 @@ namespace HuiruiSoft.Safe.Configuration
 
      public sealed class LockWorkspace
      {
-          public uint LockAfterTime { get; set; } = 300;
+          public uint LockWindowAfterTime { get; set; } = 300;
 
-          public uint LockGlobalTime { get; set; } = 600;
+          public uint LockScreenAfterTime { get; set; } = 900;
+
+          public bool LockOnMinimizeTaskbar { get; set; } = false;
+
+          public bool LockOnMinimizeToTray { get; set; } = false;
+
+          public bool ExitInsteadOfLockAfterTime { get; set; } = false;
      }
 
      public sealed class SecretRankSettings
@@ -189,7 +196,7 @@ namespace HuiruiSoft.Safe.Configuration
           public bool ClipboardClearOnExit { get; set; } = true;
 
           [XmlElement]
-          public int ClipboardClearAfterSeconds { get; set; } = 12;
+          public uint ClipboardClearAfterSeconds { get; set; } = 12;
      }
 
      public sealed class PasswordGeneratorProfile

@@ -72,6 +72,11 @@ namespace HuiruiSoft.Utils
                }
           }
 
+          public static void CloseAllWindows()
+          {
+               //
+          }
+
           public static void HideAllWindows()
           {
                lock (rootSyncObject)

@@ -59,12 +59,18 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="AutoUpdater.NET">
+      <HintPath>..\dll\AutoUpdater.NET-1.7.0\net20\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dll\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\dll\log4net\2.0\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Net20">
+      <HintPath>..\dll\Newtonsoft.Json.Net20.dll</HintPath>
     </Reference>
     <Reference Include="SourceGrid">
       <HintPath>..\dll\SourceGrid.dll</HintPath>
@@ -83,6 +89,7 @@
     <Compile Include="Exchange\FileFormatProvider.cs" />
     <Compile Include="Exchange\Formats\OfficeExcel.cs" />
     <Compile Include="Exchange\Formats\SafePassXml1x.cs" />
+    <Compile Include="LocalizationResSerializer.ZHN.cs" />
     <Compile Include="ResourceFinder.cs" />
     <Compile Include="resources\Localization\LocalizationResources.cs" />
     <Compile Include="resources\Localization\LanguageHeader.cs" />
@@ -101,11 +108,21 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Config\SecurityConfig.cs" />
+    <Compile Include="UI\Update\formAutoUpdater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Update\formAutoUpdater.Designer.cs">
+      <DependentUpon>formAutoUpdater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XmlSerialization\XmlSerializerExtend.Writer.cs" />
     <EmbeddedResource Include="UI\formChangePassword.resx">
       <DependentUpon>formChangePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\formSelectLanguage.resx">
       <DependentUpon>formSelectLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Update\formAutoUpdater.resx">
+      <DependentUpon>formAutoUpdater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Wizard\formNewSafeWizard.resx">
       <DependentUpon>formNewSafeWizard.cs</DependentUpon>
@@ -297,7 +314,7 @@
     <None Include="resources\images\show-password.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SQLite.Interop.dll">
+    <None Include="..\dll\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="resources\images\copy.ico" />

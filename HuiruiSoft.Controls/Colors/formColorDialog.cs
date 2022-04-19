@@ -95,9 +95,9 @@ namespace HuiruiSoft.UI.Controls
                // 
                this.colorPicker.AutoSize = true;
                this.colorPicker.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-               this.colorPicker.Location = new System.Drawing.Point(20, 25);
+               this.colorPicker.Location = new System.Drawing.Point(50, 50);
                this.colorPicker.Name = "colorPicker";
-               this.colorPicker.Size = new System.Drawing.Size(643, 369);
+               this.colorPicker.Size = new System.Drawing.Size(643, 374);
                this.colorPicker.TabIndex = 0;
                this.colorPicker.ColorChanged += new HuiruiSoft.UI.Controls.ColorChangedEventHandler(this.OnColorPickerColorChanged);
                this.colorPicker.PanelClosing += new HuiruiSoft.UI.Controls.PanelClosingEventHandler(this.OnColorPickerPanelClosing);
