@@ -166,7 +166,6 @@
       <DependentUpon>formNewSafeWizard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="HuiruiSoft.Safe_TemporaryKey.pfx" />
     <None Include="languages\ChineseSimp.lng">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
