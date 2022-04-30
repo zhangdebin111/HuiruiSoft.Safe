@@ -73,6 +73,9 @@ namespace HuiruiSoft.Safe
 
                WindowsUtils.AssignShortcut(this.menuItemCopyUserName, Keys.Control | Keys.B);
                WindowsUtils.AssignShortcut(this.menuItemCopyPassword, Keys.Control | Keys.P);
+
+               WindowsUtils.AssignShortcut(this.menuItemHelpGotoHelpCenter, Keys.F1);
+               //this.menuItemHelpGotoHelpCenter.ShortcutKeys = System.Windows.Forms.Keys.F1;
           }
 
           private void SetLocalizedStrings()
@@ -121,6 +124,8 @@ namespace HuiruiSoft.Safe
                this.menuItemToolsOptions.Text = SafePassResource.MenuItemToolsOptions;
                this.menuItemHelpAbout.Text = SafePassResource.MenuItemHelpAbout;
                this.menuItemHelpCheckUpdate.Text = SafePassResource.MenuItemHelpCheckUpdate;
+               this.menuItemHelpSendFeedback.Text = SafePassResource.MenuItemHelpSendFeedback;
+               this.menuItemHelpGotoHelpCenter.Text = SafePassResource.MenuItemGotoHelpCenter;
 
                this.toolButtonCatalogCreate.Text = SafePassResource.ToolButtonCatalogCreate;
                this.toolButtonCatalogCreate.ToolTipText = SafePassResource.ToolButtonCatalogCreateTips;
@@ -618,6 +623,11 @@ namespace HuiruiSoft.Safe
                this.OpenSystemOptionDialog();
           }
 
+          private void OnGotoHelpCenterMenuItemClick(object sender, System.EventArgs args)
+          {
+               System.Diagnostics.Process.Start(HuiruiSoft.Safe.Configuration.ApplicationDefines.HelpCenterUrl);
+          }
+
           private void OnHelpAboutMenuItemClick(object sender, System.EventArgs args)
           {
                var tmpAboutWindow = new formHelpAbout();
@@ -630,6 +640,13 @@ namespace HuiruiSoft.Safe
                var tmpAutoUpdateWindow = new formAutoUpdater();
                tmpAutoUpdateWindow.ShowDialog();
                tmpAutoUpdateWindow.Dispose();
+          }
+
+          private void OnHelpSendFeedbackMenuItemClick(object sender, System.EventArgs args)
+          {
+               var tmpSendFeedbackWindow = new formSendFeedback();
+               tmpSendFeedbackWindow.ShowDialog();
+               tmpSendFeedbackWindow.Dispose();
           }
 
           private void OnTrayMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs args)

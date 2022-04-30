@@ -104,7 +104,9 @@ namespace HuiruiSoft.Safe.Localization
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemLockScreen", Value = @"锁定屏幕(&W)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemToolsOptions", Value = @"选项(&O)..." });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemHelpAbout", Value = @"关于(&A)..." });
+               tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemGotoHelpCenter", Value = @"使用帮助(&U)" });
                tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemHelpCheckUpdate", Value = @"检查更新(&C)..." });
+               tmpMainMenuLocalStrings.Add(new LocalizedStringItem() { Name = "MenuItemHelpSendFeedback", Value = @"意见反馈(&B)..." });
 
                var tmpMainToolbarLocalStrings = new List<LocalizedStringItem>();
                tmpLocalResources.LocalizedStrings.MainToolbar = tmpMainToolbarLocalStrings;
@@ -329,13 +331,32 @@ namespace HuiruiSoft.Safe.Localization
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowButtonCheckUpdate", Value = @"检查更新" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowButtonStartUpdate", Value = @"开始更新" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCloseApplication", Value = @"关闭应用..." });
-               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowCurrentVersion", Value = @"{0}, 当前版本: {1}" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowNoUpdateVersion", Value = @"当前版本: {0}, 已经是最新版本。" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowMandatoryVersion", Value = @"您有新的版本 {0} 可用，这是必需的更新。" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateWindowAvailableVersion", Value = @"您有新的版本 {0} 可用。" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxTitle", Value = @"升级更新" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxMandatoryVersion", Value = @"您有新的版本 {0} 可用，当前使用版本是 {1}，这是必需的更新。请点击“开始更新”按钮开始更新。" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "AutoUpdateMessageBoxAvailableVersion", Value = @"您有新的版本 {0} 可用，当前使用版本是 {1}，您现在要更新应用程序吗？" });
 
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowCaption", Value = @"发送反馈意见" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowButtonSendFeedback", Value = @"提交反馈" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowLabelQuestionType", Value = @"问题类型:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowLabelDescription", Value = @"问题描述:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowLabelCaptchaCode", Value = @"验 证 码:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowLabelContactWay", Value = @"联系方式:" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowLabelRefreshPrompt", Value = @"看不清？请点击图片刷新" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowDialogRefreshFailed", Value = @"刷新失败" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowListContactWayQQ", Value = @"QQ" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowListContactWayEmail", Value = @"电子邮件" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowListContactWayMobile", Value = @"手机号" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowListContactWayWeChat", Value = @"微信号" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowDialogTitleSendSuccess", Value = @"发送成功" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowDialogTitleSendFailed", Value = @"发送失败" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowVerificationCodeIsEmpty", Value = @"验证码不能为空，请重新输入。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowVerificationCodeIncorrect", Value = @"您输入的验证码不正确，请重新输入。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowDialogMessageSendSuccess", Value = @"你的反馈意见已提交成功。" });
+               tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "SendFeedbackWindowDialogMessageSendFailed", Value = @"你的反馈意见提交失败，失败原因可能是：{0}" });
+               
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowCaption", Value = @"新建向导" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowLabelLoginName", Value = @"用 户 名:" });
                tmpWindowLocalStrings.Add(new LocalizedStringItem() { Name = "NewWizardWindowLabelPassword", Value = @"登录密码:" });

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using HuiruiSoft.Safe.Model;
 using System.Xml.Serialization;
 
 namespace HuiruiSoft.Safe.Configuration
@@ -110,6 +110,19 @@ namespace HuiruiSoft.Safe.Configuration
           public bool LockOnMinimizeToTray { get; set; } = false;
 
           public bool ExitInsteadOfLockAfterTime { get; set; } = false;
+     }
+
+     public sealed class DefaultFeedbackConfig
+     {
+          public ContactWays ContactWay
+          {
+               get; set;
+          }
+
+          public string ContactNo
+          {
+               get; set;
+          }
      }
 
      public sealed class SecretRankSettings

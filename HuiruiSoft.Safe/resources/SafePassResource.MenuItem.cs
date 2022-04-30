@@ -84,7 +84,11 @@
 
           public static string MenuItemHelpAbout { get; private set; } = @"&About...";
 
-          public static string MenuItemHelpCheckUpdate { get; private set; } = @"Check for Updates";
+          public static string MenuItemGotoHelpCenter { get; private set; } = @"Help";
+
+          public static string MenuItemHelpCheckUpdate { get; private set; } = @"Check for Updates...";
+
+          public static string MenuItemHelpSendFeedback { get; private set; } = @"Send Feedback...";
 
 
           public static string ToolButtonFileExit { get; private set; } = @"Exit";

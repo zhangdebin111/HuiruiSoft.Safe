@@ -1,17 +1,20 @@
 ﻿
+using HuiruiSoft.Utils;
+using HuiruiSoft.Win32;
+using HuiruiSoft.Safe.Configuration;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Security.Principal;
 using System.Security.AccessControl;
-using HuiruiSoft.Utils;
-using HuiruiSoft.Win32;
-using HuiruiSoft.Safe.Configuration;
 
 namespace HuiruiSoft.Safe
 {
      static class Program
      {
+          private static AutoUpdateConfig autoUpdateConfig = null;
+          private static FeedbackApiConfig apiConfiguration = null;
+          private static SendFeedbackCache sendFeedbackCache = null;
           private static SafePassConfiguration  applicationConfig = null;
 
           public static int ApplicationMessage { get; private set; } = 0;
@@ -28,6 +31,35 @@ namespace HuiruiSoft.Safe
                     }
 
                     return applicationConfig;
+               }
+          }
+
+          public static AutoUpdateConfig AutoUpdateConfig
+          {
+               get
+               {
+                    return autoUpdateConfig;
+               }
+          }
+
+          public static FeedbackApiConfig FeedbackApiConfig
+          {
+               get
+               {
+                    return apiConfiguration;
+               }
+          }
+
+          public static SendFeedbackCache FeedbackCache
+          {
+               get
+               {
+                    if (sendFeedbackCache == null)
+                    {
+                         sendFeedbackCache = new SendFeedbackCache();
+                    }
+
+                    return sendFeedbackCache;
                }
           }
 
@@ -60,11 +92,16 @@ namespace HuiruiSoft.Safe
                     return;
                }
 
-               applicationConfig = ApplicationConfigSerializer.Load();
+               Log4NetConfigurator.Configure(); 
+
+               applicationConfig = ApplicationConfigSerializer.LoadApplicationConfig();
                if (!string.IsNullOrEmpty(applicationConfig.Application.LanguageFile))
                {
-                    HuiruiSoft.Safe.Localization.LocalizationResourceReader.ReadLocalizationResource(applicationConfig.Application.LanguageFile);
+                    Localization.LocalizationResourceReader.ReadLocalizationResource(applicationConfig.Application.LanguageFile);
                }
+
+               autoUpdateConfig = AutoUpdateConfigSerializer.LoadAutoUpdateConfig();
+               apiConfiguration = FeedbackApiConfigSerializer.LoadFeedbackApiConfig();
 
                try
                {
@@ -75,7 +112,7 @@ namespace HuiruiSoft.Safe
                     System.Diagnostics.Debug.Assert(false);
                }
 
-               bool tmpSingleLock = HuiruiSoft.Utils.GlobalMutexPool.CreateMutex(ApplicationDefines.MutexName, true);
+               bool tmpSingleLock = GlobalMutexPool.CreateMutex(ApplicationDefines.MutexName, true);
                if (!tmpSingleLock)
                {
                     ActivatePreviousInstance(args);
@@ -83,10 +120,7 @@ namespace HuiruiSoft.Safe
                     return;
                }
 
-               log4net.Config.XmlConfigurator.ConfigureAndWatch(new FileInfo(Path.Combine(Application.StartupPath, ApplicationDefines.Log4NetConfigFile)));
-
                var tmpGlobalNotify = TryGlobalInstanceNotify(ApplicationDefines.MutexNameGlobal);
-
                var formLoginWindow = new formLoginWindow();
                if (formLoginWindow.ShowDialog() != DialogResult.OK)
                {
@@ -109,6 +143,12 @@ namespace HuiruiSoft.Safe
                }
           }
 
+          public static bool IsAdministrator()
+          {
+               var tmpWindowsPrincipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+               return tmpWindowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
+          }
+
           private static void ActivatePreviousInstance(string[] args)
           {
                if (ApplicationMessage == 0 && !NativeMethods.IsUnix())
@@ -119,7 +159,7 @@ namespace HuiruiSoft.Safe
 
                try
                {
-                    HuiruiSoft.Utils.BroadcastHelper.Send(ApplicationMessage, ApplicationDefines.MessageRestoreWindow, 0, false);
+                    BroadcastHelper.Send(ApplicationMessage, ApplicationDefines.MessageRestoreWindow, 0, false);
                }
                catch (System.Exception)
                {

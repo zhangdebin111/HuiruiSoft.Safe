@@ -277,7 +277,7 @@
 
           public static string AutoUpdateWindowCloseApplication { get; private set; } = @"Closing application...";
 
-          public static string AutoUpdateWindowCurrentVersion { get; private set; } = @"{0}, current version : {1}";
+          public static string AutoUpdateWindowNoUpdateVersion { get; private set; } = @"Current version : {0}. There is no update available please try again later.";
 
           public static string AutoUpdateWindowMandatoryVersion { get; private set; } = @"There is new version {0} available. This is required update.";
 
@@ -288,6 +288,44 @@
           public static string AutoUpdateMessageBoxMandatoryVersion { get; private set; } = @"There is new version {0} available. You are using version {1}. This is required update. Press Click the Start update button to begin updating the application.";
 
           public static string AutoUpdateMessageBoxAvailableVersion { get; private set; } = @"There is new version {0} available. You are using version {1}. Do you want to update the application now?";
+
+
+          public static string SendFeedbackWindowCaption { get; private set; } = @"Send feedback";
+
+          public static string SendFeedbackWindowButtonSendFeedback { get; private set; } = @"Send feedback";
+
+          public static string SendFeedbackWindowLabelQuestionType { get; private set; } = @"Question type:";
+
+          public static string SendFeedbackWindowLabelDescription { get; private set; } = @"Description:";
+
+          public static string SendFeedbackWindowLabelCaptchaCode { get; private set; } = @"Verification Code:";
+
+          public static string SendFeedbackWindowLabelContactWay { get; private set; } = @"Contact:";
+
+          public static string SendFeedbackWindowLabelRefreshPrompt { get; private set; } = @"invisibility? Please click the picture to refresh";
+
+          public static string SendFeedbackWindowDialogRefreshFailed { get; private set; } = @"Refresh failed";
+
+          public static string SendFeedbackWindowListContactWayQQ { get; private set; } = @"QQ";
+          
+          public static string SendFeedbackWindowListContactWayEmail { get; private set; } = @"Email";
+          
+          public static string SendFeedbackWindowListContactWayMobile { get; private set; } = @"Mobile";
+
+          public static string SendFeedbackWindowListContactWayWeChat { get; private set; } = @"WeChat";
+
+          public static string SendFeedbackWindowDialogTitleSendSuccess { get; private set; } = @"Sent success";
+
+          public static string SendFeedbackWindowDialogTitleSendFailed { get; private set; } = @"Sent failed";
+
+          public static string SendFeedbackWindowVerificationCodeIsEmpty { get; private set; } = @"The verification code cannot be empty, please re-enter it.";
+
+          public static string SendFeedbackWindowVerificationCodeIncorrect { get; private set; } = @"The verification code you entered is incorrect, please re-enter it.";
+
+          public static string SendFeedbackWindowDialogMessageSendSuccess { get; private set; } = @"Your feedback has been submitted successfully.";
+
+          public static string SendFeedbackWindowDialogMessageSendFailed { get; private set; } = @"Your feedback failed to be submitted. The reasons for the failure may be:{0}";
+
 
 
           public static string NewWizardWindowCaption { get; private set; } = @"New Wizard";

@@ -39,7 +39,6 @@ namespace HuiruiSoft.Safe
 
           protected override void OnCloseButtonClick(object sender, System.EventArgs args)
           {
-               HuiruiSoft.Safe.Localization.LocalizationResSerializerZHN.SaveLocalResources();
                this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
           }
      }

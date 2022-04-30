@@ -80,7 +80,7 @@ namespace HuiruiSoft.Safe
                     var tmpWorkDirectory = NativeShellHelper.GetWorkingDirectory();
                     if (string.IsNullOrEmpty(tmpWorkDirectory))
                     {
-                         tmpWorkDirectory = System.IO.Path.Combine(NativeShellHelper.GetLocalDataDirectory(), @"HuiruiSoft\SafePass");
+                         tmpWorkDirectory = Path.Combine(NativeShellHelper.GetLocalDataDirectory(), @"HuiruiSoft\SafePass");
                     }
                     this.textWorkDirectory.Text = tmpWorkDirectory;
                }

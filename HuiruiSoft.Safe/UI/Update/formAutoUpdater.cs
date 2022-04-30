@@ -1,5 +1,7 @@
 ﻿using AutoUpdaterDotNET;
+using System.IO;
 using System.Windows.Forms;
+using System.Security.AccessControl;
 using HuiruiSoft.Safe.Resources;
 using HuiruiSoft.Safe.Configuration;
 
@@ -7,6 +9,8 @@ namespace HuiruiSoft.Safe
 {
      public partial class formAutoUpdater : Form
      {
+          private static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
+
           private System.Version installedVersion;
 
           public formAutoUpdater()
@@ -28,6 +32,7 @@ namespace HuiruiSoft.Safe
 
                if (!base.DesignMode)
                {
+                    this.KeyPreview = true;
                     this.Text = SafePassResource.AutoUpdateWindowCaption;
                     this.Icon = HuiruiSoft.Utils.WindowsUtils.DefaultAppIcon;
                     this.checkSkipUpdate.Text = SafePassResource.AutoUpdateWindowCheckBoxSkipUpdate;
@@ -36,20 +41,31 @@ namespace HuiruiSoft.Safe
 
                     this.installedVersion = System.Reflection.Assembly.GetAssembly(typeof(ResourceFinder)).GetName().Version;
 
+                    this.pictureBoxIcon.Image = HuiruiSoft.Safe.Properties.Resources.LockWindow;
+
                     this.flashBar.ForeColor = System.Drawing.Color.WhiteSmoke;
                     this.flashBar.Title = ApplicationDefines.ProductName;
                     this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowLabelVersion, this.installedVersion);
-                    this.pictureBoxIcon.Image = HuiruiSoft.Safe.Properties.Resources.LockWindow;
 
                     this.webBrowser.ScrollBarsEnabled = true;
                     this.webBrowser.AllowWebBrowserDrop = false;
                     this.webBrowser.ScriptErrorsSuppressed = false;
                     this.webBrowser.WebBrowserShortcutsEnabled = false;
                     this.webBrowser.IsWebBrowserContextMenuEnabled = false;
-                    this.webBrowser.Url = new System.Uri("about:blank");
+
+                    var tmpNoneUpdateFile = System.IO.Path.Combine(Application.StartupPath, ApplicationDefines.NoneUpdateHtml);
+                    if (System.IO.File.Exists(tmpNoneUpdateFile))
+                    {
+                         this.webBrowser.Navigate(tmpNoneUpdateFile);
+                    }
+                    else
+                    {
+                         this.webBrowser.Navigate("about:blank");
+                    }
 
                     AutoUpdater.Synchronous = true;
                     AutoUpdater.ReportErrors = true;
+                    AutoUpdater.RunUpdateAsAdmin = true;
                     AutoUpdater.HttpUserAgent = "AutoUpdater";
                     AutoUpdater.UpdateFormSize = new System.Drawing.Size(800, 600);
                     AutoUpdater.AppTitle = string.Format("{0} {1}", ApplicationDefines.ProductName, SafePassResource.AutoUpdateWindowCaption);
@@ -58,6 +74,20 @@ namespace HuiruiSoft.Safe
                     AutoUpdater.ApplicationExitEvent += this.OnAutoUpdaterApplicationExitEvent;
 
                     this.AutoUpdaterStarter();
+               }
+          }
+
+          protected override void OnKeyUp(KeyEventArgs args)
+          {
+               if (args.KeyCode == Keys.Escape)
+               {
+                    this.Close();
+                    args.Handled = true;
+               }
+               else
+               {
+                    base.OnKeyUp(args);
+                    args.Handled = true;
                }
           }
 
@@ -70,6 +100,15 @@ namespace HuiruiSoft.Safe
                base.OnFormClosing(args);
           }
 
+          private void webBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs args)
+          {
+               var tmpHtmlElement = this.webBrowser.Document.GetElementById("noneUpdateVersion");
+               if (tmpHtmlElement != null)
+               {
+                    tmpHtmlElement.InnerHtml = string.Format(SafePassResource.AutoUpdateWindowNoUpdateVersion, this.installedVersion);
+               }
+          }
+
           private void checkSkipUpdate_CheckedChanged(object sender, System.EventArgs args)
           {
                this.UpdateStartUpdateButtonStatus();
@@ -77,29 +116,44 @@ namespace HuiruiSoft.Safe
 
           private void UpdateStartUpdateButtonStatus()
           {
-               if (this.updateInfoArgs == null || !this.updateInfoArgs.IsUpdateAvailable)
+               if (this.updateInfoArgs == null)
                {
+                    this.checkSkipUpdate.Enabled = false;
                     this.buttonStartUpdate.Enabled = false;
+               }
+               else if (this.updateInfoArgs.IsUpdateAvailable)
+               {
+                    this.checkSkipUpdate.Enabled = true;
+                    this.buttonStartUpdate.Enabled = !this.checkSkipUpdate.Checked;
                }
                else
                {
-                    this.buttonStartUpdate.Enabled = !this.checkSkipUpdate.Checked;
+                    this.checkSkipUpdate.Enabled = false;
+                    this.buttonStartUpdate.Enabled = false;
                }
           }
 
           private void AutoUpdaterStarter()
           {
-               AutoUpdater.Start("http://download.huiruisoft.com/safepass/updates/AutoUpdate.json");
+               if (!string.IsNullOrEmpty(Program.AutoUpdateConfig.CheckUpdateUrl))
+               {
+                    AutoUpdater.Start(Program.AutoUpdateConfig.CheckUpdateUrl);
+               }
+
+               this.UpdateStartUpdateButtonStatus();
           }
 
           private void buttonCheckForUpdate_Click(object sender, System.EventArgs args)
           {
                this.AutoUpdaterStarter();
-               this.UpdateStartUpdateButtonStatus();
 
                if (this.updateInfoArgs != null)
                {
-                    if (this.updateInfoArgs.IsUpdateAvailable)
+                    if (!this.updateInfoArgs.IsUpdateAvailable)
+                    {
+                         MessageBox.Show(string.Format(SafePassResource.AutoUpdateWindowNoUpdateVersion, this.installedVersion), SafePassResource.AutoUpdateMessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
                     {
                          if (this.updateInfoArgs.Mandatory.Value)
                          {
@@ -117,25 +171,20 @@ namespace HuiruiSoft.Safe
 
           private void buttonStartUpdate_Click(object sender, System.EventArgs args)
           {
-               if (this.updateInfoArgs != null)
+               if (this.updateInfoArgs != null && this.updateInfoArgs.IsUpdateAvailable)
                {
-                    if (this.updateInfoArgs.IsUpdateAvailable)
+                    string tmpDownloadPath;
+                    tmpDownloadPath = Path.Combine(Path.GetTempPath(), ApplicationDefines.GroupName);
+                    tmpDownloadPath = Path.Combine(tmpDownloadPath, ApplicationDefines.ProductName);
+                    if (!Directory.Exists(tmpDownloadPath))
                     {
-                         var tmpDownloadPath = System.IO.Path.Combine(System.Environment.CurrentDirectory, "Temp");
-                         if (!System.IO.Directory.Exists(tmpDownloadPath))
-                         {
-                              try
-                              {
-                                   System.IO.Directory.CreateDirectory(tmpDownloadPath);
-                              }
-                              catch (System.SystemException exception)
-                              {
-                                   System.Diagnostics.Debug.WriteLine(exception.Message);
-                              }
-                         }
+                         System.IO.Directory.CreateDirectory(tmpDownloadPath);
+                    }
 
+                    if (Directory.Exists(tmpDownloadPath))
+                    {
                          AutoUpdater.DownloadPath = tmpDownloadPath;
-                         AutoUpdater.InstallationPath = System.Environment.CurrentDirectory;
+                         AutoUpdater.InstallationPath = Application.StartupPath;
 
                          if (!this.updateInfoArgs.Mandatory.Value)
                          {
@@ -152,41 +201,30 @@ namespace HuiruiSoft.Safe
 
           private void OnAutoUpdaterParseUpdateInfoEvent(ParseUpdateInfoEventArgs args)
           {
-               var tmpUpdateJson = Newtonsoft.Json.JsonConvert.DeserializeObject<AutoUpdaterInfo>(args.RemoteData);
-               args.UpdateInfo = new UpdateInfoEventArgs
+               try
                {
-                    DownloadURL = tmpUpdateJson.Url,
-                    CurrentVersion = tmpUpdateJson.Version,
-                    ChangelogURL = tmpUpdateJson.Changelog,
-                    Mandatory = new Mandatory
+                    var tmpUpdateJson = Newtonsoft.Json.JsonConvert.DeserializeObject<AutoUpdaterInfo>(args.RemoteData);
+                    args.UpdateInfo = new UpdateInfoEventArgs
                     {
-                         Value = tmpUpdateJson.Mandatory.Value,
-                         UpdateMode = tmpUpdateJson.Mandatory.UpdateMode,
-                         MinimumVersion = tmpUpdateJson.Mandatory.MinimumVersion
-                    },
-                    CheckSum = new CheckSum
-                    {
-                         Value = tmpUpdateJson.checksum.Value,
-                         HashingAlgorithm = tmpUpdateJson.checksum.HashingAlgorithm
-                    }
-               };
-
-               this.flashBar.Title = string.Format(SafePassResource.AutoUpdateWindowCurrentVersion, ApplicationDefines.ProductName, this.installedVersion);
-               if (tmpUpdateJson.Mandatory.Value)
-               {
-                    this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowMandatoryVersion, tmpUpdateJson.Version);
+                         DownloadURL = tmpUpdateJson.Url,
+                         CurrentVersion = tmpUpdateJson.Version,
+                         ChangelogURL = tmpUpdateJson.Changelog,
+                         Mandatory = new Mandatory
+                         {
+                              Value = tmpUpdateJson.Mandatory.Value,
+                              UpdateMode = tmpUpdateJson.Mandatory.UpdateMode,
+                              MinimumVersion = tmpUpdateJson.Mandatory.MinimumVersion
+                         },
+                         CheckSum = new CheckSum
+                         {
+                              Value = tmpUpdateJson.checksum.Value,
+                              HashingAlgorithm = tmpUpdateJson.checksum.HashingAlgorithm
+                         }
+                    };
                }
-               else
+               catch (Newtonsoft.Json.JsonReaderException exception)
                {
-                    this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowAvailableVersion, tmpUpdateJson.Version);
-               }
-
-               if (!string.IsNullOrEmpty(tmpUpdateJson.Changelog))
-               {
-                    if (this.webBrowser != null && !this.webBrowser.IsDisposed)
-                    {
-                         this.webBrowser.Navigate(tmpUpdateJson.Changelog);
-                    }
+                    loger.Error(exception);
                }
           }
 
@@ -201,10 +239,30 @@ namespace HuiruiSoft.Safe
           {
                this.updateInfoArgs = args;
 
-               if (args.IsUpdateAvailable)
+               if (!args.IsUpdateAvailable)
+               {
+                    this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowNoUpdateVersion, this.installedVersion);
+               }
+               else
                {
                     this.checkSkipUpdate.Checked = false;
                     this.checkSkipUpdate.Enabled = !args.Mandatory.Value;
+                    if (!string.IsNullOrEmpty(args.ChangelogURL))
+                    {
+                         if (this.webBrowser != null && !this.webBrowser.IsDisposed)
+                         {
+                              this.webBrowser.Navigate(args.ChangelogURL);
+                         }
+                    }
+
+                    if (args.Mandatory.Value)
+                    {
+                         this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowMandatoryVersion, args.CurrentVersion);
+                    }
+                    else
+                    {
+                         this.flashBar.Message = string.Format(SafePassResource.AutoUpdateWindowAvailableVersion, args.CurrentVersion);
+                    }
                }
           }
 

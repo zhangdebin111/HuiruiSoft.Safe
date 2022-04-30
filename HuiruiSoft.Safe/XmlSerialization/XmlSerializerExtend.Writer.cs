@@ -73,12 +73,25 @@ namespace HuiruiSoft.Utils.XmlSerialization
                writer.WriteStartElement("Application");
 
                writer.WriteElementString("LanguageFile", applicationConfig.LanguageFile);
+               WriteDefaultFeedbackConfig(writer, applicationConfig.FeedbackConfig);
                WriteSecurityConfig(writer, applicationConfig.Security);
                WritePasswordProfile(writer, applicationConfig.PasswordGenerator);
 
                writer.WriteEndElement();
           }
 
+          private static void WriteDefaultFeedbackConfig(XmlWriter writer, DefaultFeedbackConfig feedbackConfig)
+          {
+               writer.WriteStartElement("Feedback");
+
+               writer.WriteStartElement("ContactWay");
+               WriteValue(writer, feedbackConfig.ContactWay);
+               writer.WriteEndElement();
+
+               writer.WriteElementString("ContactNo", feedbackConfig.ContactNo);
+
+               writer.WriteEndElement();
+          }
 
           private static void WriteSecurityConfig(XmlWriter writer, SecurityConfig security)
           {
@@ -288,6 +301,11 @@ namespace HuiruiSoft.Utils.XmlSerialization
           public static void WriteValue(XmlWriter writer, System.DateTime value)
           {
                writer.WriteValue(value);
+          }
+
+          public static void WriteValue<T>(XmlWriter writer, T value) where T : System.Enum
+          {
+               writer.WriteValue(System.Convert.ToInt32(value));
           }
 
           private static void WriteColor(XmlWriter writer, System.Drawing.Color color)

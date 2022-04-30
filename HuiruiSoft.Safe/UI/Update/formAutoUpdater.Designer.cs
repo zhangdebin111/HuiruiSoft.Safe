@@ -98,6 +98,7 @@ namespace HuiruiSoft.Safe
                this.webBrowser.Name = "webBrowser";
                this.webBrowser.Size = new System.Drawing.Size(700, 300);
                this.webBrowser.TabIndex = 1;
+               this.webBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser_DocumentCompleted);
                // 
                // buttonStartUpdate
                // 

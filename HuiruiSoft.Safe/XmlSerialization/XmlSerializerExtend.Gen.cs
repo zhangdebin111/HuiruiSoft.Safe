@@ -1,4 +1,5 @@
 using System.Xml;
+using System.Linq;
 using System.Diagnostics;
 using HuiruiSoft.Safe.Configuration;
 
@@ -166,6 +167,10 @@ namespace HuiruiSoft.Utils.XmlSerialization
                                    tmpApplicationConfig.LanguageFile = ReadString(reader);
                                    break;
 
+                              case "Feedback":
+                                   tmpApplicationConfig.FeedbackConfig = ReadFeedbackConfig(reader);
+                                   break;
+
                               case "Security":
                                    tmpApplicationConfig.Security = ReadSecurityConfig(reader);
                                    break;
@@ -182,6 +187,52 @@ namespace HuiruiSoft.Utils.XmlSerialization
                reader.ReadEndElement();
 
                return tmpApplicationConfig;
+          }
+
+          private static DefaultFeedbackConfig ReadFeedbackConfig(XmlReader reader)
+          {
+               var tmpFeedbackConfig = new DefaultFeedbackConfig();
+               if (SkipEmptyElement(reader))
+               {
+                    return tmpFeedbackConfig;
+               }
+
+               Debug.Assert(reader.NodeType == XmlNodeType.Element);
+               reader.ReadStartElement();
+               reader.MoveToContent();
+
+               while (true)
+               {
+                    var tmpNodeType = reader.NodeType;
+                    if (tmpNodeType == XmlNodeType.None || tmpNodeType == XmlNodeType.EndElement)
+                    {
+                         break;
+                    }
+
+                    if (tmpNodeType == XmlNodeType.Element)
+                    {
+                         switch (reader.LocalName)
+                         {
+                              default:
+                                   reader.Skip();
+                                   break;
+
+                              case "ContactNo":
+                                   tmpFeedbackConfig.ContactNo = ReadString(reader);
+                                   break;
+
+                              case "ContactWay":
+                                   tmpFeedbackConfig.ContactWay = TryReadEnum<HuiruiSoft.Safe.Model.ContactWays>(reader);
+                                   break;
+                         }
+
+                         reader.MoveToContent();
+                    }
+               }
+
+               reader.ReadEndElement();
+
+               return tmpFeedbackConfig;
           }
 
           private static SecurityConfig ReadSecurityConfig(XmlReader reader)
@@ -585,6 +636,21 @@ namespace HuiruiSoft.Utils.XmlSerialization
           private static bool ReadBoolean(XmlReader reader)
           {
                return XmlConvert.ToBoolean(reader.ReadElementString());
+          }
+
+          private static T TryReadEnum<T>(XmlReader reader) where T : System.Enum
+          {
+               T tmpEnumValue = default;
+               try
+               {
+                    tmpEnumValue = (T)System.Enum.Parse(typeof(T), reader.ReadElementString());
+               }
+               catch
+               {
+                    //
+               }
+
+               return tmpEnumValue;
           }
 
           private static int ReadInt32(XmlReader reader)

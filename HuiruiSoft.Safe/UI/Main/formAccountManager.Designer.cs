@@ -65,8 +65,13 @@
                this.toolSeparatorTools1 = new System.Windows.Forms.ToolStripSeparator();
                this.menuItemToolsOptions = new System.Windows.Forms.ToolStripMenuItem();
                this.menuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
-               this.menuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+               this.menuItemHelpGotoHelpCenter = new System.Windows.Forms.ToolStripMenuItem();
+               this.toolSeparatorHelp1 = new System.Windows.Forms.ToolStripSeparator();
+               this.menuItemHelpSendFeedback = new System.Windows.Forms.ToolStripMenuItem();
+               this.toolSeparatorHelp2 = new System.Windows.Forms.ToolStripSeparator();
                this.menuItemHelpCheckUpdate = new System.Windows.Forms.ToolStripMenuItem();
+               this.toolSeparatorHelp3 = new System.Windows.Forms.ToolStripSeparator();
+               this.menuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
                this.menuStripDataGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
                this.menuItemRestoreRecycleBin = new System.Windows.Forms.ToolStripMenuItem();
                this.toolSeparatorRestore = new System.Windows.Forms.ToolStripSeparator();
@@ -99,7 +104,6 @@
                this.menuStripTray = new System.Windows.Forms.ContextMenuStrip(this.components);
                this.menuItemSwitchSystemTray = new System.Windows.Forms.ToolStripMenuItem();
                this.notifyIconTray = new System.Windows.Forms.NotifyIcon(this.components);
-               this.toolSeparatorHelp = new System.Windows.Forms.ToolStripSeparator();
                this.toolBarStrip.SuspendLayout();
                this.stripStatusBar.SuspendLayout();
                this.splitControls.Panel1.SuspendLayout();
@@ -526,27 +530,60 @@
                // menuItemHelp
                // 
                this.menuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuItemHelpGotoHelpCenter,
+            this.toolSeparatorHelp1,
+            this.menuItemHelpSendFeedback,
+            this.toolSeparatorHelp2,
             this.menuItemHelpCheckUpdate,
-            this.toolSeparatorHelp,
+            this.toolSeparatorHelp3,
             this.menuItemHelpAbout});
                this.menuItemHelp.Name = "menuItemHelp";
                this.menuItemHelp.Size = new System.Drawing.Size(67, 28);
                this.menuItemHelp.Text = "&Help";
                // 
-               // menuItemHelpAbout
+               // menuItemHelpGotoHelpCenter
                // 
-               this.menuItemHelpAbout.Image = ((System.Drawing.Image)(resources.GetObject("menuItemHelpAbout.Image")));
-               this.menuItemHelpAbout.Name = "menuItemHelpAbout";
-               this.menuItemHelpAbout.Size = new System.Drawing.Size(270, 34);
-               this.menuItemHelpAbout.Text = "&About...";
-               this.menuItemHelpAbout.Click += new System.EventHandler(this.OnHelpAboutMenuItemClick);
+               this.menuItemHelpGotoHelpCenter.Name = "menuItemHelpGotoHelpCenter";
+               this.menuItemHelpGotoHelpCenter.Size = new System.Drawing.Size(280, 34);
+               this.menuItemHelpGotoHelpCenter.Text = "Help";
+               this.menuItemHelpGotoHelpCenter.Click += new System.EventHandler(this.OnGotoHelpCenterMenuItemClick);
+               // 
+               // toolSeparatorHelp1
+               // 
+               this.toolSeparatorHelp1.Name = "toolSeparatorHelp1";
+               this.toolSeparatorHelp1.Size = new System.Drawing.Size(277, 6);
+               // 
+               // menuItemHelpSendFeedback
+               // 
+               this.menuItemHelpSendFeedback.Name = "menuItemHelpSendFeedback";
+               this.menuItemHelpSendFeedback.Size = new System.Drawing.Size(280, 34);
+               this.menuItemHelpSendFeedback.Text = "Send Feedback...";
+               this.menuItemHelpSendFeedback.Click += new System.EventHandler(this.OnHelpSendFeedbackMenuItemClick);
+               // 
+               // toolSeparatorHelp2
+               // 
+               this.toolSeparatorHelp2.Name = "toolSeparatorHelp2";
+               this.toolSeparatorHelp2.Size = new System.Drawing.Size(277, 6);
                // 
                // menuItemHelpCheckUpdate
                // 
                this.menuItemHelpCheckUpdate.Name = "menuItemHelpCheckUpdate";
-               this.menuItemHelpCheckUpdate.Size = new System.Drawing.Size(270, 34);
-               this.menuItemHelpCheckUpdate.Text = "Check for Updates";
+               this.menuItemHelpCheckUpdate.Size = new System.Drawing.Size(280, 34);
+               this.menuItemHelpCheckUpdate.Text = "Check for Updates...";
                this.menuItemHelpCheckUpdate.Click += new System.EventHandler(this.OnHelpCheckUpdateMenuItemClick);
+               // 
+               // toolSeparatorHelp3
+               // 
+               this.toolSeparatorHelp3.Name = "toolSeparatorHelp3";
+               this.toolSeparatorHelp3.Size = new System.Drawing.Size(277, 6);
+               // 
+               // menuItemHelpAbout
+               // 
+               this.menuItemHelpAbout.Image = ((System.Drawing.Image)(resources.GetObject("menuItemHelpAbout.Image")));
+               this.menuItemHelpAbout.Name = "menuItemHelpAbout";
+               this.menuItemHelpAbout.Size = new System.Drawing.Size(280, 34);
+               this.menuItemHelpAbout.Text = "&About...";
+               this.menuItemHelpAbout.Click += new System.EventHandler(this.OnHelpAboutMenuItemClick);
                // 
                // menuStripDataGrid
                // 
@@ -790,11 +827,6 @@
                this.notifyIconTray.DoubleClick += new System.EventHandler(this.OnSystemTrayIconDoubleClick);
                this.notifyIconTray.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnSystemTrayIconMouseDown);
                // 
-               // toolSeparatorHelp
-               // 
-               this.toolSeparatorHelp.Name = "toolSeparatorHelp";
-               this.toolSeparatorHelp.Size = new System.Drawing.Size(267, 6);
-               // 
                // formAccountManager
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -907,7 +939,11 @@
           private System.Windows.Forms.ToolStripMenuItem menuItemSwitchSystemTray;
           private System.Windows.Forms.ToolStripButton toolButtonExitWorkspace;
           private System.Windows.Forms.ToolStripMenuItem menuItemHelpCheckUpdate;
-          private System.Windows.Forms.ToolStripSeparator toolSeparatorHelp;
+          private System.Windows.Forms.ToolStripMenuItem menuItemHelpSendFeedback;
+          private System.Windows.Forms.ToolStripSeparator toolSeparatorHelp3;
+          private System.Windows.Forms.ToolStripSeparator toolSeparatorHelp2;
+          private System.Windows.Forms.ToolStripMenuItem menuItemHelpGotoHelpCenter;
+          private System.Windows.Forms.ToolStripSeparator toolSeparatorHelp1;
      }
 }
 

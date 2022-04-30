@@ -94,6 +94,8 @@
     <Compile Include="Model\AccountAttribute.cs" />
     <Compile Include="Model\AccountCatalog.cs" />
     <Compile Include="Model\AccountModel.cs" />
+    <Compile Include="Model\ClientUserAgents.cs" />
+    <Compile Include="Model\ContactWays.cs" />
     <Compile Include="Model\SecretRank.cs" />
     <Compile Include="ORM\AccountAttributeEntity.cs" />
     <Compile Include="ORM\AccountCatalogEntity.cs" />

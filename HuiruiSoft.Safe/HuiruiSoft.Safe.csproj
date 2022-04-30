@@ -25,9 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -58,19 +59,40 @@
     <ApplicationIcon>SafePass.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>E9961CC854D8505B48B29CE32BD90F35628402B5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>HuiruiSoft.Safe_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoUpdater.NET">
-      <HintPath>..\dll\AutoUpdater.NET-1.7.0\net20\AutoUpdater.NET.dll</HintPath>
+    <Reference Include="AutoUpdater.NET, Version=1.6.3.0, Culture=neutral, PublicKeyToken=501435c91b35f4bc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.6.3\lib\net35\AutoUpdater.NET.dll</HintPath>
     </Reference>
-    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+    <Reference Include="EPPlus, Version=6.0.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.0.3\lib\net35\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\dll\EPPlus.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
       <HintPath>..\dll\log4net\2.0\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json.Net20">
-      <HintPath>..\dll\Newtonsoft.Json.Net20.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net35\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SourceGrid">
       <HintPath>..\dll\SourceGrid.dll</HintPath>
@@ -78,12 +100,17 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ApplicationConfig.cs" />
+    <Compile Include="Config\AutoUpdateConfig.cs" />
+    <Compile Include="Config\FeedbackApiConfig.cs" />
+    <Compile Include="Config\Log4NetConfigurator.cs" />
+    <Compile Include="Config\SendFeedbackCache.cs" />
     <Compile Include="Exchange\ImportAccountHelper.cs" />
     <Compile Include="Exchange\ExportAccountHelper.cs" />
     <Compile Include="Exchange\FileFormatProvider.cs" />
@@ -108,18 +135,29 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Config\SecurityConfig.cs" />
+    <Compile Include="UI\Help\formSendFeedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\Update\formAutoUpdater.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Update\formAutoUpdater.Designer.cs">
       <DependentUpon>formAutoUpdater.cs</DependentUpon>
     </Compile>
+    <Compile Include="WebClient\SoftFeedbackModel.cs" />
+    <Compile Include="WebClient\FeedbackSubject.cs" />
+    <Compile Include="WebClient\SoftFeedbackClient.cs" />
+    <Compile Include="WebClient\HttpDataResponse.cs" />
+    <Compile Include="WebClient\HttpRequestApi.cs" />
     <Compile Include="XmlSerialization\XmlSerializerExtend.Writer.cs" />
     <EmbeddedResource Include="UI\formChangePassword.resx">
       <DependentUpon>formChangePassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\formSelectLanguage.resx">
       <DependentUpon>formSelectLanguage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Help\formSendFeedback.resx">
+      <DependentUpon>formSendFeedback.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Update\formAutoUpdater.resx">
       <DependentUpon>formAutoUpdater.cs</DependentUpon>
@@ -128,9 +166,14 @@
       <DependentUpon>formNewSafeWizard.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="HuiruiSoft.Safe_TemporaryKey.pfx" />
     <None Include="languages\ChineseSimp.lng">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="resources\config\Feedback.config" />
+    <None Include="resources\config\Update.config" />
     <None Include="resources\images\CustomizeLarge.png" />
     <None Include="resources\images\TopMost.png" />
     <None Include="resources\images\TopNone.png" />
@@ -161,7 +204,7 @@
     </Compile>
     <Compile Include="resources\SafePassResource.General.cs" />
     <Compile Include="resources\SafePassResource.cs" />
-    <Compile Include="UI\formHelpAbout.cs">
+    <Compile Include="UI\Help\formHelpAbout.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Config\ApplicationConfigSerializer.cs" />
@@ -238,7 +281,7 @@
     <EmbeddedResource Include="UI\Export\formExportAccount.resx">
       <DependentUpon>formExportAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\formHelpAbout.resx">
+    <EmbeddedResource Include="UI\Help\formHelpAbout.resx">
       <DependentUpon>formHelpAbout.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\formSystemOptions.resx">
@@ -366,8 +409,13 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if not exist "$(TargetDir)\config"  md "$(TargetDir)\config"
-copy $(ProjectDir)\resources\config\log4net.config $(TargetDir)\config\log4net.config /Y</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(TargetDir)\html"  md "$(TargetDir)\html"
+if not exist "$(TargetDir)\config"  md "$(TargetDir)\config"
+copy $(ProjectDir)\resources\html\NoneUpdate.html $(TargetDir)\html\NoneUpdate.html /Y
+copy $(ProjectDir)\resources\config\log4net.config $(TargetDir)\config\log4net.config /Y
+copy $(ProjectDir)\resources\config\Update.config $(TargetDir)\config\Update.config /Y
+copy $(ProjectDir)\resources\config\Feedback.config $(TargetDir)\config\Feedback.config /Y
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

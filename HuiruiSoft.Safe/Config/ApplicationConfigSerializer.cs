@@ -8,37 +8,28 @@ namespace HuiruiSoft.Safe.Configuration
      {
           private static readonly log4net.ILog loger = log4net.LogManager.GetLogger("loger");
 
-          public static SafePassConfiguration Load( )
+          public static SafePassConfiguration LoadApplicationConfig( )
           {
-               var tmpWorkDirectory = HuiruiSoft.Utils.NativeShellHelper.GetWorkingDirectory();
-               var tmpConfigFileName = System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigFile);
-               var applicationConfig = LoadApplicationConfig(tmpConfigFileName);
-               applicationConfig.WorkingDirectory = tmpWorkDirectory;
-
-               return applicationConfig;
-          }
-
-          private static SafePassConfiguration LoadApplicationConfig(string filePath)
-          {
-               if(string.IsNullOrEmpty(filePath))
-               {
-                    return null;
-               }
-
                SafePassConfiguration applicationConfig = null;
 
-               try
+               var tmpWorkDirectory = HuiruiSoft.Utils.NativeShellHelper.GetWorkingDirectory();
+               var tmpConfigFileName = System.IO.Path.Combine(tmpWorkDirectory, ApplicationDefines.MainConfigFile);
+               if (System.IO.File.Exists(tmpConfigFileName))
                {
-                    var tmpXmlSerializer = new XmlSerializerExtend(typeof(SafePassConfiguration));
-                    using(var tmpFileStream = new System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
+                    try
                     {
-                         applicationConfig = (SafePassConfiguration)tmpXmlSerializer.Deserialize(tmpFileStream);
+                         var tmpXmlSerializer = new XmlSerializerExtend(typeof(SafePassConfiguration));
+                         using (var tmpFileStream = new System.IO.FileStream(tmpConfigFileName, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read))
+                         {
+                              applicationConfig = (SafePassConfiguration)tmpXmlSerializer.Deserialize(tmpFileStream);
+                              applicationConfig.WorkingDirectory = tmpWorkDirectory;
+                         }
                     }
-               }
-               catch(System.Exception exception)
-               {
-                    applicationConfig = new SafePassConfiguration();
-                    System.Diagnostics.Debug.WriteLine(exception.StackTrace);
+                    catch (System.Exception exception)
+                    {
+                         loger.Error(exception);
+                         System.Diagnostics.Debug.WriteLine(exception.StackTrace);
+                    }
                }
 
                return applicationConfig;

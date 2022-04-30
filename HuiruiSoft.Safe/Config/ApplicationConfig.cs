@@ -9,6 +9,28 @@
           [XmlElement]
           public string LanguageFile { get; set; } = null;
 
+
+          private DefaultFeedbackConfig defaultFeedbackConfig = null;
+
+          [XmlElement]
+          public DefaultFeedbackConfig FeedbackConfig
+          {
+               set
+               {
+                    this.defaultFeedbackConfig = value ?? throw new System.ArgumentNullException("value");
+               }
+
+               get
+               {
+                    if (this.defaultFeedbackConfig == null)
+                    {
+                         this.defaultFeedbackConfig = new DefaultFeedbackConfig();
+                    }
+
+                    return this.defaultFeedbackConfig;
+               }
+          }
+
           [XmlElement]
           public SecurityConfig Security
           {
