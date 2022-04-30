@@ -293,7 +293,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\SafePass.Setup_v1.2.0.msi"
+        "OutputFilename" = "8:Release\\SafePass.Setup_v1.3.0.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -900,7 +900,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:SafePass, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:SafePass, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_F900712CF01B47F8959D489C064ABBD6"
@@ -1061,7 +1061,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:SafePass"
         "ProductCode" = "8:{A7112BC0-9A6C-4C0C-B95F-1DC7C310F0C7}"
-        "PackageCode" = "8:{4F2B6446-BFCA-481B-800E-0A490F54E1FB}"
+        "PackageCode" = "8:{D45759C7-770D-4066-8ADC-ABDDB55C191A}"
         "UpgradeCode" = "8:{A5ADABD5-C43A-4035-9772-63A95A806210}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
